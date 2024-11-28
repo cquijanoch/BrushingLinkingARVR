@@ -1,0 +1,35 @@
+Product,Prefab name,Category,Price (EUR),Calories (kcal),Fat (g),Sugar (g),Protein (g),Carbohydrate (g),Alcohol (%),Lactose (Y/N),Gluten (Y/N),Vegan/Vegetarian/N
+Cereal SUINPIN Multi-fruit,BoxCereal1_1_1,Cereal,2.49,102,5.1,1.7,5.4,7.8,0,Y,Y,N
+Cereal SUINPIN Multi-fruit,BoxCereal1_2_1,Cereal,2.49,102,5.1,1.7,5.4,7.8,0,Y,Y,N
+Cereal Jecces,BoxCereal2_1_1,Cereal,1.99,145,4.8,0.2,2.2,22,0,N,N,Vegan
+Cereal Jecces,BoxCereal2_2_1,Cereal,1.99,145,4.8,0.2,2.2,22,0,N,N,Vegan
+Sugar Bits,BoxCereal3_1_1,Cereal,1.69,350,1,2,8.5,73.3,0,Y,Y,Vegetarian
+Sugar Bits,BoxCereal3_2_1,Cereal,1.69,350,1,2,8.5,73.3,0,Y,Y,Vegetarian
+Sugar Bits,BoxCereal3_3_1,Cereal,1.69,350,1,2,8.5,73.3,0,Y,Y,Vegetarian
+Ceral LUR for Kids,BoxCereal4_1_1,Cereal,3.69,230,8.5,3.2,9.5,28,0,Y,Y,N
+Ceral LUR for Kids,BoxCereal4_2_1,Cereal,3.69,230,8.5,3.2,9.5,28,0,Y,Y,N
+Ceral LUR for Kids,BoxCereal4_3_1,Cereal,3.69,230,8.5,3.2,9.5,28,0,Y,Y,N
+Ceral LUR for Kids,BoxCereal4_4_1,Cereal,3.69,230,8.5,3.2,9.5,28,0,Y,Y,N
+CerealColor FAKE,BoxCereal5_1_1,Cereal,2.4,120,5,1.9,5,7.65,0,Y,Y,N
+CerealColor FAKE,BoxCereal5_2_1,Cereal,2.4,120,5,1.9,5,7.65,0,Y,Y,N
+CerealColor FAKE,BoxCereal5_3_1,Cereal,2.4,120,5,1.9,5,7.65,0,Y,Y,N
+Cereal Fraue Frau,BoxCereal6_1_1,Cereal,2.4,154,4.6,1.2,2.1,25,0,N,N,Vegan
+Cereal Fraue Frau,BoxCereal6_2_1,Cereal,2.4,154,4.6,1.2,2.1,25,0,N,N,Vegan
+Cereal Fraue Frau,BoxCereal6_3_1,Cereal,2.4,154,4.6,1.2,2.1,25,0,N,N,Vegan
+Cereal Frakke,BoxCereal7_1_1,Cereal,1.48,340,1.3,2.3,7.5,74.3,0,Y,Y,Vegetarian
+Cereal Frakke,BoxCereal7_2_1,Cereal,1.48,340,1.3,2.3,7.5,74.3,0,Y,Y,Vegetarian
+Cereal Frakke,BoxCereal7_3_1,Cereal,1.48,340,1.3,2.3,7.5,74.3,0,Y,Y,Vegetarian
+Cereal Frakke,BoxCereal7_4_1,Cereal,1.48,340,1.3,2.3,7.5,74.3,0,Y,Y,Vegetarian
+Cereal Frakke,BoxCereal7_5_1,Cereal,1.48,340,1.3,2.3,7.5,74.3,0,Y,Y,Vegetarian
+Cereal Frakke,BoxCereal7_6_1,Cereal,1.48,340,1.3,2.3,7.5,74.3,0,Y,Y,Vegetarian
+Cereal Chocolate,BoxCereal8_1_1,Cereal,3.39,175,8.7,3.1,8.5,27,0,Y,Y,N
+Cereal Chocolate,BoxCereal8_2_1,Cereal,3.39,175,8.7,3.1,8.5,27,0,Y,Y,N
+Cereal Chocolate,BoxCereal8_3_1,Cereal,3.39,175,8.7,3.1,8.5,27,0,Y,Y,N
+Cereal Chocollate,BoxCereal9_1_1,Cereal,2.19,330,5.6,1.45,5.1,77,0,Y,Y,N
+Cereal Chocollate,BoxCereal9_2_1,Cereal,2.19,330,5.6,1.45,5.1,77,0,Y,Y,N
+Cereal Chocollate,BoxCereal9_3_1,Cereal,2.19,330,5.6,1.45,5.1,77,0,Y,Y,N
+Cereal Chocollate,BoxCereal9_4_1,Cereal,2.19,330,5.6,1.45,5.1,77,0,Y,Y,N
+Cereal ChipChops,BoxCereal10_1_1,Cereal,1.79,350,4.45,0.25,2.6,33,0,N,N,Vegan
+Cereal ChipChops,BoxCereal10_2_1,Cereal,1.79,350,4.45,0.25,2.6,33,0,N,N,Vegan
+Cereal ChipChops,BoxCereal10_3_1,Cereal,1.79,350,4.45,0.25,2.6,33,0,N,N,Vegan
+Cereal ChipChops,BoxCereal10_4_1,Cereal,1.79,350,4.45,0.25,2.6,33,0,N,N,Vegan
