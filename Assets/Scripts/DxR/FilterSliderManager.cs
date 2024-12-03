@@ -118,6 +118,10 @@ namespace BrushingAndLinking
 
         private void Start()
         {
+            if (!MainVis.IsReady)
+            {
+                return;
+            }
             visSpecsInferred = MainVis.GetVisSpecsInferred();
             MainVis.VisUpdatedInferred.AddListener(MainVisUpdated);
 
