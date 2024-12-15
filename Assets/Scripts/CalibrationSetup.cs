@@ -1,27 +1,29 @@
 using System.Collections.Generic;
+using BrushingAndLinking;
 using Oculus.Interaction.Input;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CalibrationSetup : MonoBehaviour
 {
-    public List<Vector3> PointsNumber = new List<Vector3>();
-    public List<GameObject> ShelvesPrefabs = new List<GameObject>();
-    private List<GameObject> Shelves = new List<GameObject>();
+    [Header("Elements from the environment")]
+    public GameObject Infraestructure;
+    public GameObject Baseplate;
+    public GameObject FloorPoints;
 
-    private OVRInput.Axis1D GrabTrigger;
-    private readonly float ButtonPressThreshold = 0.5f;
-    private readonly float TimePressThreshold = 3.5f;
+    public List<Transform> Shelves = new List<Transform>();
+    public List<Transform> Points = new List<Transform>();
     public float TimeConfiguration = 0f;
 
-    public GameObject ShelvesInfraestructure;
+    //public GameObject ShelvesInfraestructure;
 
     //[SerializeField]
     //private Hand Hand;
 
-    [SerializeField]
-    private Material LineMaterial;
-
+    //[SerializeField]
+    //private Material LineMaterial;
+    [Header("Controllers elements")]
     public Controller LeftController;
     public Controller RightController;
     public GameObject LogAuxPrefab;
@@ -31,18 +33,29 @@ public class CalibrationSetup : MonoBehaviour
     public GameObject RightControllerMesh;
     public GameObject SphereTracking;
 
-    private GameObject LogAux;
-    private Vector3 CurrentPose;
-    private int countLines = 0;
-    private const int PointsByShelf = 3;
+    [Header("UI elements")]
+    public MenuUI MenuUI;
+    public GameObject LogAux;
 
-    void Start()
+    private Vector3 CurrentPose;
+    private OVRInput.Axis1D GrabTrigger;
+    private readonly float ButtonPressThreshold = 0.5f;
+    //private readonly float TimePressThreshold = 3.5f;
+
+    private void Awake()
     {
-        LeftController.enabled = false;
+        //MenuUI.SetOverallVisibility(true);
+        //Baseplate.SetActive(true);
+        //Infraestructure.SetActive(false);
+        //FloorPoints.SetActive(false);
+    }
+
+    private void Start()
+    {
+        LeftController.enabled = true;
         RightController.enabled = true;
         LogAux = Instantiate(LogAuxPrefab, RightController.transform.GetChild(2).transform);
         GrabTrigger = OVRInput.Axis1D.SecondaryHandTrigger;
-
         SphereTracking = Instantiate(SphereTrackingPrefab, RightControllerMesh.transform);
     }
 
@@ -57,39 +70,58 @@ public class CalibrationSetup : MonoBehaviour
             canvas.GetComponentInChildren<TextMeshProUGUI>().text = ShowLogAux(CurrentPose);
             //print("POSE = " + CurrentPose.position);
             //print("ORIENTATION = " + CurrentPose.rotation);
-            if (TimeConfiguration > TimePressThreshold)
-            {
-                PointsNumber.Add(CurrentPose);
-                canvas.GetComponentInChildren<TextMeshProUGUI>().text = ShowLogAux(CurrentPose);
-                TimeConfiguration = 0f;
-
-                if (PointsNumber.Count / PointsByShelf > countLines)
-                {
-                    for (int i = 0; i < PointsByShelf - 1; i++)
-                    {
-                        DrawLine(PointsNumber[PointsNumber.Count - 2 - i], PointsNumber[PointsNumber.Count - 1 - i], Color.red);
-                        countLines++;
-                    }
-                }
-            }
-
-            TimeConfiguration += Time.fixedDeltaTime;
         }
 
         if (IsUnpressedGrabTrigger())
         {
             TimeConfiguration = 0f;
         }
+    }
 
-        if (OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.RTouch))
-            DisplayShelves();
+    public void CalibrationInit()
+    {
+        MenuUI.SetOverallVisibility(true);
+        Baseplate.SetActive(true);
+        FloorPoints.SetActive(false);
+        Infraestructure.SetActive(true);
+    }
+
+    public void ShowFloorPoints()
+    {
+        MenuUI.SetOverallVisibility(true);
+        Baseplate.SetActive(false);
+        FloorPoints.SetActive(true);
+        Infraestructure.SetActive(true);
+    }
+
+    public void ShelvesCalibration()
+    {
+        MenuUI.SetOverallVisibility(true);
+        Baseplate.SetActive(false);
+        FloorPoints.SetActive(true);
+        Infraestructure.SetActive(true);
+        for (int i = 0; i < Infraestructure.transform.childCount; i++)
+        {
+            var child = Infraestructure.transform.GetChild(i);
+            var pbuilder = child.GetComponent<ProductBuilder>();
+            if (pbuilder.prepertiesCreated)
+            {
+                foreach (var p in pbuilder.products)
+                {
+                    var outline = p.GetComponent<OutlineHighlighter>();
+                    if (outline == null)
+                        outline = p.AddComponent<OutlineHighlighter>();
+                    outline.Highlight();
+                }     
+            }
+        }
     }
 
     private string ShowLogAux(Vector3 position)
     {
-        return "Position: " + position.ToString() + "\n" +
+        return "Position: " + position.ToString(); 
             //"Rotation: " + rotation.eulerAngles.ToString() + "\n" +
-            "Point#: " + PointsNumber.Count;
+            //"Point#: " + PointsNumber.Count;
     }
 
     private bool IsPressedGrabTrigger()
@@ -102,43 +134,5 @@ public class CalibrationSetup : MonoBehaviour
         return OVRInput.Get(GrabTrigger, OVRInput.Controller.Active) <= ButtonPressThreshold;
     }
 
-    private void DrawLine(Vector3 start, Vector3 end, Color color)
-    {
-        //start = start; //+ new Vector3(0, 0, 0.03f);
-        //end = end;// + new Vector3(0, 0, 0.03f);
-        GameObject myLine = new GameObject();
-        myLine.transform.position = start;
-        LineRenderer lr = myLine.AddComponent<LineRenderer>();
-        lr.sharedMaterial = LineMaterial;
-        lr.startColor = color;
-        lr.endColor = color;
-        lr.startWidth = 0.02f;
-        lr.endWidth = 0.02f;
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-    }
 
-    private void DisplayShelves()
-    {
-        if (PointsNumber.Count / PointsByShelf != ShelvesPrefabs.Count)
-        {
-            UnityEngine.Debug.LogError("Shelves amount is not equal to points group of " + PointsByShelf);
-            return;
-        }
-            
-        foreach (var shelfPrefab in ShelvesPrefabs)
-        {
-            var newShelf = Instantiate(shelfPrefab, ShelvesInfraestructure.transform);
-            newShelf.transform.position = PointsNumber[0];
-            var normal = Vector3.Cross(PointsNumber[2] - PointsNumber[1], PointsNumber[0] - PointsNumber[1]);
-            newShelf.transform.position += normal.normalized / 5f;
-            newShelf.transform.rotation = Quaternion.LookRotation(normal, PointsNumber[2] - PointsNumber[1]);
-            //newShelf.transform.eulerAngles = new Vector3(-90, 0, 0);
-            //newShelf.transform.rotation *= Quaternion.FromToRotation(PointsNumber[0], PointsNumber[1]);
-            //newShelf.transform.rotation *= Quaternion.FromToRotation(PointsNumber[0], PointsNumber[2]);
-
-
-            Shelves.Add(newShelf);
-        }
-    }
 }

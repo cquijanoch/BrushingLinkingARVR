@@ -9,6 +9,7 @@ namespace BrushingAndLinking
     public class ProductBuilder : MonoBehaviour
     {
         public bool prepertiesCreated = false;
+        public bool transparentMaterial = false;
         //public Material material;
         public List<Transform> products;
 
@@ -20,22 +21,28 @@ namespace BrushingAndLinking
             for (int i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
-                //child.name = transform.name + child.name;
-                if (!child.name.StartsWith("Shelf") &&
-                    !child.name.EndsWith("1"))
-                    child.gameObject.SetActive(false);
-                
-                if (!child.name.StartsWith("Shelf") &&
-                    child.name.EndsWith("1"))
+                ////child.name = transform.name + child.name;
+                //if (!child.name.StartsWith("Shelf") &&
+                //    !child.name.EndsWith("1"))
+                //    child.gameObject.SetActive(false);
+
+                if (transparentMaterial)
                 {
-                    
+                    var renderer = child.GetComponent<Renderer>();
+                    renderer.materials = new Material[0];
+                }
+
+                if (!child.name.EndsWith("Background"))
+                {
                     //var renderer = child.GetComponent<Renderer>();
                     //renderer.material = material;
                     //renderer.motionVectorGenerationMode = MotionVectorGenerationMode.ForceNoMotion;
                     child.AddComponent<MeshCollider>().convex = true;
                     child.AddComponent<ColliderSurface>().enabled = false;
                     child.AddComponent<RayInteractable>();
-                    child.AddComponent<Product>();
+                    var product = child.AddComponent<Product>();
+                    //product.SetHighlightTechnique(HighlightTechnique.Outline);
+                    //product.SetHighlightState(true);
                     products.Add(child);
                 }
             }

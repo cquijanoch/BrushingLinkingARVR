@@ -38,11 +38,11 @@ namespace BrushingAndLinking
             rayInteractable.WhenSelectingInteractorViewAdded += ProductSelected;
 
             // Rename the gameobject name if it has _Pack at the end of it
-            string[] split = gameObject.name.Split('_');
-            if (split[^1].ToLower().Contains("pack"))
-            {
-                gameObject.name = string.Join("_", split.Take(split.Length - 1));
-            }
+            //string[] split = gameObject.name.Split('_');
+            //if (split[^1].ToLower().Contains("pack"))
+            //{
+            //    gameObject.name = string.Join("_", split.Take(split.Length - 1));
+            //}
         }
 
         /// <summary>
