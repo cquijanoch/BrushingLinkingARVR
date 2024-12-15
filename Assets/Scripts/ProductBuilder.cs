@@ -45,6 +45,8 @@ namespace BrushingAndLinking
                     //product.SetHighlightState(true);
                     products.Add(child);
                 }
+                else
+                    child.gameObject.SetActive(false);
             }
 
             prepertiesCreated = true;
