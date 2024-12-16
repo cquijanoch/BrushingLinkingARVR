@@ -26,14 +26,14 @@ namespace BrushingAndLinking
                 //    !child.name.EndsWith("1"))
                 //    child.gameObject.SetActive(false);
 
-                if (transparentMaterial)
-                {
-                    var renderer = child.GetComponent<Renderer>();
-                    renderer.materials = new Material[0];
-                }
-
                 if (!child.name.EndsWith("Background"))
                 {
+                    if (transparentMaterial)
+                    {
+                        var renderer = child.GetComponent<Renderer>();
+                        renderer.materials = new Material[0];
+                    }
+
                     //var renderer = child.GetComponent<Renderer>();
                     //renderer.material = material;
                     //renderer.motionVectorGenerationMode = MotionVectorGenerationMode.ForceNoMotion;
@@ -45,8 +45,8 @@ namespace BrushingAndLinking
                     //product.SetHighlightState(true);
                     products.Add(child);
                 }
-                //else
-                    //child.gameObject.SetActive(false);
+                else
+                    child.gameObject.SetActive(false);
             }
 
             prepertiesCreated = true;

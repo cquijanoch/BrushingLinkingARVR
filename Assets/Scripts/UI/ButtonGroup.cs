@@ -45,7 +45,7 @@ namespace BrushingAndLinking
             Outline outline = Buttons[id].gameObject.AddComponent<Outline>();
             outline.OutlineWidth = 10f;
             outline.OutlineColor = new Color(0.545f, 0, 0);
-            outline.OutlineMode = Outline.Mode.OutlineAll;
+            outline.OutlineMode = Outline.Mode.OutlineVisible;
             outlines.Add(outline);
         }
 

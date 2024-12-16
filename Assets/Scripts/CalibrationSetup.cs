@@ -137,7 +137,7 @@ public class CalibrationSetup : MonoBehaviour
         FinishShelvesCalibration();
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(true);
+        FloorPoints.SetActive(false);
         Infraestructure.SetActive(true);
 
         MainManager.Instance.StartDemo();

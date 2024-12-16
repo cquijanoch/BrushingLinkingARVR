@@ -298,7 +298,7 @@ public class Outline : MonoBehaviour
                 break;
 
             case Mode.OutlineVisible:
-                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
                 outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
                 outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
                 break;
