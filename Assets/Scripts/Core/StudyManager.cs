@@ -35,6 +35,7 @@ namespace BrushingAndLinking
         public TextAsset TaskInfo;
 
         [Header("Supermarket Variables")]
+        public GameObject ShelvesInfraestructure;
         public GameObject InLayoutProducts;
         public GameObject OutLayoutProducts;
 
@@ -49,6 +50,7 @@ namespace BrushingAndLinking
         public ButtonGroup YButtonGroup;
 
         [Header("Debug Parameters")]
+        public bool AutoStartDemo = false;
         public bool AutoStartUserStudy = false;
         public bool AutoStartTraining = false;
 
@@ -59,6 +61,7 @@ namespace BrushingAndLinking
         public bool StudyActive { get; private set; }
         public bool TrialActive { get; private set; }
         public bool TrainingActive { get; private set; }
+        public bool DemoActive { get; private set; }
 
         // Data variables are using rows x columns (i.e. each list element is a row, each array element is a column within that row)
         private List<string[]> participantInfoData;
@@ -105,10 +108,44 @@ namespace BrushingAndLinking
             SetProductsHidden();
             Tablet.SetOverallVisibility(false);
 
-            if (AutoStartTraining)
+            if (AutoStartDemo)
+                StartDemo();
+            else if (AutoStartTraining)
                 StartTraining();
             else if (AutoStartUserStudy)
                 StartStudy();
+        }
+
+        public void StartDemo()
+        {
+            if(StudyActive || TrainingActive || DemoActive)
+                return;
+
+            DemoActive = true;
+
+            // Change the vis data set to a training one
+            // TODO: Create training data set
+            var json = MainVis.GetVisSpecs();
+            json["data"]["url"] = "ProductData_Demo.csv";
+            MainVis.UpdateVisSpecsFromJSONNode(json);
+
+            Tablet.SetOverallVisibility(true);
+            Tablet.SetAlcoholButtonVisibility(true);
+
+            // Show only training products
+            SetProductsVisibility(ShelfLayout.Demo);
+
+            // Use the size highlighting for just the training layout
+            //foreach (Transform child in TrainingLayoutProducts.transform)
+            //child.gameObject.GetComponent<Product>().SetHighlightTechnique(HighlightTechnique.Size);
+
+            foreach (Transform shelf in ShelvesInfraestructure.transform)
+                foreach (Transform product in shelf.GetComponent<ProductBuilder>().products)
+                    product.GetComponent<Product>().SetHighlightTechnique(HighlightTechnique.Outline, IncludeLinkForEveryMode);
+
+            Tablet.SetTaskText("<b>Traning Phase</b>\nPlease practice using the brushing and linking interactions.");
+
+            SetTabletAllVisibility(true, false, false, false, false, false);
         }
 
         public void StartTraining()
@@ -449,11 +486,11 @@ namespace BrushingAndLinking
             bool outVisibility = false;
             bool tutorialVisibility = false;
             bool trainingVisibility = false;
+            bool demoVisibility = false;
 
             switch (layout)
             {
                 case ShelfLayout.In:
-                
                     inVisibility = true;
                     break;
 
@@ -470,6 +507,10 @@ namespace BrushingAndLinking
                     trainingVisibility = true;
                     break;
 
+                case ShelfLayout.Demo:
+                    demoVisibility = true;
+                    break;
+
                 case ShelfLayout.None:
                     break;
             }
@@ -478,6 +519,7 @@ namespace BrushingAndLinking
             OutLayoutProducts.SetActive(outVisibility);
             TutorialLayoutProducts.SetActive(tutorialVisibility);
             TrainingLayoutProducts.SetActive(trainingVisibility);
+            ShelvesInfraestructure.SetActive(demoVisibility);
 
             HighlightManager.Instance.ResetProductReferences();
         }

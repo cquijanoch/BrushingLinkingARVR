@@ -78,6 +78,8 @@ namespace DxR
         public virtual void ApplyChannelEncoding(ChannelEncoding channelEncoding, int markIndex)
         {
             string value = GetValueForChannelEncoding(channelEncoding, markIndex);
+            if (value == "NaN")
+                Debug.LogWarning("Here!!!");
             SetChannelValue(channelEncoding.channel, value);
         }
 
@@ -180,6 +182,8 @@ namespace DxR
         private void SetLocalPos(string value, int dim)
         {
             // TODO: Do this more robustly.
+            if (value == "NaN")
+                Debug.LogWarning("SETLOCALPOS: string: " + value + " dim: " + dim);
             float pos = float.Parse(value) * DxR.Vis.SIZE_UNIT_SCALE_FACTOR;
 
             Vector3 localPos = gameObject.transform.localPosition;

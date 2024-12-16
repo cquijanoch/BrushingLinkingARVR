@@ -4,7 +4,8 @@ namespace BrushingAndLinking
     {
         Start,
         FloorPoints,
-        Shelves
+        Shelves,
+        Demo
     }
 
     public class CalibrationModeButton : ButtonGroupChild
@@ -25,6 +26,9 @@ namespace BrushingAndLinking
                     break;
                 case CalibrationStep.Shelves:
                     CalibrationSetup.ShelvesCalibration();
+                    break;
+                case CalibrationStep.Demo:
+                    CalibrationSetup.StartDemo();
                     break;
 
             }

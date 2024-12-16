@@ -35,20 +35,11 @@ public class CalibrationSetup : MonoBehaviour
 
     [Header("UI elements")]
     public MenuUI MenuUI;
-    public GameObject LogAux;
+    public GameObject LogAux { get; private set; }
 
     private Vector3 CurrentPose;
     private OVRInput.Axis1D GrabTrigger;
     private readonly float ButtonPressThreshold = 0.5f;
-    //private readonly float TimePressThreshold = 3.5f;
-
-    private void Awake()
-    {
-        //MenuUI.SetOverallVisibility(true);
-        //Baseplate.SetActive(true);
-        //Infraestructure.SetActive(false);
-        //FloorPoints.SetActive(false);
-    }
 
     private void Start()
     {
@@ -108,6 +99,7 @@ public class CalibrationSetup : MonoBehaviour
             {
                 foreach (var p in pbuilder.products)
                 {
+                    p.GetComponent<BrushingAndLinking.Product>().highlightTechnique = HighlightTechnique.Calibration;
                     var outline = p.GetComponent<OutlineHighlighter>();
                     if (outline == null)
                         outline = p.AddComponent<OutlineHighlighter>();
@@ -115,6 +107,40 @@ public class CalibrationSetup : MonoBehaviour
                 }     
             }
         }
+    }
+
+    public void FinishShelvesCalibration()
+    {
+        for (int i = 0; i < Infraestructure.transform.childCount; i++)
+        {
+            var child = Infraestructure.transform.GetChild(i);
+            var pbuilder = child.GetComponent<ProductBuilder>();
+            if (pbuilder.prepertiesCreated)
+            {
+                foreach (var p in pbuilder.products)
+                {
+                    p.GetComponent<BrushingAndLinking.Product>().highlightTechnique = HighlightTechnique.None;
+                    var highlighter = p.GetComponent<OutlineHighlighter>();
+                    if (highlighter != null)
+                        Destroy(highlighter);
+
+                    var outline = p.GetComponent<Outline>();
+                    if (outline != null)
+                        Destroy(outline);
+                }
+            }
+        }
+    }
+
+    public void StartDemo()
+    {
+        FinishShelvesCalibration();
+        MenuUI.SetOverallVisibility(false);
+        Baseplate.SetActive(false);
+        FloorPoints.SetActive(true);
+        Infraestructure.SetActive(true);
+
+        MainManager.Instance.StartDemo();
     }
 
     private string ShowLogAux(Vector3 position)
@@ -134,5 +160,15 @@ public class CalibrationSetup : MonoBehaviour
         return OVRInput.Get(GrabTrigger, OVRInput.Controller.Active) <= ButtonPressThreshold;
     }
 
+    private void OnEnable()
+    {
+        if (LogAux != null)
+            LogAux.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        LogAux.SetActive(false);
+    }
 
 }

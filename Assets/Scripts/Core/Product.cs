@@ -144,6 +144,8 @@ namespace BrushingAndLinking
 
         private void ProductSelected(IInteractorView view)
         {
+            if (StudyManager.Instance == null) return;
+
             StudyManager.Instance.ProductSelected(this);
         }
     }

@@ -8,6 +8,7 @@ namespace BrushingAndLinking
         Link,
         //Arrow,
         Size,
+        Calibration
     }
 
     public enum LinkTechnique
@@ -22,7 +23,8 @@ namespace BrushingAndLinking
         Tutorial,
         In,
         Out,
-        Training
+        Training,
+        Demo
     }
 
     public enum TaskType
