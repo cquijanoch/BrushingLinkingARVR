@@ -1,8 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using BrushingAndLinking;
 using Oculus.Interaction.Input;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CalibrationSetup : MonoBehaviour
@@ -11,18 +11,12 @@ public class CalibrationSetup : MonoBehaviour
     public GameObject Infraestructure;
     public GameObject Baseplate;
     public GameObject FloorPoints;
+    public Transform PivotCalibration;
 
     public List<Transform> Shelves = new List<Transform>();
     public List<Transform> Points = new List<Transform>();
     public float TimeConfiguration = 0f;
 
-    //public GameObject ShelvesInfraestructure;
-
-    //[SerializeField]
-    //private Hand Hand;
-
-    //[SerializeField]
-    //private Material LineMaterial;
     [Header("Controllers elements")]
     public Controller LeftController;
     public Controller RightController;
@@ -36,10 +30,13 @@ public class CalibrationSetup : MonoBehaviour
     [Header("UI elements")]
     public MenuUI MenuUI;
     public GameObject LogAux { get; private set; }
+    //public bool ShowLog = true;
 
+    private bool visualLog = false;
     private Vector3 CurrentPose;
     private OVRInput.Axis1D GrabTrigger;
     private readonly float ButtonPressThreshold = 0.5f;
+    private bool DisplayedShelvesCalibration = false;
 
     private void Start()
     {
@@ -52,15 +49,13 @@ public class CalibrationSetup : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!visualLog) return;
+
         if (IsPressedGrabTrigger())
         {
-            //hand.GetJointPose(handJointId, out currentPose);
-            //RightController.TryGetPose(out CurrentPose);
             CurrentPose = SphereTracking.transform.position;
             var canvas = LogAux.transform.GetChild(0);
             canvas.GetComponentInChildren<TextMeshProUGUI>().text = ShowLogAux(CurrentPose);
-            //print("POSE = " + CurrentPose.position);
-            //print("ORIENTATION = " + CurrentPose.rotation);
         }
 
         if (IsUnpressedGrabTrigger())
@@ -69,78 +64,139 @@ public class CalibrationSetup : MonoBehaviour
         }
     }
 
-    public void CalibrationInit()
+    public void ShowLog(bool show)
     {
+        visualLog = show;
+        if (LogAux != null)
+            LogAux.SetActive(show);
+    }
+
+    public bool CalibrationInit()
+    {
+        if (MainManager.Instance.AppMode != ApplicationMode.None)
+            return false;
+
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(true);
         FloorPoints.SetActive(false);
-        Infraestructure.SetActive(true);
+        MainManager.Instance.GetVisibility(ApplicationMode.Demo);
+        StartCoroutine(ResetAllCues());
+
+        return true;
     }
 
-    public void ShowFloorPoints()
+    public bool ShowFloorPoints()
     {
+        StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
         FloorPoints.SetActive(true);
-        Infraestructure.SetActive(true);
+        MainManager.Instance.GetVisibility(ApplicationMode.Demo);
+
+        return true;
     }
 
-    public void ShelvesCalibration()
+    public bool ShowShelvesCalibration()
     {
+        if (MainManager.Instance.AppMode != ApplicationMode.None)
+            return false;
+
+        if (DisplayedShelvesCalibration)
+            return false;
+
+        StartCoroutine(ResetAllCues());
+
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
         FloorPoints.SetActive(true);
-        Infraestructure.SetActive(true);
-        for (int i = 0; i < Infraestructure.transform.childCount; i++)
-        {
-            var child = Infraestructure.transform.GetChild(i);
-            var pbuilder = child.GetComponent<ProductBuilder>();
-            if (pbuilder.prepertiesCreated)
-            {
-                foreach (var p in pbuilder.products)
-                {
-                    p.GetComponent<BrushingAndLinking.Product>().highlightTechnique = HighlightTechnique.Calibration;
-                    var outline = p.GetComponent<OutlineHighlighter>();
-                    if (outline == null)
-                        outline = p.AddComponent<OutlineHighlighter>();
-                    outline.Highlight();
-                }     
-            }
-        }
+        FinishShelvesCalibration();
+
+        MainManager.Instance.GetVisibility(ApplicationMode.Demo);
+
+        StartCoroutine(ShowAllCues());
+
+        return true;
     }
+
 
     public void FinishShelvesCalibration()
     {
-        for (int i = 0; i < Infraestructure.transform.childCount; i++)
-        {
-            var child = Infraestructure.transform.GetChild(i);
-            var pbuilder = child.GetComponent<ProductBuilder>();
-            if (pbuilder.prepertiesCreated)
-            {
-                foreach (var p in pbuilder.products)
-                {
-                    p.GetComponent<BrushingAndLinking.Product>().highlightTechnique = HighlightTechnique.None;
-                    var highlighter = p.GetComponent<OutlineHighlighter>();
-                    if (highlighter != null)
-                        Destroy(highlighter);
+        Infraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        Baseplate.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        Baseplate.transform.position = Baseplate.transform.position + new Vector3(0f, 0.001f, 0f);
+        Baseplate.transform.Rotate(new Vector3(90f, 0, -180));
 
-                    var outline = p.GetComponent<Outline>();
-                    if (outline != null)
-                        Destroy(outline);
-                }
-            }
-        }
+        MainManager.Instance.EnvironmnetInfraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
     }
 
-    public void StartDemo()
+    private IEnumerator ResetAllCues()
     {
-        FinishShelvesCalibration();
+        DisplayedShelvesCalibration = false;
+        HighlightManager.Instance.UnhighlightAllProducts();
+        LinkHighlighter.VisMarksChanged();
+
+        foreach (var product in MainManager.Instance.GetProductsByMode(ApplicationMode.Demo))
+            product.SetHighlightTechnique(HighlightTechnique.None);
+
+        yield return new WaitForEndOfFrame();
+    }
+
+    private IEnumerator ShowAllCues()
+    {
+        yield return new WaitForEndOfFrame();
+        foreach (var product in MainManager.Instance.GetProductsByMode(ApplicationMode.Demo))
+        {
+            product.SetHighlightTechnique(HighlightTechnique.Outline);
+            product.SetHighlightState(true);
+        }
+
+        DisplayedShelvesCalibration = true;
+    }
+
+    public bool StartDemo()
+    {
+        if (MainManager.Instance.AppMode != ApplicationMode.None)
+            return false;
+
+        StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(false);
         FloorPoints.SetActive(false);
         Infraestructure.SetActive(true);
 
         MainManager.Instance.StartDemo();
+
+        return true;
+    }
+
+    public bool StartStudy()
+    {
+        if (MainManager.Instance.AppMode == ApplicationMode.Demo)
+            return false;
+
+        StartCoroutine(ResetAllCues());
+        MenuUI.SetOverallVisibility(false);
+        Baseplate.SetActive(true);
+        FloorPoints.SetActive(false);
+        Infraestructure.SetActive(true);
+
+        if (MainManager.Instance.AppMode == ApplicationMode.Study)
+        {
+            MainManager.Instance.RestoreStudy();
+            return true;
+        }
+
+        MainManager.Instance.StartStudy();
+        return true;
+    }
+
+    public bool StopStudy()
+    {
+        if (MainManager.Instance.AppMode != ApplicationMode.Study)
+            return false;
+
+        MainManager.Instance.StopStudy();
+        return true;
     }
 
     private string ShowLogAux(Vector3 position)
@@ -162,13 +218,14 @@ public class CalibrationSetup : MonoBehaviour
 
     private void OnEnable()
     {
-        if (LogAux != null)
-            LogAux.SetActive(true);
+        ShowLog(visualLog);
+        DisplayedShelvesCalibration = false;
+        MenuUI.SetOverallVisibility(true);
     }
 
     private void OnDisable()
     {
-        LogAux.SetActive(false);
+        ShowLog(false);
     }
 
 }

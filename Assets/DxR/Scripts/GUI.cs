@@ -164,7 +164,7 @@ namespace DxR
 
             if(!marksList.Contains(guiVisSpecs["mark"].Value.ToString()))
             {
-                throw new Exception("Cannot find mark name in DxR/Resources/Marks/marks.json");
+                throw new Exception("[DebugUnity] Cannot find mark name in DxR/Resources/Marks/marks.json");
             }
 
             // Update the dropdown values:

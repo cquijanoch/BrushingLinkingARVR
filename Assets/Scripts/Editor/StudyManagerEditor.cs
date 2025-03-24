@@ -19,16 +19,18 @@ namespace BrushingAndLinking
         {
             if (Application.isPlaying)
             {
-                if (!studyManagerScript.StudyActive && !studyManagerScript.TrainingActive)
+                if (!studyManagerScript.StudyActive && !studyManagerScript.DemoActive)
                 {
                     if (GUILayout.Button("Start Study", GUILayout.Height(40)))
                     {
+                        studyManagerScript.gameObject.SetActive(true);
                         studyManagerScript.StartStudy();
                     }
 
-                    if (GUILayout.Button("Start Training"))
+                    if (GUILayout.Button("Start Demo"))
                     {
-                        studyManagerScript.StartTraining();
+                        studyManagerScript.gameObject.SetActive(true);
+                        studyManagerScript.StartDemo();
                     }
                 }
                 else
@@ -57,11 +59,11 @@ namespace BrushingAndLinking
                             }
                         }
                     }
-                    else if (studyManagerScript.TrainingActive)
+                    else if (studyManagerScript.DemoActive)
                     {
-                        if (GUILayout.Button("Stop Training"))
+                        if (GUILayout.Button("Stop Demo"))
                         {
-                            studyManagerScript.StopTraining();
+                            studyManagerScript.StopDemo();
                         }
 
                     }
@@ -84,9 +86,9 @@ namespace BrushingAndLinking
                     }
                 }
 
-                if (studyManagerScript.TrainingActive)
+                if (studyManagerScript.DemoActive)
                 {
-                    EditorGUILayout.HelpBox("Training is currently active.", MessageType.Info);
+                    EditorGUILayout.HelpBox("Demo is currently active.", MessageType.Info);
                 }
 
                 if (studyManagerScript.StudyActive && !studyManagerScript.TrialActive && !studyManagerScript.CurrentTrial.IsTrialCompleted)

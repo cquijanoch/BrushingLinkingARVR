@@ -1,13 +1,13 @@
+
 namespace BrushingAndLinking
 {
+    //[DisallowMultipleComponent]
     public class OutlineHighlighter : Highlighter
     {
         public override HighlightTechnique Mode { get { return HighlightTechnique.Outline; } }
 
         private Outline outlineScript;
         private readonly float outlineWidth = 15.0f;
-
-        //private bool isHighlighted = false;
 
         private void Awake()
         {
@@ -16,6 +16,15 @@ namespace BrushingAndLinking
             outlineScript.OutlineWidth = outlineWidth;
             outlineScript.precomputeOutline = true;
             outlineScript.OutlineMode = Outline.Mode.OutlineVisible;
+        }
+
+        private void LateUpdate()
+        {
+            if (outlineScript != null && outlineScript.enabled && GradientColor)
+            {
+                currentColor = ColorManager.Instance.CurrentColor;
+                outlineScript.UpdateColor(currentColor);
+            }
         }
 
         public override void Highlight()
@@ -43,7 +52,7 @@ namespace BrushingAndLinking
 
         public void OnDestroy()
         {
-            Destroy(outlineScript);
+           Destroy(outlineScript);
         }
     }
 }

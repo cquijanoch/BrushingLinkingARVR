@@ -5,8 +5,6 @@
 //  Created by Chris Nolet on 3/30/18.
 //  Copyright © 2018 Chris Nolet. All rights reserved.
 //
-
-using BrushingAndLinking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +85,7 @@ public class Outline : MonoBehaviour
     private Material outlineMaskMaterial;
     private Material outlineFillMaterial;
 
-    private bool needsUpdate;
+    public bool needsUpdate;
 
     void Awake()
     {
@@ -124,6 +122,10 @@ public class Outline : MonoBehaviour
 
     void OnValidate()
     {
+        //Avoiding validation in inspector mode
+        if (outlineFillMaterial == null)
+            return;
+
         // Update material properties
         needsUpdate = true;
 
@@ -138,17 +140,11 @@ public class Outline : MonoBehaviour
         if (precomputeOutline && bakeKeys.Count == 0)
             Bake();
 
-        outlineFillMaterial.SetColor("_OutlineColor", ColorManager.Instance.CurrentColor);
+        outlineFillMaterial.SetColor("_OutlineColor", OutlineColor);
     }
 
-    void Update()
+    void LateUpdate()
     {
-        if (ColorManager.Instance.GradientColor)
-        {
-            outlineFillMaterial.SetColor("_OutlineColor", ColorManager.Instance.CurrentColor);
-            needsUpdate = true;
-        }
-
         if (needsUpdate)
         {
             needsUpdate = false;
@@ -158,6 +154,7 @@ public class Outline : MonoBehaviour
 
     void OnDisable()
     {
+        needsUpdate = false;
         foreach (var renderer in renderers)
         {
             // Remove outline shaders
@@ -175,6 +172,12 @@ public class Outline : MonoBehaviour
         // Destroy material instances
         Destroy(outlineMaskMaterial);
         Destroy(outlineFillMaterial);
+    }
+
+    public void UpdateColor(Color color)
+    {
+        outlineColor = color;
+        needsUpdate = true;
     }
 
     void Bake()
@@ -288,7 +291,7 @@ public class Outline : MonoBehaviour
     void UpdateMaterialProperties()
     {
         //outlineFillMaterial.SetColor("_OutlineColor", gradient.Evaluate(gradientTime));
-
+        outlineFillMaterial.SetColor("_OutlineColor", OutlineColor);
         switch (outlineMode)
         {
             case Mode.OutlineAll:

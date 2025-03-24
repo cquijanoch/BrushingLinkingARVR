@@ -6,6 +6,7 @@ using DxR;
 using System.IO;
 using Random = System.Random;
 using Oculus.Interaction.Input;
+using System.Collections;
 
 namespace BrushingAndLinking
 {
@@ -16,16 +17,15 @@ namespace BrushingAndLinking
     /// </summary>
     public class StudyManager : MonoBehaviour
     {
-        // Singleton pattern. The StudyManager can be accessed from anywhere using StudyManager.Instance
         public static StudyManager Instance { get; private set; }
 
         [Header("User Study Parameters")]
         [Min(1)] public int CurrentParticipantID = 1;
-        public Handedness ParticipantHandedness = Handedness.Right;
-        public bool IncludeLinkForEveryMode = false;
+        private Handedness CurrentParticipantHandedness = Handedness.Right;
 
         [Header("Data Logging")]
-        public string FolderPath = "C:/Users/Benjamin/Desktop/Logs/";
+        public string FolderPath = "C:/Users/quijancr/Desktop";
+
         public bool LoggingEnabled = false;
         public bool LogInteractions = false;
         public bool NewFilePerParticipant = true;
@@ -35,15 +35,16 @@ namespace BrushingAndLinking
         public TextAsset TaskInfo;
 
         [Header("Supermarket Variables")]
-        public GameObject ShelvesInfraestructure;
-        public GameObject InLayoutProducts;
-        public GameObject OutLayoutProducts;
+        //public Transform ShelvesInfraestructure;
+        //public GameObject InLayoutProducts;
+        //public GameObject OutLayoutProducts;
+        //public GameObject EnvironmentForVR;
 
-        [Tooltip("Tutorials are the brief period of time where the participant can see the highlighting technique before the trial begins.")] 
-        public GameObject TutorialLayoutProducts;
-        
-        [Tooltip("Training is the stage before the user study begins, where the participant can try and practice with the interactions.")] 
-        public GameObject TrainingLayoutProducts;
+        //[Tooltip("Tutorials are the brief period of time where the participant can see the highlighting technique before the trial begins.")] 
+        //public GameObject TutorialLayoutProducts;
+
+        //[Tooltip("Training is the stage before the user study begins, where the participant can try and practice with the interactions.")] 
+        //public GameObject TrainingLayoutProducts;
         public Vis MainVis;
         public Tablet Tablet;
         public ButtonGroup XButtonGroup;
@@ -52,36 +53,41 @@ namespace BrushingAndLinking
         [Header("Debug Parameters")]
         public bool AutoStartDemo = false;
         public bool AutoStartUserStudy = false;
-        public bool AutoStartTraining = false;
+        //public bool AutoStartTraining = false;
 
         public List<StudyTrial> StudyTrials { get; private set; }
         public StudyTrial CurrentTrial { get { return StudyTrials[CurrentTrialIdx]; } }
         public int CurrentTrialIdx { get; private set; }
-
         public bool StudyActive { get; private set; }
         public bool TrialActive { get; private set; }
-        public bool TrainingActive { get; private set; }
+        public bool TutorialActive { get; private set; }
         public bool DemoActive { get; private set; }
+
+        public StudyMode Status = StudyMode.Pause;
 
         // Data variables are using rows x columns (i.e. each list element is a row, each array element is a column within that row)
         private List<string[]> participantInfoData;
         private List<string[]> taskInfoData;
         private string[] participantInfoDataHeaders;
         private string[] taskInfoDataHeaders;
-
-        private List<Product> studyProducts;
-
+        public List<Product> studyProducts;
         private Random randGen;
 
         // Key is the configuration of independent variables, value is a list of questions associated with it
-        private Dictionary<Tuple<ShelfLayout, TaskType>, List<StudyTask>> studyTasksDictionary;
+        private Dictionary<TaskType, List<StudyTask>> studyTasksDictionary;
+        private EnvironmentMode currentEnvironment;
 
         private StreamWriter mainDataStreamWriter;
         private StreamWriter interactionsDataStreamWriter;
         private TrialDataLog currentTrialDataLog;
         private float _trialStartTime;
         private float _trialFirstObjectSelectionTime;
+        private float _trialLastObjectSelectionTime;
         private float _trialLastTabletInteractionTime;
+        public  ViewTimeController _viewTimeController;
+
+        private DateTime _startTime;
+        private DateTime _endTime;
 
         private void Awake()
         {
@@ -95,121 +101,84 @@ namespace BrushingAndLinking
 
         private void Start()
         {
+            currentEnvironment = MainManager.Instance.EnvironmentMode;
+            Status = StudyMode.Pause;
+
             studyProducts = new List<Product>();
-            studyProducts.AddRange(InLayoutProducts.GetComponentsInChildren<Product>());
-            studyProducts.AddRange(OutLayoutProducts.GetComponentsInChildren<Product>());
-            studyProducts.AddRange(TutorialLayoutProducts.GetComponentsInChildren<Product>());
+            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Demo);
 
             // Set handedness of all interactions
-            Tablet.SetHandedness(ParticipantHandedness);
-            FilterSliderManager.Instance.SetHandedness(ParticipantHandedness);
-            BrushingOculusHandler.Instance.SetHandedness(ParticipantHandedness);
+            SetHandedness(CurrentParticipantHandedness);
 
             SetProductsHidden();
             Tablet.SetOverallVisibility(false);
 
             if (AutoStartDemo)
                 StartDemo();
-            else if (AutoStartTraining)
-                StartTraining();
             else if (AutoStartUserStudy)
                 StartStudy();
         }
 
         public void StartDemo()
         {
-            if(StudyActive || TrainingActive || DemoActive)
+            if (StudyActive || TutorialActive || DemoActive)
                 return;
 
             DemoActive = true;
 
             // Change the vis data set to a training one
-            // TODO: Create training data set
             var json = MainVis.GetVisSpecs();
-            json["data"]["url"] = "ProductData_Demo.csv";
+            json["data"]["url"] = "data_source_demo.csv";
             MainVis.UpdateVisSpecsFromJSONNode(json);
 
             Tablet.SetOverallVisibility(true);
-            Tablet.SetAlcoholButtonVisibility(true);
 
-            // Show only training products
-            SetProductsVisibility(ShelfLayout.Demo);
+            SetProductsVisibility(ApplicationMode.Demo);
+            StartCoroutine(SetHighlightTechnique(HighlightTechnique.AnimatedOutlineLink));
+            
+            Tablet.SetTaskText("<b>Demo Phase</b>\nPlease practice using the brushing and linking interactions.");
 
-            // Use the size highlighting for just the training layout
-            //foreach (Transform child in TrainingLayoutProducts.transform)
-            //child.gameObject.GetComponent<Product>().SetHighlightTechnique(HighlightTechnique.Size);
-
-            foreach (Transform shelf in ShelvesInfraestructure.transform)
-                foreach (Transform product in shelf.GetComponent<ProductBuilder>().products)
-                    product.GetComponent<Product>().SetHighlightTechnique(HighlightTechnique.Outline, IncludeLinkForEveryMode);
-
-            Tablet.SetTaskText("<b>Traning Phase</b>\nPlease practice using the brushing and linking interactions.");
-
-            SetTabletAllVisibility(true, false, false, false, false, false);
+            SetTabletAllVisibility(true, false, false, false, false, false, true);
         }
 
-        public void StartTraining()
+        public void StopDemo()
         {
-            if (StudyActive || TrainingActive)
+            if (!DemoActive)
                 return;
 
-            TrainingActive = true;
-
-            // Change the vis data set to a training one
-            // TODO: Create training data set
-            var json = MainVis.GetVisSpecs();
-            json["data"]["url"] = "ProductData_Tutorial.csv";//"ProductData_Training.csv";
-            MainVis.UpdateVisSpecsFromJSONNode(json);
-
-            Tablet.SetOverallVisibility(true);
-            Tablet.SetAlcoholButtonVisibility(true);
-
-            // Show only training products
-            SetProductsVisibility(ShelfLayout.Training);
-
-            // Use the size highlighting for just the training layout
-            //foreach (Transform child in TrainingLayoutProducts.transform)
-            //child.gameObject.GetComponent<Product>().SetHighlightTechnique(HighlightTechnique.Size);
-
-            foreach (Transform product in TrainingLayoutProducts.GetComponent<ProductBuilder>().products)
-                product.GetComponent<Product>().SetHighlightTechnique(HighlightTechnique.Size, IncludeLinkForEveryMode);
-
-            Tablet.SetTaskText("<b>Traning Phase</b>\nPlease practice using the brushing and linking interactions.");
-
-            SetTabletAllVisibility(true, false, false, false, false, false);
-        }
-
-        public void StopTraining()
-        {
-            if (!TrainingActive)
-                return;
-
+            ResetAllBrushingAndLinking();
             SetProductsHidden();
             Tablet.SetOverallVisibility(false);
-
-            TrainingActive = false;
+            DemoActive = false;
+            Status = StudyMode.Pause;
+            MainManager.Instance.AppMode = ApplicationMode.None;
+            MainManager.Instance.StartCalibration();
         }
 
         public void StartStudy()
         {
-            if (StudyActive || TrainingActive)
+            if (StudyActive || DemoActive || Status == StudyMode.Play)
                 return;
 
             StudyActive = true;
-
-            Tablet.SetOverallVisibility(true);
-
-            // Load the tasks from the data set. We do this here because we destructively manipulate the task dictionaries which this function populates
             LoadTasks(ref taskInfoData);
 
-            // Load the trials that are to be conudcted for this participant
+            if (CurrentParticipantID < 1)
+                CurrentParticipantID = 1;
             CalculateTrials(participantInfoData[CurrentParticipantID - 1]);
-            CurrentTrialIdx = 0;
 
+            CurrentTrialIdx = 0;
+            currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
+            StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
+
+
+            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
+            Tablet.SetOverallVisibility(true);
+            
             // Set initial visibility rules
             SetProductsHidden();
             // Only show the pre-tutorial stuff
-            SetTabletAllVisibility(false, true, false, false, false, true);
+            SetTabletAllVisibility(false, true, false, false, false, true, false);
 
             // Load the first trial in the study
             LoadTrial(StudyTrials[CurrentTrialIdx]);
@@ -220,6 +189,12 @@ namespace BrushingAndLinking
 
         public void NextStudyStep()
         {
+            if (DemoActive)
+            {
+                StopDemo();
+                return;
+            }
+
             if (!StudyActive)
                 return;
 
@@ -237,50 +212,46 @@ namespace BrushingAndLinking
             {
                 CurrentTrialIdx++;
 
-                // If there are no more trials left, stop the study
                 if (CurrentTrialIdx >= StudyTrials.Count)
                 {
                     StopStudy();
                     return;
                 }
-                else
-                    LoadTrial(StudyTrials[CurrentTrialIdx]);
+                
+                if (currentEnvironment != StudyTrials[CurrentTrialIdx].Environment)
+                {
+                    currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
+                    StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
+                    studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
+                }
+
+                LoadTrial(StudyTrials[CurrentTrialIdx]);
             }
             else
-                throw new Exception("Error in NextStudyStep. This should not happen.");
+                throw new Exception("[DebugUnity] Error in NextStudyStep. This should not happen.");
         }
-
 
         private void LoadTrial(StudyTrial trialToLoad)
         {
             // Change the vis data set
             var json = MainVis.GetVisSpecs();
-            switch (trialToLoad.Layout)
-            {
-                case ShelfLayout.Tutorial:
-                    json["data"]["url"] = "ProductData_Tutorial.csv";
-                    Tablet.SetAlcoholButtonVisibility(false);
-                    break;
-                case ShelfLayout.In:
-                    json["data"]["url"] = "ProductData_Tutorial.csv";//"ProductData_Inside.csv";
-                    Tablet.SetAlcoholButtonVisibility(false);
-                    break;
-                case ShelfLayout.Out:
-                    json["data"]["url"] = "ProductData_Tutorial.csv";//"ProductData_Outside.csv";
-                    Tablet.SetAlcoholButtonVisibility(true);
-                    break;
-            }
+
+            if (TaskType.Tutorial == trialToLoad.Task)
+                json["data"]["url"] = "data_source_tutorial.csv";
+            else
+                json["data"]["url"] = "data_source_study.csv";//"ProductData_Tutorial.csv";
 
             MainVis.UpdateVisSpecsFromJSONNode(json);
             ResetAllBrushingAndLinking();
             SetProductsHidden();
             SetTabletAllVisibility(
-                false,   // Always hide the vis, dimension change buttons, etc. when the trial is loaded
+                false,      // Always hide the vis, dimension change buttons, etc. when the trial is loaded
                 trialToLoad.Task == TaskType.Tutorial,   // Load the pre-tutorial controls if the trial is a tutorial
-                false,   // Don't show mid-tutorial controls
+                false,      // Don't show mid-tutorial controls
                 trialToLoad.Task != TaskType.Tutorial,   // Load the pre-trial controls if the trial is a regular trial
-                false,    // Don't load hypothesis response controls
-                false     // Don't load post-trial controls
+                false,      // Don't load hypothesis response controls
+                false,      // Don't load post-trial controls
+                false        // Don't load exit demo button
             );
 
             switch (trialToLoad.Task)
@@ -299,23 +270,26 @@ namespace BrushingAndLinking
                     break;
             }
 
-            SetHighlightTechnique(trialToLoad.Technique);
+            StartCoroutine(SetHighlightTechnique(trialToLoad.Technique));
         }
 
-        public void StartTrial()
+        private void StartTrial()
         {
-            if (CurrentTrial.IsTrialCompleted || TrialActive)
+            if (CurrentTrial.IsTrialCompleted || TrialActive || Status != StudyMode.Pause)
                 return;
 
             TrialActive = true;
-            SetProductsVisibility(CurrentTrial.Layout);
+            Status = StudyMode.Play;
+
+            SetProductsVisibility(ApplicationMode.Study);
             SetTabletAllVisibility(
-                true,    // Show vis, etc.
-                false,   // Don't show pre-tutorial controls
+                true,       // Show vis, etc.
+                false,      // Don't show pre-tutorial controls
                 CurrentTrial.Task == TaskType.Tutorial,   // Load mid-tutorial controls if the trial is a tutorial
-                false,   // Don't show pre-trial controls
+                false,      // Don't show pre-trial controls
                 CurrentTrial.Task == TaskType.Hypothesis, // Load the response buttons if it is a hypothesis task
-                false    // Don't show post-trial controls
+                false,      // Don't show post-trial controls
+                false       // Don't show demo controls
             );
 
             // Provide visual cues for the appropriate dimensions to use depending on the given task
@@ -333,28 +307,26 @@ namespace BrushingAndLinking
             {
                 currentTrialDataLog = new TrialDataLog();
                 _trialStartTime = Time.time;
+                _startTime = DateTime.Now;
                 _trialFirstObjectSelectionTime = -1;
                 _trialLastTabletInteractionTime = -1;
+                _trialLastObjectSelectionTime = -1;
+                _viewTimeController.Restart();
             }
         }
 
         public void StopTrial()
         {
-            if (!TrialActive)
+            if (!TrialActive && Status != StudyMode.Pause)
+                return;
+
+            if (Status == StudyMode.Questionnaire)
                 return;
 
             ResetAllBrushingAndLinking();
             SetProductsHidden();
             ResetHiddenProducts();
-            SetTabletAllVisibility(
-                false,   // Don't show vis, etc.
-                false,   // Don't show pre-tutorial controls
-                false,   // Don't show mid-tutorial controls
-                false,   // Don't show pre-trial controls
-                false,   // Don't show hypothesis response controls
-                true     // Show post-trial controls
-                );
-
+            
             // Hide the visual cues for the dimension buttons
             if (CurrentTrial.Task != TaskType.Tutorial)
             {
@@ -369,8 +341,10 @@ namespace BrushingAndLinking
                 currentTrialDataLog.CompletionTime = Time.time - _trialStartTime;
                 currentTrialDataLog.TimeUntilLastTabletInteraction = (_trialLastTabletInteractionTime != -1) ? _trialLastTabletInteractionTime - _trialStartTime : -1;
                 currentTrialDataLog.TimeUntilFirstObjectSelected = (_trialFirstObjectSelectionTime != -1) ? _trialFirstObjectSelectionTime - _trialStartTime : -1;
+                currentTrialDataLog.TimeUntilLastObjectSelected = (_trialLastObjectSelectionTime != -1) ? _trialLastObjectSelectionTime - _trialStartTime : -1;
                 currentTrialDataLog.CountOfSelectedObjects = currentTrialDataLog.SelectedObjectNames.Count;
-                
+                currentTrialDataLog.TimeOutTabletViewing = currentTrialDataLog.CompletionTime - _viewTimeController.timeViewing;
+
                 if (CurrentTrial.Task != TaskType.Hypothesis)
                     currentTrialDataLog.CountOfWrongSelectedObjects = currentTrialDataLog.SelectedObjectNames.Count - CurrentTrial.QuestionAnswers.Length;
                 else
@@ -378,15 +352,52 @@ namespace BrushingAndLinking
                     if (currentTrialDataLog.SelectedObjectNames.Count > 0)
                         currentTrialDataLog.CountOfWrongSelectedObjects = currentTrialDataLog.SelectedObjectNames[0].ToLower() == CurrentTrial.QuestionAnswers[0].ToLower() ? 0 : 1;
                 }
-                WriteDataLogging();
+
+                _viewTimeController.Stop();
+
+                if (Status == StudyMode.Play)
+                    WriteDataLogging();
             }
 
-            Tablet.SetTaskText("Please return to the middle of the room as indicated by the feet image. Press the button to the right when you have done so.");
+            if (Status == StudyMode.Play && TaskType.Hypothesis == CurrentTrial.Task)
+            {
+                Status = StudyMode.Questionnaire;
+                Tablet.SetTaskText("Please remove the device and wait for instructions.");
+            }
+            else
+            {
+                Tablet.SetTaskText("Please return to the middle of the room as indicated by the feet image. Press the button to the right when you have done so.");
+                TrialActive = false;
+                Status = StudyMode.Pause;
+            }
 
-            // Play a sound effect
-            //SoundEffectPlayer.Instance.PlayTrialFinished();
+            SetTabletAllVisibility(
+                false,   // Don't show vis, etc.
+                false,   // Don't show pre-tutorial controls
+                false,   // Don't show mid-tutorial controls
+                false,   // Don't show pre-trial controls
+                false,   // Don't show hypothesis response controls
+                Status != StudyMode.Questionnaire,     // Show post-trial controls
+                false
+            );
+        }
 
-            TrialActive = false;
+        /// <summary>
+        /// Once the administrator admits to continue
+        /// </summary>
+        public void ContinueQuestionnaire()
+        {
+            Status = StudyMode.Pause;
+
+            SetTabletAllVisibility(
+                false,   // Don't show vis, etc.
+                false,   // Don't show pre-tutorial controls
+                false,   // Don't show mid-tutorial controls
+                false,   // Don't show pre-trial controls
+                false,   // Don't show hypothesis response controls
+                true,     // Show post-trial controls
+                false
+            );
         }
 
         /// <summary>
@@ -407,8 +418,14 @@ namespace BrushingAndLinking
                 return;
 
             StopDataLogging();
+            ResetAllBrushingAndLinking();
+            SetProductsHidden();
+            _viewTimeController.Stop();
+
+
             Tablet.SetOverallVisibility(false);
             StudyActive = false;
+            Status = StudyMode.Pause;
         }
 
         #region Study configuration and loading methods
@@ -416,119 +433,85 @@ namespace BrushingAndLinking
         private void LoadTasks(ref List<string[]> taskInfoData)
         {
             // Create data structure
-            studyTasksDictionary = new Dictionary<Tuple<ShelfLayout, TaskType>, List<StudyTask>>();
+            studyTasksDictionary = new Dictionary<TaskType, List<StudyTask>>();
 
             foreach (string[] row in taskInfoData)
             {
-                Enum.TryParse(row[1], out ShelfLayout layout);
-                Enum.TryParse(row[0], out TaskType task);
-
-                // Get the list of study tasks (questions) associated with this configuration of independent variables, or create one if it does not yet exist
-                Tuple<ShelfLayout, TaskType> key = new (layout, task);
-                if (!studyTasksDictionary.TryGetValue(key, out List<StudyTask> taskList))
+                Enum.TryParse(row[0], out TaskType taskType);
+                if (!studyTasksDictionary.TryGetValue(taskType, out List<StudyTask> taskList))
                 {
                     taskList = new List<StudyTask>();
-                    studyTasksDictionary.Add(key, taskList);
+                    studyTasksDictionary.Add(taskType, taskList);
                 }
 
                 taskList.Add(new StudyTask(row[2], row[3], row[4].Split(';'), row[5], row[6], row[7], row[8], row[9], row[10]));
             }
         }
 
-
         private void CalculateTrials(string[] participantInfo)
         {
             StudyTrials = new List<StudyTrial>();
 
-            // Set a random seed to be that of the participant ID. This ensures randomness between participants, but consistency of task order for each individual participant.
-            // This is particularly useful if the prototype restarts mid-experiment, as the questions asked will be the same every time
             randGen = new Random(CurrentParticipantID);
 
-            // This assumes a very fixed format for the input data. This function must be edited if the input format changes
-            for (int i = 1; i < participantInfo.Length; i += 3)
-            {
-                Enum.TryParse(participantInfo[i], out HighlightTechnique technique);
-                Enum.TryParse(participantInfo[i+1], out ShelfLayout layout1);
-                Enum.TryParse(participantInfo[i+2], out ShelfLayout layout2);
+            Enum.TryParse(participantInfo[1], out EnvironmentMode environment1);
+            Enum.TryParse(participantInfo[2], out EnvironmentMode environment2);
+            Enum.TryParse(participantInfo[3], out HighlightTechnique technique1);
+            Enum.TryParse(participantInfo[4], out HighlightTechnique technique2);
+            Enum.TryParse(participantInfo[5], out HighlightTechnique technique3);
 
-                StudyTrials.Add(new StudyTrial(technique, ShelfLayout.Tutorial, TaskType.Tutorial));
-                StudyTrials.Add(CreateStudyTrialFromIndependentVariables(technique, layout1, TaskType.Single));
-                StudyTrials.Add(CreateStudyTrialFromIndependentVariables(technique, layout1, TaskType.Multiple));
-                StudyTrials.Add(CreateStudyTrialFromIndependentVariables(technique, layout1, TaskType.Hypothesis));
+            StudyTrials.Add(new StudyTrial(environment1, technique1, TaskType.Tutorial));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique1, TaskType.Single));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique1, TaskType.Multiple));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique1, TaskType.Hypothesis));
 
-                StudyTrials.Add(CreateStudyTrialFromIndependentVariables(technique, layout2, TaskType.Single));
-                StudyTrials.Add(CreateStudyTrialFromIndependentVariables(technique, layout2, TaskType.Multiple));
-                StudyTrials.Add(CreateStudyTrialFromIndependentVariables(technique, layout2, TaskType.Hypothesis));
-            }
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique2, TaskType.Single));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique2, TaskType.Multiple));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique2, TaskType.Hypothesis));
+
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique3, TaskType.Single));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique3, TaskType.Multiple));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment1, technique3, TaskType.Hypothesis));
+
+            StudyTrials.Add(new StudyTrial(environment2, technique1, TaskType.Tutorial));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique1, TaskType.Single));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique1, TaskType.Multiple));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique1, TaskType.Hypothesis));
+
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique2, TaskType.Single));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique2, TaskType.Multiple));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique2, TaskType.Hypothesis));
+
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique3, TaskType.Single));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique3, TaskType.Multiple));
+            StudyTrials.Add(CreateStudyTrialFromIndependentVariables(environment2, technique3, TaskType.Hypothesis));
 
             for (int i = 0; i < StudyTrials.Count; i++)
                 StudyTrials[i].TrialNumber = i;
         }
 
-        private StudyTrial CreateStudyTrialFromIndependentVariables(HighlightTechnique technique, ShelfLayout layout, TaskType task)
+        private StudyTrial CreateStudyTrialFromIndependentVariables(EnvironmentMode environment, HighlightTechnique technique, TaskType taskType)
         {
-            Tuple<ShelfLayout, TaskType> key = new Tuple<ShelfLayout, TaskType>(layout, task);
-            List<StudyTask> taskList = studyTasksDictionary[key];
+            List<StudyTask> taskList = studyTasksDictionary[taskType];
 
             int rand = randGen.Next(0, taskList.Count);
             StudyTask studyTask = taskList[rand];
-            StudyTrial retVal = new (technique, layout, task, studyTask);
+            StudyTrial retVal = new (environment, technique, taskType, studyTask);
 
             taskList.RemoveAt(rand);
 
             return retVal;
         }
-
-
-        private void SetProductsVisibility(ShelfLayout layout)
+        private void SetProductsVisibility(ApplicationMode visibilityMode)
         {
-            bool inVisibility = false;
-            bool outVisibility = false;
-            bool tutorialVisibility = false;
-            bool trainingVisibility = false;
-            bool demoVisibility = false;
-
-            switch (layout)
-            {
-                case ShelfLayout.In:
-                    inVisibility = true;
-                    break;
-
-                case ShelfLayout.Out:
-                    inVisibility = true;
-                    outVisibility = true;
-                    break;
-
-                case ShelfLayout.Tutorial:
-                    tutorialVisibility = true;
-                    break;
-
-                case ShelfLayout.Training:
-                    trainingVisibility = true;
-                    break;
-
-                case ShelfLayout.Demo:
-                    demoVisibility = true;
-                    break;
-
-                case ShelfLayout.None:
-                    break;
-            }
-
-            InLayoutProducts.SetActive(inVisibility);
-            OutLayoutProducts.SetActive(outVisibility);
-            TutorialLayoutProducts.SetActive(tutorialVisibility);
-            TrainingLayoutProducts.SetActive(trainingVisibility);
-            ShelvesInfraestructure.SetActive(demoVisibility);
-
+            MainManager.Instance.GetVisibility(visibilityMode);
             HighlightManager.Instance.ResetProductReferences();
         }
 
         private void SetProductsHidden()
         {
-            SetProductsVisibility(ShelfLayout.None);
+            SetProductsVisibility(ApplicationMode.None);
         }
-
         private void SetTabletContentVisibility(bool visible)
         {
             Tablet.SetContentVisibility(visible);
@@ -539,7 +522,7 @@ namespace BrushingAndLinking
             Tablet.SetControlsVisibility(tabletControls, visible);
         }
 
-        private void SetTabletAllVisibility(bool content, bool preTutorial, bool midTutorial, bool preTrial, bool hypothesisResponse, bool postTrial)
+        private void SetTabletAllVisibility(bool content, bool preTutorial, bool midTutorial, bool preTrial, bool hypothesisResponse, bool postTrial, bool demo)
         {
             SetTabletContentVisibility(content);
             SetTabletControlsVisibility(TabletControls.PreTutorial, preTutorial);
@@ -547,12 +530,15 @@ namespace BrushingAndLinking
             SetTabletControlsVisibility(TabletControls.PreTrial, preTrial);
             SetTabletControlsVisibility(TabletControls.HypothesisResponse, hypothesisResponse);
             SetTabletControlsVisibility(TabletControls.PostTrial, postTrial);
+            SetTabletControlsVisibility(TabletControls.Demo, demo);
         }
 
-        private void SetHighlightTechnique(HighlightTechnique technique)
+        private IEnumerator SetHighlightTechnique(HighlightTechnique technique)
         {
             foreach (Product product in studyProducts)
-                product.SetHighlightTechnique(technique, IncludeLinkForEveryMode);
+                product.SetHighlightTechnique(technique);
+
+            yield return new WaitForEndOfFrame();
         }
 
         private void ResetAllBrushingAndLinking()
@@ -561,7 +547,48 @@ namespace BrushingAndLinking
             HighlightManager.Instance.UnhighlightAllProducts();
             FilterSliderManager.Instance.ResetFiltering();
             LinkHighlighter.VisMarksChanged();
-            ArrowHighlighter.VisMarksChanged();
+            //ArrowHighlighter.VisMarksChanged();
+        }
+
+        public void PauseStudy()
+        {
+            TrialActive = false;
+            Status = StudyMode.Pause;
+            SaveStudyParams();
+            _viewTimeController.Stop();
+
+            XButtonGroup.UnhighlightButtons();
+            YButtonGroup.UnhighlightButtons();
+
+            ResetAllBrushingAndLinking();
+            SetProductsHidden();
+
+            Tablet.SetOverallVisibility(false);
+        }
+
+        public void RestoreStudy()
+        {
+            if (Status == StudyMode.Play)
+                return;
+
+            SetHandedness(CurrentParticipantHandedness);
+
+            currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
+            StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
+            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
+            Tablet.SetOverallVisibility(true);
+
+            SetProductsHidden();
+            LoadTrial(StudyTrials[CurrentTrialIdx]);
+
+            //InitialiseDataLogging();
+
+        }
+
+        //Save StudyParams
+        private void SaveStudyParams()
+        {
+
         }
 
         #endregion Study configuration and loading methods
@@ -606,34 +633,25 @@ namespace BrushingAndLinking
                 {
                     CurrentTrial.QuestionResponses[Array.IndexOf(CurrentTrial.QuestionAnswers, product.name)] = true;
 
-                    //SoundEffectPlayer.Instance.PlayCorrectProductSelected();
-
                     if (CurrentTrial.QuestionResponses.All(b => b))
+                    {
+                        _endTime = DateTime.Now;
+                        _trialLastObjectSelectionTime = Time.time;
+
                         StopTrial();
+                    }
+                        
                     else
                         product.SetProductVisibility(false);
                 }
-                //else
-                //{
-                //    // Play a sound effect here too
-                //    //SoundEffectPlayer.Instance.PlayIncorrectProductSelected();
-                //}
             }
         }
 
         public void ResetHiddenProducts()
         {
-            foreach (Transform child in InLayoutProducts.transform)
-            {
-                if (!child.gameObject.activeSelf)
-                    child.gameObject.SetActive(true);
-            }
-
-            foreach (Transform child in OutLayoutProducts.transform)
-            {
-                if (!child.gameObject.activeSelf)
-                    child.gameObject.SetActive(true);
-            }
+            foreach (Product prod in studyProducts)
+                if (!prod.gameObject.activeSelf)
+                    prod.gameObject.SetActive(true); 
         }
 
         public void ResponseGiven(string response)
@@ -643,11 +661,25 @@ namespace BrushingAndLinking
 
             currentTrialDataLog.SelectedObjectNames.Add(response);
 
+            if (_trialFirstObjectSelectionTime == -1)
+            {
+                _trialFirstObjectSelectionTime = Time.time;
+                _endTime = DateTime.Now;
+            }
+
             // Play a sound effect
             //SoundEffectPlayer.Instance.PlayHypothesisResponseGiven();
 
             // The trial finishes immediately when a response is given
             StopTrial();
+        }
+
+        public void SetHandedness(Handedness ParticipantHandedness)
+        {
+            CurrentParticipantHandedness = ParticipantHandedness;
+            Tablet.SetHandedness(CurrentParticipantHandedness);
+            FilterSliderManager.Instance.SetHandedness(CurrentParticipantHandedness);
+            BrushingOculusHandler.Instance.SetHandedness(CurrentParticipantHandedness);
         }
 
         #endregion Participant interaction methods
@@ -659,19 +691,20 @@ namespace BrushingAndLinking
             if (!LoggingEnabled)
                 return;
 
+#if PLATFORM_ANDROID
+            FolderPath = Application.persistentDataPath;
+#endif
             if (!FolderPath.EndsWith('/'))
                 FolderPath += '/';
 
-            // Create stream writer for the main set of aggregated data
             // Get the path, which differs if we use a new file per each participant
             string path = NewFilePerParticipant ? string.Format("{0}MainData_Participant{1}.csv", FolderPath, CurrentParticipantID) : string.Format("{0}MainData.csv", FolderPath);
-            // If the file doesn't already exist, we need to write headers to it
+
             bool writeHeaders = !File.Exists(path);
-            // Create the stream writer
             mainDataStreamWriter = new StreamWriter(path, true);
-            // Append headers if needed
             if (writeHeaders)
-                mainDataStreamWriter.WriteLine("Participant ID,Technique,FOV,Task Type, Question ID,Completion Time, Time until last selection on tablet,Time until selected first object,Count of selected Objects,Count of Wrong Selected Objects,Name of selected Objects");
+                mainDataStreamWriter.WriteLine("Participant_ID,Technique,Environment,Task_Type,Question_ID,Start_Time,EndTime,Completion_Time,Time_until_last_selection_on_tablet,Time_until_selected_first_object,Time_until_selected_last_object,Time_Out_Tablet_Viewing,Count_selected_Objects,Count_Wrong_Selected_Objects,Name_selected_Objects");
+            
             mainDataStreamWriter.AutoFlush = true;
 
             // Create stream writer for the interactions
@@ -681,26 +714,33 @@ namespace BrushingAndLinking
                 writeHeaders = !File.Exists(path);
                 interactionsDataStreamWriter = new StreamWriter(path, true);
                 if (writeHeaders)
-                    interactionsDataStreamWriter.WriteLine("Technique,FOV,Task Type,Question ID,Time,Interaction Type,Comment");
+                    interactionsDataStreamWriter.WriteLine("Technique,Environment,Task_Type,Question_ID,Time,Interaction_Type,Comment");
                 interactionsDataStreamWriter.AutoFlush = true;
             }
         }
 
         private void WriteDataLogging()
         {
-            if (!LoggingEnabled || mainDataStreamWriter == null || CurrentTrial.Task == TaskType.Tutorial)
+            if (MainManager.Instance.AppMode != ApplicationMode.Study || Status == StudyMode.Pause)
+                return;
+
+            if (!LoggingEnabled || mainDataStreamWriter == null || CurrentTrial.Task == TaskType.Tutorial || CurrentTrial.Task == TaskType.Demo)
                 return;
 
             mainDataStreamWriter.WriteLine(
-                string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14}",
                 CurrentParticipantID,
                 CurrentTrial.Technique.ToString(),
-                CurrentTrial.Layout.ToString(),
+                CurrentTrial.Environment.ToString(),
                 CurrentTrial.Task.ToString(),
                 CurrentTrial.QuestionID,
+                _startTime.ToString("dd/MM/yyyy H:mm:ss"),
+                _endTime.ToString("dd/MM/yyyy H:mm:ss"),
                 currentTrialDataLog.CompletionTime,
                 currentTrialDataLog.TimeUntilLastTabletInteraction,
                 currentTrialDataLog.TimeUntilFirstObjectSelected,
+                currentTrialDataLog.TimeUntilLastObjectSelected,
+                currentTrialDataLog.TimeOutTabletViewing,
                 currentTrialDataLog.CountOfSelectedObjects,
                 currentTrialDataLog.CountOfWrongSelectedObjects,
                 string.Join(';', currentTrialDataLog.SelectedObjectNames)
@@ -709,13 +749,16 @@ namespace BrushingAndLinking
 
         private void LogInteractionData(float time, InteractionType interactionType, string comment = "")
         {
-            if (!LoggingEnabled || interactionsDataStreamWriter == null || CurrentTrial.Task == TaskType.Tutorial)
+            if (MainManager.Instance.AppMode != ApplicationMode.Study || Status == StudyMode.Pause)
+                return;
+
+            if (!LoggingEnabled || interactionsDataStreamWriter == null || CurrentTrial.Task == TaskType.Tutorial || CurrentTrial.Task == TaskType.Demo)
                 return;
 
             interactionsDataStreamWriter.WriteLine(
                 string.Format("{0},{1},{2},{3},{4},{5},{6}",
                 CurrentTrial.Technique.ToString(),
-                CurrentTrial.Layout.ToString(),
+                CurrentTrial.Environment.ToString(),
                 CurrentTrial.Task.ToString(),
                 CurrentTrial.QuestionID,
                 time,

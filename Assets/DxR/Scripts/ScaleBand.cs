@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using SimpleJSON;
-using System;
 
 namespace DxR
 {
@@ -93,7 +90,7 @@ namespace DxR
 
             if(domainValueIndex == -1)
             {
-                throw new System.Exception("Invalid domain value " + domainValue);
+                throw new System.Exception("[DebugUnity] Invalid domain value " + domainValue);
             } else
             {
                 rangeValue = rangeValue + ((float)(domainValueIndex) * rangeStep) + (bandwidth / 2.0f);

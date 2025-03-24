@@ -6,15 +6,15 @@ namespace BrushingAndLinking
     {
         public static ColorManager Instance { get; private set; }
 
-        public Color InitColor = Color.white;
-        public Color EndColor = Color.white;
-        public Color CurrentColor = Color.white;
-        public bool GradientColor = false;
+        public Color InitColor = Constants.DefaultHighlightColor;
+        public Color EndColor = Color.yellow;
+        public Color CurrentColor = Constants.DefaultHighlightColor;
+        private bool GradientColor = false;
         public int numberGradientColorBySequence = 5;
         public float GradientTime = 0f;
 
         private Gradient Gradient = new();
-        private float TotalGradientSeconds = 5f;
+        private float TotalGradientSeconds = 3f;
         public float timeStep;
         public int currentStep = 0;
 
@@ -61,6 +61,19 @@ namespace BrushingAndLinking
                 currentStep = 0;
             }
                 
+        }
+
+        public void ActiveGradientColor(bool active)
+        {
+            GradientColor = active;
+
+            if (!active)
+                CurrentColor = Constants.DefaultHighlightColor;
+        }
+
+        public bool IsGradientActive()
+        {
+            return GradientColor;
         }
     }
 }

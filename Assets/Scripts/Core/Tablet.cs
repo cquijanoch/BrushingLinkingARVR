@@ -11,6 +11,7 @@ namespace BrushingAndLinking
         PreTrial,
         HypothesisResponse,
         PostTrial,
+        Demo,
         All
     }
 
@@ -36,11 +37,9 @@ namespace BrushingAndLinking
         public GameObject PreTrialControlsParent;
         public GameObject HypothesisResponseControlsParent;
         public GameObject PostTrialControlsParent;
+        public GameObject DemoControlsParent;
         public TextMeshPro TaskText;
         public TextMeshPro InfoText;
-
-        public GameObject AlcoholButton1;
-        public GameObject AlcoholButton2;
 
         private bool visibility = false;
 
@@ -138,6 +137,10 @@ namespace BrushingAndLinking
                     PostTrialControlsParent.SetActive(visibility);
                     return;
 
+                case TabletControls.Demo:
+                    DemoControlsParent.SetActive(visibility);
+                    return;
+
                 case TabletControls.All:
                     PostTrialControlsParent.SetActive(visibility);
                     PreTrialControlsParent.SetActive(visibility);
@@ -149,12 +152,6 @@ namespace BrushingAndLinking
         public void SetTaskText(string text)
         {
             TaskText.text = text;
-        }
-
-        public void SetAlcoholButtonVisibility(bool visibility)
-        {
-            AlcoholButton1.SetActive(visibility);
-            AlcoholButton2.SetActive(visibility);
         }
     }
 }

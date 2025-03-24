@@ -5,10 +5,18 @@ namespace BrushingAndLinking
         None,
         Color,
         Outline,
+        AnimatedOutline,
+        AnimatedOutlineLink,
         Link,
         //Arrow,
-        Size,
-        Calibration
+        //Size,
+        //Calibration
+    }
+
+    public enum EnvironmentMode
+    {
+        AR,
+        VR
     }
 
     public enum LinkTechnique
@@ -20,15 +28,31 @@ namespace BrushingAndLinking
     public enum ShelfLayout
     {
         None,
-        Tutorial,
-        In,
-        Out,
-        Training,
-        Demo
+        A,
+        B,
+        C,
+        D,
+        E
+    }
+
+    public enum ApplicationMode
+    {
+        Demo,
+        Study,
+        None
+    }
+
+    public enum StudyMode
+    {
+        Play,
+        Pause,
+        Questionnaire
     }
 
     public enum TaskType
     {
+        None,
+        Demo,
         Tutorial,
         Single,
         Multiple,

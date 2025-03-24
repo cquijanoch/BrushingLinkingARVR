@@ -1,4 +1,5 @@
 using Oculus.Interaction.Input;
+using UnityEngine;
 
 namespace BrushingAndLinking
 {
@@ -11,12 +12,19 @@ namespace BrushingAndLinking
         private readonly float ButtonPressThreshold = 0.35f;
         #endregion
 
+        public GameObject VisualsLeftRay;
+        public GameObject VisualsRightRay;
+
         public override void SetHandedness(Handedness handedness)
         {
             if (handedness == Handedness.Left)
             {
                 LeftRayInteractor.enabled = true;
+                VisualsLeftRay.SetActive(true);
+
                 RightRayInteractor.enabled = false;
+                VisualsRightRay.SetActive(false);
+
                 rayInteractorToUse = LeftRayInteractor;
                 BrushAddButton = OVRInput.Axis1D.PrimaryIndexTrigger;
                 BrushSubtractButton = OVRInput.Axis1D.PrimaryHandTrigger;
@@ -24,7 +32,11 @@ namespace BrushingAndLinking
             else
             {
                 LeftRayInteractor.enabled = false;
+                VisualsLeftRay.SetActive(false);
+
                 RightRayInteractor.enabled = true;
+                VisualsRightRay.SetActive(true);
+
                 rayInteractorToUse = RightRayInteractor;
                 BrushAddButton = OVRInput.Axis1D.SecondaryIndexTrigger;
                 BrushSubtractButton = OVRInput.Axis1D.SecondaryHandTrigger;

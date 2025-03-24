@@ -906,7 +906,7 @@ namespace SimpleJSON
                 return LoadFromStream(F);
             }
 #else
-			throw new Exception ("Can't use File IO stuff in the webplayer");
+			throw new Exception ("[DebugUnity] Can't use File IO stuff in the webplayer");
 #endif
         }
 

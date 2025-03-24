@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using Oculus.Interaction;
 using Oculus.Interaction.Surfaces;
 using UnityEngine;
@@ -25,9 +25,15 @@ namespace BrushingAndLinking
         private RayInteractable rayInteractable;
         private new Collider collider;
         private ColliderSurface colliderSurface;
+        private Dictionary<Renderer, Material[]> originalMaterials;
 
         private void Awake()
         {
+            originalMaterials = new Dictionary<Renderer, Material[]>();
+            var renderers = GetComponentsInChildren<Renderer>();
+            foreach (var renderer in renderers)
+                originalMaterials[renderer] = renderer.materials;
+
             rayInteractable = GetComponent<RayInteractable>();
             collider = GetComponent<Collider>();
             colliderSurface = GetComponent<ColliderSurface>();
@@ -37,21 +43,14 @@ namespace BrushingAndLinking
 
             rayInteractable.WhenSelectingInteractorViewAdded += ProductSelected;
 
-            // Rename the gameobject name if it has _Pack at the end of it
-            //string[] split = gameObject.name.Split('_');
-            //if (split[^1].ToLower().Contains("pack"))
-            //{
-            //    gameObject.name = string.Join("_", split.Take(split.Length - 1));
-            //}
         }
 
         /// <summary>
         /// Sets the Highlighting mode of this Product
         /// </summary>
         /// <param name="technique"></param>
-        public void SetHighlightTechnique(HighlightTechnique technique, bool includeLinks = false)
+        public void SetHighlightTechnique(HighlightTechnique technique)
         {
-            // Only proceed if the technique has changed
             if (highlightTechnique == technique)
                 return;
 
@@ -61,14 +60,34 @@ namespace BrushingAndLinking
             if (visualLinker != null)
                 Destroy(visualLinker);
 
+            bool gradientColor = false;
+
             switch (technique)
             {
                 case HighlightTechnique.Outline:
                     highlighter = gameObject.AddComponent<OutlineHighlighter>();
+                    highlighter.enabled = false;
+                    break;
+
+                case HighlightTechnique.AnimatedOutline:
+                    highlighter = gameObject.AddComponent<OutlineHighlighter>();
+                    highlighter.enabled = false;
+                    gradientColor = true;
+                    break;
+
+                case HighlightTechnique.AnimatedOutlineLink:
+                    highlighter = gameObject.AddComponent<OutlineHighlighter>();
+                    highlighter.enabled = false;
+                    visualLinkTechnique = LinkTechnique.Line;
+                    visualLinker = gameObject.AddComponent<LinkHighlighter>();
+                    visualLinker.enabled = false;
+                    gradientColor = true;
+                    
                     break;
 
                 case HighlightTechnique.Color:
                     highlighter = gameObject.AddComponent<ColorHighlighter>();
+                    highlighter.enabled = false;
                     break;
 
                 //case HighlightTechnique.Arrow:
@@ -78,27 +97,32 @@ namespace BrushingAndLinking
                 //}
 
                 case HighlightTechnique.Link:
-                    highlighter = gameObject.AddComponent<LinkHighlighter>();
-                    highlighter.enabled = false;
-                    highlighter.AlwaysVisualLink = true;
-                    highlighter.enabled = true;
+                    visualLinker = gameObject.AddComponent<LinkHighlighter>();
+                    visualLinker.enabled = false;
                     break;
 
-
-                case HighlightTechnique.Size:
-                    gameObject.GetComponent<MeshCollider>().enabled = false;
-                    highlighter = gameObject.AddComponent<SizeHighlighter>();
+                case HighlightTechnique.None:
+                    visualLinker = null;
+                    highlighter = null;
                     break;
+
+                //case HighlightTechnique.Size:
+                //    gameObject.GetComponent<MeshCollider>().enabled = false;
+                //    highlighter = gameObject.AddComponent<SizeHighlighter>();
+                //    break;
             }
 
             highlightTechnique = technique;
+            isHighlighted = false;
 
-            if (includeLinks)
-                visualLinkTechnique = LinkTechnique.Line;
+            if (highlighter != null)
+            {
+                highlighter.enabled = true;
+                highlighter.ActiveGradientColor(gradientColor);
+            }
 
-            if (includeLinks && highlightTechnique != HighlightTechnique.Link)
-                visualLinker = gameObject.AddComponent<LinkHighlighter>();
-
+            if (visualLinker != null)
+                visualLinker.enabled = true;
         }
 
         /// <summary>
@@ -115,8 +139,8 @@ namespace BrushingAndLinking
         /// <param name="value">If true, turns on the Highlight</param>
         public void SetHighlightState(bool value)
         {
-            if (highlighter == null)
-                SetHighlightTechnique(highlightTechnique);
+            //if (highlighter == null)
+            //    SetHighlightTechnique(highlightTechnique);
 
             if (highlighter == null)
                 return;
@@ -147,6 +171,21 @@ namespace BrushingAndLinking
             if (StudyManager.Instance == null) return;
 
             StudyManager.Instance.ProductSelected(this);
+        }
+
+        public void ShowOriginalMaterial(bool show, Material optionalMaterial = null)
+        {
+
+            foreach (var kvp in originalMaterials)
+            {
+                if (show)
+                    kvp.Key.materials = kvp.Value;
+                else if (optionalMaterial != null)
+                    kvp.Key.materials = new Material[1] { optionalMaterial };
+                else
+                    kvp.Key.materials = new Material[0];
+            }
+                    
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class DisableMetaPopup : MonoBehaviour
 {
     private const string TelemetryEnabledKey = "OVRTelemetry.TelemetryEnabled";
@@ -16,3 +17,4 @@ public class DisableMetaPopup : MonoBehaviour
         DisablePopup();
     }
 }
+#endif

@@ -5,6 +5,9 @@ using SimpleJSON;
 using System;
 using System.IO;
 using System.Linq;
+using UnityEngine.Networking;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace DxR
 {
@@ -18,13 +21,19 @@ namespace DxR
         /// </summary>
         public void Parse(string specsFilename, out JSONNode visSpecs)
         {
+            UnityEngine.Debug.Log("[DebugUnity] Parser.Parse :" + GetFullSpecsPath(specsFilename));
+
             visSpecs = JSON.Parse(GetStringFromFile(GetFullSpecsPath(specsFilename)));
+
+            UnityEngine.Debug.Log("[DebugUnity] Parser.Parse :" + GetStringFromFile(GetFullSpecsPath(specsFilename)));
 
             // If the specs file is empty, provide the boiler plate data and marks specs.
             if (visSpecs == null || visSpecs.ToString() == "\"\"")
             {
                 CreateEmptyTemplateSpecs(specsFilename, ref visSpecs);
             }
+
+            UnityEngine.Debug.Log("[DebugUnity] Parser.Parse::end()");
         }
 
         private void CreateEmptyTemplateSpecs(string specsFilename, ref JSONNode visSpecs)
@@ -109,13 +118,43 @@ namespace DxR
             }
             else
             {
-                throw new Exception("Cannot load file type" + ext);
+                throw new Exception("[DebugUnity] Cannot load file type" + ext);
             }
         }
 
-        public static string GetStringFromFile(string filename)
+        public string GetStringFromFile(string filename)
         {
+#if UNITY_EDITOR
+            
             return File.ReadAllText(filename);
+#elif PLATFORM_ANDROID
+           return Task.Run(async() => await GetStringFromFileAndroid(filename)).Result;
+           
+#endif
+        }
+
+        public async Task<string> GetStringFromFileAndroid(string fileName)
+        {
+            UnityWebRequest request = UnityWebRequest.Get(fileName);
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+            {
+                UnityEngine.Debug.Log("[DebugUnity] Parser.GetStringFromFileAndroid");
+                await Task.Yield();
+            }
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                UnityEngine.Debug.Log("[DebugUnity] Parser.GetStringFromFileAndroid success");
+                return request.downloadHandler.text;
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("[DebugUnity] Cannot load file at " + fileName);
+            }
+            
+            return string.Empty;
         }
 
         public static string GetFullSpecsPath(string filename)

@@ -86,7 +86,7 @@ namespace BrushingAndLinking
             }
             else
             {
-                // throw new System.Exception(string.Format("Cannot highlight Product with name {0} because it does not exist!", name));
+                // throw new System.Exception(string.Format("[DebugUnity] Cannot highlight Product with name {0} because it does not exist!", name));
             }
 
         }
@@ -102,7 +102,7 @@ namespace BrushingAndLinking
             }
             else
             {
-                // throw new System.Exception(string.Format("Cannot unhighlight Product with name {0} because it does not exist!", name));
+                // throw new System.Exception(string.Format("[DebugUnity] Cannot unhighlight Product with name {0} because it does not exist!", name));
             }
         }
 

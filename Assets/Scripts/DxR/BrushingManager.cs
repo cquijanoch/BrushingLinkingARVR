@@ -88,7 +88,7 @@ namespace BrushingAndLinking
             {
                 MainVis = Object.FindAnyObjectByType<Vis>();
                 if (MainVis == null)
-                    throw new System.Exception("There is no DxR Vis object in the scene. Brushing will only work with a DxR Vis.");
+                    throw new System.Exception("[DebugUnity] There is no DxR Vis object in the scene. Brushing will only work with a DxR Vis.");
             }
 
             if (BrushPoint == null)

@@ -162,7 +162,7 @@ namespace DxR
                     SetDirectionVector(value, 2);
                     break;
                 default:
-                    throw new System.Exception("Cannot find channel: " + channel);
+                    throw new System.Exception("[DebugUnity] Cannot find channel: " + channel);
             }
         }
 
@@ -252,25 +252,26 @@ namespace DxR
         {
             float size = float.Parse(value) * DxR.Vis.SIZE_UNIT_SCALE_FACTOR;
 
-            Vector3 renderSize = myRenderer.bounds.size;
-            Vector3 localScale = gameObject.transform.localScale;
+            gameObject.transform.localScale = new Vector3(size,
+                size, size);
+            //Vector3 renderSize = myRenderer.bounds.size;
+            //Vector3 localScale = gameObject.transform.localScale;
 
-            int maxIndex = 0;
-            float maxSize = renderSize[maxIndex];
-            for(int i = 1; i < 3; i++)
-            {
-                if(maxSize < renderSize[i])
-                {
-                    maxSize = renderSize[i];
-                    maxIndex = i;
-                }
-            }
+            //int maxIndex = 0;
+            //float maxSize = renderSize[maxIndex];
+            //for(int i = 1; i < 3; i++)
+            //{
+            //    if(maxSize < renderSize[i])
+            //    {
+            //        maxSize = renderSize[i];
+            //        maxIndex = i;
+            //    }
+            //}
 
-            float origMaxSize = renderSize[maxIndex] / localScale[maxIndex];
-            float newLocalScale = (size / origMaxSize);
-
-            gameObject.transform.localScale = new Vector3(newLocalScale,
-                newLocalScale, newLocalScale);
+            //float origMaxSize = renderSize[maxIndex] / localScale[maxIndex];
+            //float newLocalScale = (size / origMaxSize);
+            //gameObject.transform.localScale = new Vector3(newLocalScale,
+            //    newLocalScale, newLocalScale);
         }
 
         private void ScaleToMaxDim(string value, int maxDim)
@@ -293,7 +294,7 @@ namespace DxR
                 return;
 
             Color color;
-            bool colorParsed = ColorUtility.TryParseHtmlString(value, out color);
+            bool colorParsed = UnityEngine.ColorUtility.TryParseHtmlString(value, out color);
             if (!colorParsed)
                 return;
 
@@ -389,7 +390,7 @@ namespace DxR
                     }
                     else
                     {
-                        throw new Exception("Missing field in channel " + channelEncoding.channel);
+                        throw new Exception("[DebugUnity] Missing field in channel " + channelEncoding.channel);
                     }
                 }
                 // 2. The channel shouldn't specify both a value and field. If so, the field takes precedent and we remove the value
@@ -406,13 +407,13 @@ namespace DxR
                     // 3. The specified field needs to actually be in the data
                     if (!data.fieldNames.Contains(channelEncoding.field))
                     {
-                        throw new Exception("Cannot find data field " + channelEncoding.field + " in data. Please check your spelling (case sensitive).");
+                        throw new Exception("[DebugUnity] Cannot find data field " + channelEncoding.field + " in data. Please check your spelling (case sensitive).");
                     }
 
                     // 4. There needs to be a type specified for this field
                     if (channelSpecs["type"] == null)
                     {
-                        throw new Exception("Missing field data type in channel " + channelEncoding.channel);
+                        throw new Exception("[DebugUnity] Missing field data type in channel " + channelEncoding.channel);
                     }
 
                     channelEncoding.fieldDataType = channelSpecs["type"];
@@ -440,8 +441,9 @@ namespace DxR
                 if (node["type"] == null || node["field"] == null)
                 {
                     continue;
-                    //throw new Exception("Missing type and/or field for interaction specs.");
-                } else
+                    //throw new Exception("[DebugUnity] Missing type and/or field for interaction specs.");
+                }
+                else
                 {
                     if(node["domain"] == null)
                     {
@@ -451,7 +453,7 @@ namespace DxR
                         // Check validity of data field
                         if (!data.fieldNames.Contains(ch.field))
                         {
-                            throw new Exception("Cannot find data field " + ch.field + " in data (check your interaction specs). Please check your spelling (case sensitive).");
+                            throw new Exception("[DebugUnity] Cannot find data field " + ch.field + " in data (check your interaction specs). Please check your spelling (case sensitive).");
                         }
 
                         ch.channel = "color";
@@ -852,7 +854,7 @@ namespace DxR
                 scheme = "viridis";
             } else
             {
-                throw new Exception("Cannot infer color scheme for range " + range);
+                throw new Exception("[DebugUnity] Cannot infer color scheme for range " + range);
             }
 
             scaleSpecsObj.Add("scheme", new JSONString(scheme));
@@ -942,7 +944,7 @@ namespace DxR
             else if(channel == "shape")
             {
                 range.Add(new JSONString("symbol"));
-                throw new Exception("Not implemented yet.");
+                throw new Exception("[DebugUnity] Not implemented yet.");
             }
             else if(channel == "xrotation" || channel == "yrotation" || channel == "zrotation")
             {
@@ -1098,7 +1100,7 @@ namespace DxR
                 }
                 else
                 {
-                    throw new Exception("Invalid field data type: " + fieldDataType);
+                    throw new Exception("[DebugUnity] Invalid field data type: " + fieldDataType);
                 }
             }
             else if (channel == "width" || channel == "height" || channel == "depth" || channel == "length")
@@ -1121,7 +1123,7 @@ namespace DxR
                 }
                 else
                 {
-                    throw new Exception("Invalid field data type: " + fieldDataType);
+                    throw new Exception("[DebugUnity] Invalid field data type: " + fieldDataType);
                 }
             }
             else if (channel == "xrotation" || channel == "yrotation" || channel == "zrotation"
@@ -1141,7 +1143,7 @@ namespace DxR
                 }
                 else
                 {
-                    throw new Exception("Invalid field data type: " + fieldDataType);
+                    throw new Exception("[DebugUnity] Invalid field data type: " + fieldDataType);
                 }
             }
             else if (channel == "color")
@@ -1156,7 +1158,7 @@ namespace DxR
                 }
                 else
                 {
-                    throw new Exception("Invalid field data type: " + fieldDataType);
+                    throw new Exception("[DebugUnity] Invalid field data type: " + fieldDataType);
                 }
             }
             else if (channel == "shape")
@@ -1167,7 +1169,7 @@ namespace DxR
                 }
                 else
                 {
-                    throw new Exception("Invalid field data type: " + fieldDataType + " for shape channel.");
+                    throw new Exception("[DebugUnity] Invalid field data type: " + fieldDataType + " for shape channel.");
                 }
             }
             else
@@ -1246,7 +1248,7 @@ namespace DxR
 
         public bool IsHighlighted { get; private set; }
         public bool IsFiltered { get; private set; }
-        public string GameObjectName { get { return datum["Prefab name"]; } } //get { return datum["Prefab name"];
+        public string GameObjectName { get { return datum["Prefab name"]; } } //get { return datum["Prefab name"].Split("_")[0] + "_" + datum["Prefab name"].Split("_")[1];
 
         private Color baseColour = Color.white;
 

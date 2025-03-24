@@ -111,6 +111,11 @@ public class UnbundleFD : MonoBehaviour {
         colorT = ColorManager.Instance.CurrentColor;
     }
 
+    private void OnDestroy()
+    {
+        ResetBundling();
+    }
+
     public void InitUnbundling(List<KeyValuePair<GameObject, GameObject>> listGO)
     {
         InitUnbundling(listGO, true);
@@ -507,11 +512,11 @@ public class UnbundleFD : MonoBehaviour {
             RedrawTube();
         }
 
-        if (Input.GetKey(KeyCode.T))
-        {
-            this.repulsionConstant = -0.00005f;
-            this.obstacleDMin = 0.2f;
-        }
+        //if (Input.GetKey(KeyCode.T))
+        //{
+        //    this.repulsionConstant = -0.00005f;
+        //    this.obstacleDMin = 0.2f;
+        //}
     }
 
     private void LateUpdate()

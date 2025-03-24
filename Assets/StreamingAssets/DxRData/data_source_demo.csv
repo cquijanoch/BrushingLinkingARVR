@@ -1,0 +1,210 @@
+product_id,Prefab name,shelf_no,Side,product_name,en_product_name,Category,Volume (kg/l),Price (EUR),height (z),width (x),depth (y),row,position,Calories (kcal),Fat (g),Sugar (g),Protein (g),Carbohydrate (g),Alcohol (%),Lactose (Y/N),Gluten (Y/N),N/Vegan/Vegetarian,Rating (u)
+1,Sauce_1,1,D,"DELIKATO Feinschmecker Sauce 300 ml, Hollandaise","DELIKATO Gourmet Sauce 300 ml, Hollandaise",Sauce,0,1.19,0.14,0.1,0.05,5,1,405,43,0.5,0.6,3,0,N,Y,Vegetarian,0.2
+2,Sauce_2,1,D,"DELIKATO Feinschmecker Sauce 300 ml, Pfeffer-Sahne","DELIKATO Gourmet Sauce 300 ml, Pepper Cream",Sauce,0,1.09,0.14,0.1,0.05,5,2,102,8.3,0.6,0.6,6,0,N,N,Vegetarian,0.3
+3,Soup_3,1,D,"KNORR Fix, Geschnetzeltes ZÃƒÂ¼rcher Art 41 g","KNORR Fix, Sliced Zurich Art 41 g",Soup,0,1.19,0.153,0.127,0.02,1,1,518,5.5,1.1,14,4.1,0,N,N,Vegetarian,0.2
+4,Sauce_4,1,D,GUT BIO Bio-Tomaten passiert 500 g,GUT BIO Organic Tomatoes Sieved 500 g,Sauce,0,0.89,0.126,0.08,0.05,4,1,26,0.5,3.7,1.5,3.8,0,Y,Y,Vegan,0.4
+5,Pasta_5,1,D,CUCINA NOBILE LasagneblÃƒÂ¤tter 500 g,CUCINA NOBILE Lasagna Sheets 500 g,Pasta,0,1.19,0.18,0.09,0.07,3,1,350,1.3,2.1,12.2,0,0,Y,N,Vegan,0.5
+6,Pasta_6,1,D,"GUT BIO Bio-GemÃƒÂ¼sepasta 250 g, GrÃƒÂ¼ne Erbsen Penne","GUT BIO Organic Vegetable Pasta 250 g, Green Peas Penne",Pasta,0,1.55,0.179,0.097,0.06,3,2,360,2.4,3.4,21,61,0,Y,N,Vegan,0.7
+7,Rice_7,1,D,BON-RI Kochbeutel-Reis 500 g,BON-RI Cook-in Bag Rice 500 g,Rice,0,0.99,0.13,0.11,0.05,2,1,220,0.7,0.5,0.5,48,0,Y,Y,Vegan,0.1
+8,Rice_8,1,D,KÃƒÅ“CHENMEISTER Dinkel-Couscous oder -Reis 500 g,CHEF MASTER Spelt Couscous or Rice 500 g,Rice,0,2.19,0.17,0.13,0.05,2,2,349,9,12,59.5,325,0,Y,N,Vegan,0.2
+9,Sauce_9,1,D,KING'S CROWN Tomate Frito 400 g,KING'S CROWN Tomato Frito 400 g,Sauce,0,0.89,0.19,0.1,0.03,4,2,780,52,80,11.6,80,0,Y,Y,Vegan,0.2
+10,Soup_10,1,D,"LE GUSTO Suppeneinlage 130 g, Lebernockerln","LE GUSTO Soup Ingredient 130 g, liver dumplings",Soup,0,0.79,0.153,0.127,0.02,1,2,260,15,2,16,22,0,N,N,N,0.3
+11,Baking_11,2,A,"BACK FAMILY Raspelschokolade, Zartbitter 100 g","BACK FAMILY Grated Chocolate, Dark 100 g",Baking,100,1.79,0.136,0.086,0.034,5,1,504,27,48,7.1,53,0,Y,N,Vegan,3.2
+12,Baking_12,2,A,"BACK FAMILY Schoko-TrÃƒÂ¶pfchen 100 g, Vollmilch","BACK FAMILY Chocolate Drops 100 g, Milk Chocolate",Baking,100,1.29,0.136,0.086,0.034,5,2,508,27,55,8.7,55,0,N,N,N,3.2
+13,Baking_13,2,A,"BACK FAMILY Raspelschokolade, Vollmilch 100 g","BACK FAMILY Grated Chocolate, Milk Chocolate 100 g",Baking,100,1.79,0.136,0.086,0.034,5,3,587,30,64,4.6,65,0,N,N,N,3.4
+14,Baking_14,2,A,DIADEM Puderzucker 250 g,DIADEM Powdered Sugar 250 g,Baking,250,0.49,0.202,0.134,0.06,1,2,400,0,100,0,100,0,Y,Y,Vegan,3.5
+15,Baking_15,2,A,DIADEM WÃƒÂ¼rfelzucker 1 kg,DIADEM Sugar Cubes 1 kg,Baking,1000,1.69,0.142,0.212,0.045,1,1,400,0,100,0,100,0,Y,Y,Vegan,3.7
+16,Baking_16,2,A,BACK FAMILY Backmischung 500 g,BACK FAMILY Baking Mix 500 g,Baking,500,1.99,0.213,0.142,0.05,4,3,423,23,26,6.3,47,0,N,N,N,2.3
+17,Baking_17,2,A,BACK FAMILY Backmischung 350,BACK FAMILY Baking Mix 350 g,Baking,350,1.99,0.212,0.142,0.045,4,1,423,23,26,6.3,47,0,N,N,N,2.9
+18,Baking_18,2,A,BACK FAMILY Backmischung 300 g,BACK FAMILY Baking Mix 300 g,Baking,300,1.99,0.212,0.142,0.045,4,2,423,23,26,6.3,47,0,N,N,N,2.1
+19,Baking_19,2,A,BACK FAMILY Backmischung 420 g,BACK FAMILY Baking Mix 420 g,Baking,420,1.99,0.181,0.122,0.07,3,1,423,23,26,6.3,47,0,N,N,N,2
+20,Baking_20,2,A,SCHNEEKOPPE Bio Dinkelmehl 1 kg,SCHNEEKOPPE Organic Spelt Flour 1 kg,Baking,1000,1.45,0.181,0.122,0.07,2,2,343,1.2,0.6,12.5,88,0,Y,N,Vegan,3.5
+21,Baking_21,2,A,MEHL VON DAHEIM Weizenmehl 1 kg,MEHL VON DAHEIM Wheat Flour 1 kg,Baking,1000,0.99,0.181,0.122,0.07,2,1,349,1.1,1.1,11,82,0,Y,N,Vegan,2
+22,Chocolate_22,3,A,MOSER ROTH Flavour Sortiment 125 g,MOSER ROTH Flavor Assortment 125 g,Chocolate,125,1.49,0.18,0.1056,0.017,4,1,540,33,47,6.3,50,0,N,N,N,2.1
+23,Chocolate_23,3,A,HARIBO Baiser Eier 230 g,HARIBO Meringue Eggs 230 g,Chocolate,230,0.99,0.19,0.1,0.02,3,1,389,0.5,88,2,95,0,Y,Y,N,1.8
+25,Chocolate_25,3,A,CHOCEUR Mini-Tafeln 200 g,CHOCEUR Mini Bars 200 g,Chocolate,200,1.79,0.169,0.077,0.017,4,4,600,35,51,8,52,0,N,N,N,3.5
+26,Chocolate_26,3,A,BISCOTTO Schokosticks 90 g,BISCOTTO Chocolate Sticks 90 g,Chocolate,90,1.49,0.195,0.095,0.017,3,3,475,18,31,6.9,70,0,N,N,N,3.2
+27,Cookies_27,3,A,FERRERO hanuta Haselnuss-Schnitte 220 g,FERRERO Hanuta Hazelnut Slice 220 g,Cookies,220,2.79,0.205,0.105,0.056,3,4,540,31.9,42.6,7.6,54,0,N,N,N,2.1
+28,Chocolate_28,3,A,CHOCEURÃ‚Â® Sahne-Schokolade 200 g,CHOCEUR Cream Chocolate 200 g,Chocolate,200,1.79,0.1284,0.2804,0.05,4,7,580,40,39,12,39,0,N,N,N,2.3
+29,Chocolate_29,3,A,CHOCEUR Choco und Keks 300 g,CHOCEUR Chocolate and Biscuit 300 g,Chocolate,300,2.39,0.285,0.085,0.017,3,5,539,30.3,49,7.7,58,0,N,N,N,2.9
+30,Cookies_30,3,A,BISCOTTO Mini-Kekse 150 g,BISCOTTO Mini Cookies 150 g,Cookies,150,1.39,0.19,0.1,0.02,4,3,504,26,33,6.1,60,0,N,N,N,3.6
+31,Cookies_31,3,A,BISCOTTO GebÃƒÂ¤ckmischung mit Schokolade 500 g,BISCOTTO Pastry Assortment with Chocolate 500 g,Cookies,500,2.39,0.173,0.11,0.025,3,2,491,22,28,5.9,65,0,N,N,N,2.2
+32,Chocolate_32,3,A,CHOCEUR Schoko Milch Riegel 200 g,CHOCEUR Chocolate Milk Bar 200 g,Chocolate,200,1.79,0.253,0.1,0.038,4,5,574,38.3,49,7.9,49.5,0,Y,N,N,3.2
+33,Chocolate_33,3,A,CHOCEUR Coconut Kiss 150 g,CHOCEUR Coconut Kiss 150 g,Chocolate,150,1.99,0.222,0.076,0.045,4,6,500,30,43,6.3,50,0,N,N,N,2.2
+34,Cookies_34,3,A,GUT BIO Bio-Hafercookies 200 g,GUT BIO Organic Oat Cookies 200 g,Cookies,200,1.99,0.08,0.27,0.041,3,7,499,25,26,7.4,57,0,N,N,N,2.3
+35,Cookies_35,3,A,BISCOTTO American Style Cookies 175 g,BISCOTTO American Style Cookies 175 g,Cookies,175,1.29,0.222,0.076,0.045,3,6,471,23,33,5.6,61,0,N,N,N,2.4
+36,Baking_36,2,A,"BACK FAMILY Tortenguss 72 g, 6er-Packung","BACK FAMILY Cake Glaze 72 g, pack of 6",Baking,72,0.55,0.136,0.086,0.034,3,2,309,0.4,4.5,0.4,83,0,Y,Y,N,4.1
+37,Snacks_37,3,A,GUT BIO Bio-Knusperriegel 75 g,GUT BIO Organic Crunchy Bar 75 g,Snacks,75,1.19,0.2,0.2,0.065,5,3,523,31,34,18,40,0,Y,Y,Vegetarian,2.7
+38,Snacks_38,3,A,SUN SNACKS Flips 200 g,SUN SNACKS Peanut Flips 200 g,Snacks,200,0.99,0.35,0.19,0.07,1,3,483,25,1.9,13,52,0,N,N,N,3.5
+39,Snacks_39,3,A,SUN SNACKS Light-Chips 150 g,SUN SNACKS Light Chips 150 g,Snacks,150,1.49,0.2997,0.1676,0.066,2,1,485,23,2.6,7,60,0,N,N,N,3.8
+40,Snacks_40,3,A,SUN SNACKS Salzbrezeln 250 g,SUN SNACKS Salt Pretzels 250 g,Snacks,250,0.99,0.153,0.095,0.04,2,3,397,7.3,1.3,11,80,0,N,N,N,3.2
+41,Snacks_41,3,A,FARMER ErdnÃƒÂ¼sse im Teigmantel 200 g,FARMER Peanuts in a Crispy Coating 200 g,Snacks,200,1.29,0.2,0.165,0.03,1,1,531,33,9.2,16,40,0,N,N,N,2.4
+42,Snacks_42,3,A,HUOBER Prinzess Brezel 125 g,HUOBER Princess Pretzel 125 g,Snacks,125,1.59,0.2,0.165,0.03,1,2,368,6.2,1.8,9.7,86.6,0,Y,N,Vegan,3.4
+43,Snacks_43,3,A,FARMER NATURALS GeNuss-Mix 200 g,FARMER NATURALS Nut Mix 200 g,Snacks,200,3.29,0.1473,0.1473,0.0203,5,1,471,25,38,12,44,0,Y,N,Vegetarian,2.3
+44,Snacks_44,3,A,SUN SNACKS Linsen-Chips 90 g,SUN SNACKS Lentil Chips 90 g,Snacks,90,1.19,0.25,0.18,0.06,2,2,484,21,4.5,14,58,0,N,N,N,2.1
+45,Snacks_45,3,A,"NUR NUR NATUR Hafer-Riegel 105 g, Saaten","NUR NUR NATUR Oat Bar 105 g, Seeds",Snacks,105,1.79,0.2,0.2,0.065,5,4,430,16,24,11,58,0,Y,Y,Vegetarian,3.1
+46,Snacks_46,3,A,GeNuss-Mix - Schnellstart - Farmer naturals - 200g,GeNuss-Mix - Schnellstart - Farmer naturals - 200g,Snacks,200,3.29,0.1448,0.1473,0.0203,5,2,522,39,18,15,21,0,N,N,Vegetarian,2.1
+47,Snacks_47,3,A,"Knusperriegel Kirsch-Mandel Gut bio, 75g","Crunchy Bar Cherry-Almond Good organic, 75g",Snacks,75,1.79,0.2,0.2,0.065,5,5,535,39,25,22,26,0,N,N,Vegetarian,3.9
+48,Chocolate_48,3,A,MOSER ROTH Noisette Schokolade 125 g,MOSER ROTH Flavor Assortment 125 g,Chocolate,125,1.49,0.18,0.1056,0.017,4,2,585,39,44,9.2,47,0,N,N,N,2.3
+49,Coffee_49,4,A,EXPRESSI Kaffeekapseln Latte Macchiato 160 g,EXPRESSI Coffee Capsules Latte Macchiato 160 g,Coffee,160,3.29,0.167,0.101,0.058,4,1,83,3,11,3,11,0,N,N,N,2.5
+50,Coffee_50,4,A,AMAROY Mahlkaffee Classic 500 g,AMAROY Ground Coffee Classic 500 g,Coffee,500,3.99,0.1803,0.0991,0.066,3,2,4,0,0,0.2,0.3,0,N,N,N,3.4
+51,Coffee_51,4,A,AMAROY Unser Bester 500 g,AMAROY Unser Bester 500 g,Coffee,500,4.99,0.156,0.18,0.044,5,3,5,0,0,0.2,0.3,0,Y,N,N,3.8
+52,Coffee_52,4,A,AMAROY Alu Kaffeekapseln Espresso Speciale 55 g,AMAROY Aluminum Coffee Capsules Espresso Speciale 55 g,Coffee,55,1.89,0.15,0.08,0.03,4,6,9,0.18,0,0.12,1.7,0,Y,N,N,3.5
+53,Coffee_53,4,A,AMAROY Alu Kaffeekapseln Lungo Crema 55 g,AMAROY Aluminum Coffee Capsules Lungo Crema 55 g,Coffee,55,1.89,0.15,0.08,0.03,4,7,10,0.2,0,0.12,1.7,0,Y,N,N,2.7
+54,Coffee_54,4,A,AMAROY Aluminium Kaffeekapseln Espresso Ristretto 55 g,AMAROY Aluminum Coffee Capsules Espresso Ristretto 55 g,Coffee,55,1.89,0.15,0.08,0.03,4,4,9,0.2,0,0.11,1.9,0,Y,N,N,2.8
+55,Coffee_55,4,A,EXPRESSI Kaffeekapseln CaffÃƒÂ¨ Crema Decaf entkoffeiniert 125 g,EXPRESSI Coffee Capsules CaffÃ¨ Crema Decaf (decaffeinated) 125 g,Coffee,125,1.89,0.15,0.08,0.03,4,7,10,0.1,0,0.14,1.6,0,Y,N,N,3.7
+56,Coffee_56,4,A,AMAROY Express Kaffee Entkoffeiniert 100 g,AMAROY Express Decaffeinated Coffee 100 g,Coffee,100,3.79,0.153,0.065,0.065,1,3,5,0,0,0.3,0.4,0,Y,N,N,4.1
+57,ChocolateDrink_57,4,A,SCHOVIT Kakaohaltiges GetrÃƒÂ¤nkepulver 800 g,SCHOVIT Cocoa-Based Beverage Powder 800 g,ChocolateDrink,800,3.29,0.211,0.144,0.076,1,1,380,3.1,77.9,4.5,79.8,0,N,N,N,4.5
+58,Coffee_58,4,A,AMAROY Bio-Fairtrade CaffÃƒÂ¨ Crema 1 kg,AMAROY Bio-Fairtrade CaffÃ¨ Crema 1 kg,Coffee,1000,12.99,0.1803,0.0991,0.066,5,1,4,0.2,0,0.2,0.4,0,Y,N,N,3.1
+59,Coffee_59,4,A,EXPRESSI Kaffeekapseln Milch 160 g,EXPRESSI Coffee Capsules Milk 160 g,Coffee,160,3.49,0.167,0.101,0.058,1,2,69,12,0,0.35,60,0,N,N,N,4.2
+60,Coffee_60,4,A,EXPRESSI Kaffeekapseln Typ Filterkaffee 120 g,EXPRESSI Coffee Capsules Filter Coffee Type 120 g,Coffee,120,3.29,0.167,0.101,0.051,4,3,10,0.1,0,0.14,1.6,0,Y,N,N,2.9
+61,Tea_61,4,A,"WESTMINSTER GrÃƒÂ¼ner Tee Mix 44 g, Zitrone","WESTMINSTER Green Tea Mix 44 g, Lemon",Tea,44,1.19,0.066,0.16,0.074,3,1,1,0,0.1,0,0.2,0,Y,Y,Vegan,3.7
+62,Coffee_62,4,A,AMAROY Alu Kaffeekapseln Lungo Perfetto 55 g,AMAROY Aluminum Coffee Capsules Lungo Perfetto 55 g,Coffee,55,1.89,0.15,0.08,0.03,4,5,13,0.5,0,0.18,2.1,0,Y,N,N,2.7
+63,Coffee_63,4,A,"JACOBS KrÃƒÂ¶nung 0,5 kg",JACOBS KrÃ¶nung 0.5 kg,Coffee,500,7.49,0.167,0.101,0.051,3,3,2,0,0,0.3,2,0,Y,N,N,3.3
+64,Tea_64,4,A,"FrÃƒÂ¼chtetee-Mix 75 g, Multifrucht","Fruit Tea Mix 75 g, Multifrucht (multi-fruit)",Tea,75,1.39,0.066,0.16,0.074,2,2,2,0.1,0.2,0.2,0.3,0,Y,Y,Vegan,2.8
+65,Coffee_65,4,A,AMAROY Bio-Fairer Biokaffee 500 g,AMAROY Organic Fair-Trade Coffee 500 g,Coffee,500,5.99,0.156,0.18,0.044,5,2,1,0,0,0.2,0.3,0,Y,N,N,3.5
+66,Coffee_66,4,A,"AMAROY Kapseln Lungo Fortemente, 20 Kapseln","AMAROY Capsules Lungo Fortemente, 20 Capsules",Coffee,120,3.49,0.055,0.157,0.12,5,5,9,0.3,0,0.1,1.4,0,Y,N,N,2.8
+67,Tea_67,4,A,WESTCLIFF KrÃƒÂ¤uter-Vielfalt 50 g,WESTCLIFF Herb Variety 50 g,Tea,50,1.19,0.138,0.082,0.071,2,4,1,0,0.1,0,0.2,0,Y,Y,Vegan,3.2
+68,Coffee_68,4,A,"AMAROY Kapseln Espresso Supremo, 20 Kapseln","AMAROY Capsules Espresso Supremo, 20 Capsules",Coffee,120,3.49,0.055,0.157,0.12,5,4,11,0.1,0,0,1.5,0,Y,N,N,3.3
+69,Tea_69,4,A,"WESTCLIFF KrÃƒÂ¤uter-Vielfalt 37,5 g",WESTCLIFF Herb Variety 37.5 g,Tea,37.5,1.19,0.138,0.082,0.071,2,3,1,0,0.1,0,0.2,0,Y,Y,Vegan,2.1
+70,Tea_70,4,A,"FrÃƒÂ¼chtetee-Mix 75 g, Waldbeere","Fruit Tea Mix 75 g, Waldbeere (wild berry)",Tea,75,1.39,0.066,0.16,0.074,2,1,2,0,0.2,0,0.6,0,Y,Y,Vegan,2.4
+71,Cereals_71,5,B,IronMaxx Fitness Cereal - Chocolate 2 kg Bag | Vegan High Protein Cereal with Crunchies | Reduced Sugar Content & High Fibre,IronMaxx Fitness Cereal - Chocolate 2 kg Bag | Vegan High Protein Cereal with Crunchies | Reduced Sugar Content & High Fibre,Cereals,2000,20.8,0.25,0.2,0.07,1,2,113,15,13,26,27,0,Y,N,Vegetarian,2.8
+72,Cereals_72,5,B,"Kellogg's Smacks Breakfast Cereals (6 x 400g) - Crispy Sweet Puffed Wheat - Made from Natural Grains, No Artificial Colours and Flavours","Kellogg's Smacks Breakfast Cereals (6 x 400g) - Crispy Sweet Puffed Wheat - Made from Natural Grains, No Artificial Colours and Flavours",Cereals,400,23.59,0.29,0.18,0.08,2,2,100,1.6,34,7.1,81,0,Y,N,N,3.8
+73,Cereals_73,5,B,"Ovomaltine Crunchy Muesli - Chocolate Crisp Muesli with Unique Cereal Blend and Ovomaltine - Chocolate Cereal with Valuable Vitamins, Fibre and Minerals (1 x 450 g)","Ovomaltine Crunchy Muesli - Chocolate Crisp Muesli with Unique Cereal Blend and Ovomaltine - Chocolate Cereal with Valuable Vitamins, Fibre and Minerals (1 x 450 g)",Cereals,450,4.94,0.16,0.108,0.014,3,2,400,9.3,18,9.4,68,0,N,N,N,2.8
+74,Cereals_74,5,B,"RUF Porridge Bircher, with Whole Grain Oats, Chopped Hazelnuts and Aromatic Apple and Pear Pieces, 1 x 65 g Bag, Pack of 1","RUF Porridge Bircher, with Whole Grain Oats, Chopped Hazelnuts and Aromatic Apple and Pear Pieces, 1 x 65 g Bag, Pack of 1",Cereals,65,0.89,0.16,0.11,0.01,3,1,116,1.9,7.9,4.3,20,0,Y,N,N,2.5
+75,Cereals_75,5,B,IronMaxx Protein MÃ¼sli - Cookies & Chocolate 2kg Beutel | Veganes High Protein MÃ¼sli laktosefrei | Reduzierter Zuckergehalt & Low Carb,IronMaxx Protein MÃ¼sli - Cookies & Chocolate 2kg Beutel | Veganes High Protein MÃ¼sli laktosefrei | Reduzierter Zuckergehalt & Low Carb,Cereals,2000,24.99,0.25,0.2,0.07,1,1,122,15,11,45,21,0,Y,N,Vegetarian,2.9
+76,Cereals_76,5,B,"Alete bewusst Evening Milk Cereal Meal Multigrain, from the 10th Month, Ready-to-Drink Baby Food with Whole Grain Oats, Replacement for Baby Porridge, Warm or Cold Drink, 400 ml (2 x 200 ml)","Alete bewusst Evening Milk Cereal Meal Multigrain, from the 10th Month, Ready-to-Drink Baby Food with Whole Grain Oats, Replacement for Baby Porridge, Warm or Cold Drink, 400 ml (2 x 200 ml)",Cereals,400,1.75,0.09,0.13,0.04,5,4,86,2.9,3.9,2.6,12.2,0,N,N,N,3.7
+77,Cereals_77,5,B,"Hipp Organic Berry Muesli, Pack of 6 (6 x 200 g)","Hipp Organic Berry Muesli, Pack of 6 (6 x 200 g)",Cereals,1200,16.5,0.29,0.21,0.1,2,3,57,3.6,11,11,65,0,N,N,Vegan,2.5
+78,Cereals_78,5,B,"RUF Porridge Chocolate Brownie, with Brownie Bites and Chocolate Pieces, Pure Brownie Enjoyment in a Muesli Bowl for All Chocoholics, 1 x 65 g Bag","RUF Porridge Chocolate Brownie, with Brownie Bites and Chocolate Pieces, Pure Brownie Enjoyment in a Muesli Bowl for All Chocoholics, 1 x 65 g Bag",Cereals,65,0.89,0.16,0.11,0.01,4,1,404,12,18,12,60,0,Y,N,N,2.2
+79,Cereals_79,5,B,"Manner Crispy Musli Cereal, 1 x 500 g","Manner Crispy Musli Cereal, 1 x 500 g",Cereals,500,10.19,0.22,0.137,0.05,3,4,124,16,14,8.4,55,0,N,N,N,2.5
+80,Cereals_80,5,B,"RUF Pudding Oats Caramel, Harmonious Mix of Caramel Pudding and Whole Grain Oatmeal, No Sugar, Sweetened with Agave Syrup, 1 x 64 g Bag","RUF Pudding Oats Caramel, Harmonious Mix of Caramel Pudding and Whole Grain Oatmeal, No Sugar, Sweetened with Agave Syrup, 1 x 64 g Bag",Cereals,64,0.99,0.16,0.11,0.01,4,2,410,14,12,12,56,0,Y,N,N,3.7
+81,Cereals_81,5,B,"RUF Natural topping with raspberries, cherries, rice crisps, no artificial additives, fruit mix for porridge and pastries, gluten-free, vegan, 15 g","RUF Natural topping with raspberries, cherries, rice crisps, no artificial additives, fruit mix for porridge and pastries, gluten-free, vegan, 15 g",Cereals,15,1.49,0.16,0.11,0.01,4,4,60,2,5,1,8,0,Y,Y,Vegan,4.2
+82,Cereals_82,5,B,KNUSPERONE Honey Wheat 750 g,KNUSPERONE Honey Wheat 750 g,Cereals,750,2.99,0.23,0.15,0.1,2,1,385,1.9,33,10,78,0,Y,N,N,3.7
+83,Cereals_83,5,B,KNUSPERONE Nougat Bits 750 g,KNUSPERONE Nougat Bits 750 g,Cereals,750,2.79,0.23,0.15,0.05,5,1,482,22,27,6.7,62,0,N,N,N,2.1
+84,Cereals_84,5,B,"KNUSPERONE Zimt Chips 0,75 kg",KNUSPERONE Zimt Chips 0.75 kg,Cereals,750,2.79,0.23,0.15,0.05,5,2,430,11,23,6.4,74,0,N,N,N,3.9
+85,Cereals_85,5,B,"KNUSPERONE Schoko Krunchy 0,75 kg",KNUSPERONE Schoko Krunchy 0.75 kg,Cereals,750,2.79,0.23,0.15,0.05,5,3,420,15,18,4,60,0,N,N,N,3.8
+86,Cereals_86,5,B,"GOLDEN BRIDGE Premium MÃƒÂ¼sli 500 g, Honig Nuss","GOLDEN BRIDGE Premium Muesli 500 g, Honig Nuss",Cereals,500,2.59,0.25,0.2,0.07,1,4,400,11,19,6,60,0,N,N,N,3.9
+87,Bread_87,6,B,"GOLDÃƒâ€žHREN BaguettebrÃƒÂ¶tchen 0,3 kg",GOLDÃ„HREN Baguettebroetchen 0.3 kg,Bread,300,0.69,0.27,0.1,0.05,1,3,250,3,2,7,40,0,N,N,N,3.5
+88,Cereals_88,5,B,"GOLDEN BRIDGE Premium MÃƒÂ¼sli 500 g, FrÃƒÂ¼chte & NÃƒÂ¼sse","GOLDEN BRIDGE Premium Muesli 500 g, Fruichte & Nuesse",Cereals,500,2.59,0.25,0.2,0.07,1,3,300,10,2,6,40,0,N,N,N,2.1
+89,Cereals_89,5,B,"GOLDEN BRIDGE Premium MÃƒÂ¼sli 500 g, Triple choc","GOLDEN BRIDGE Premium Muesli 500 g, Triple choc",Cereals,500,2.59,0.25,0.2,0.07,2,4,350,7,10,8,60,0,N,N,N,2.5
+90,Bread_90,6,B,"GOLDÃƒâ€žHREN RosenbrÃƒÂ¶tchen 0,51 kg, Weizen","GOLDÃ„HREN Rosenbroetchen 0.51 kg, Weizen",Bread,510,1.59,0.26,0.2,0.05,2,2,300,8,4,4,45,0,N,N,N,3.3
+91,Bread_91,6,B,"GOLDÃƒâ€žHREN RosenbrÃƒÂ¶tchen 0,51 kg, Sonnenblume-Leinsamen","GOLDÃ„HREN Rosenbroetchen 0.51 kg, Sonnenblume-Leinsamen",Bread,510,1.59,0.26,0.21,0.05,2,1,280,10,2,5,40,0,N,N,N,2.9
+92,Bread_92,6,B,GOLDÃƒâ€žHREN Laugenbrezeln 868 g,GOLDÃ„HREN Laugenbrezeln 868 g,Bread,868,2.19,0.21,0.28,0.05,4,1,250,10,15,3,35,0,N,N,N,2.1
+93,Bread_93,6,B,GUT BIO Das Pure 300 g,GUT BIO Das Pure 300 g,Bread,300,1.95,0.15,0.21,0.05,3,1,240,9,10,6,30,0,Y,Y,Vegan,1.7
+94,Bread_94,6,B,GOLDÃƒâ€žHREN Protein-Wraps 320 g,GOLDÃ„HREN Protein-Wraps 320 g,Bread,320,1.69,0.2546,0.2566,0.05,1,1,350,10,30,8,45,0,N,N,N,2.9
+95,Bread_95,6,B,"GUT BIO Bio-LandbrÃƒÂ¶tchen 280 g, Kernig","GUT BIO Bio-Landbroetchen 280 g, Kernig",Bread,280,1.19,0.24,0.23,0.05,5,2,350,7,24,5,60,0,Y,Y,Vegetarian,3.6
+96,Bread_96,6,B,"GUT BIO Bio-LandbrÃƒÂ¶tchen 250 g, Weizen","GUT BIO Bio-Landbroetchen 250 g, Weizen",Bread,250,1.19,0.24,0.23,0.05,5,1,200,2,0,7,30,0,Y,N,Vegetarian,3.9
+97,Bread_97,6,B,"GOLDÃƒâ€žHREN ToastbrÃƒÂ¶tchen 335 g, Mehrkorn","GOLDÃ„HREN Toastbroetchen 335 g, Mehrkorn",Bread,335,0.99,0.13,0.27,0.05,1,2,100,3,0,1,10,0,Y,N,N,3.6
+98,Bread_98,6,B,GOLDÃƒâ€žHREN Zwieback 450 g,GOLDÃ„HREN Zwieback 450 g,Bread,450,2.19,0.2468,0.2146,0.05,3,2,60,2,5,1,8,0,Y,Y,Vegan,1.2
+99,Cereals_99,5,B,1001-Nacht Porridge Unsweetened,1001-Nacht Porridge Unsweetened,Cereals,500,7.27,0.2,0.11,0.055,3,3,110,3.5,1,3,18,0,Y,N,N,2.4
+100,Cereals_100,5,B,"RUF Porridge Chocolate Banana, Instant Oatmeal with Whole Grain Oatmeal, Cocoa Powder and Banana Chips in Practical Portion Bag, 1 x 65 g Bag","RUF Porridge Chocolate Banana, Instant Oatmeal with Whole Grain Oatmeal, Cocoa Powder and Banana Chips in Practical Portion Bag, 1 x 65 g Bag",Cereals,65,0.79,0.16,0.11,0.01,4,3,380,15,12,6,60,0,N,N,N,2.7
+102,RawMeat_102,12,E,"GUT BIO Bio-Hackfleisch, gemischt 400 g","GUT BIO Bio-Minced meat, mixed 400 g",RawMeat,0,2.99,0.2586,0.1978,0.05,3,1,250,15,0,30,0,0,Y,N,N,0.2
+106,Pizza_106,11,E,PIZZâ€™AH Pizzeria Pizza Spinaci 780 g,PIZZ'AH Pizzeria Pizza Spinaci 780 g,Pizza,0,3.59,0.2548,0.2572,0.05,3,2,600,20,4,20,80,0,N,N,N,0.4
+108,MeatSnacks_108,10,E,GUT DREI EICHEN Kaiserbraten 150 g,GUT DREI EICHEN Kaiserbraten 150 g,MeatSnacks,0,2.39,0.2738,0.2306,0.05,5,3,350,20,0,30,20,0,N,N,N,0.5
+109,Pizza_109,11,E,"PIZZÂ´AH Baguette 500 g, Salami","PIZZ'AH Baguette 500 g, Salami",Pizza,0,1.99,0.269,0.1686,0.05,2,1,350,20,1,25,15,0,N,N,N,0.7
+111,MeatSnacks_111,10,E,JACK'S FARM HÃ¤hnchen Mini Schnitzel 500 g,JACK'S FARM Chicken Mini Schnitzel 500 g,MeatSnacks,0,3.79,0.2322,0.283,0.05,3,1,300,10,2,30,5,0,N,N,N,0.1
+115,RawMeat_115,12,E,ALMARE SEAFOOD RÃ¤ucherlachs 200 g,ALMARE SEAFOOD Raucherlachs 200 g,RawMeat,0,4.79,0.2282,0.2058,0.05,2,1,300,12,2,40,8,0,N,N,N,0.2
+117,RawMeat_117,12,E,"HERTA Finesse 100 g, Schinken","HERTA Finesse 100 g, Schinken",RawMeat,0,2.49,0.2782,0.1722,0.05,4,1,250,13,1,15,5,0,N,N,N,0.2
+118,MeatSnacks_118,10,E,GUT BIO Bio-Mini Berner WÃ¼rstchen 187 g,GUT BIO Bio-Mini Berner Wurstchen 187 g,MeatSnacks,0,2.99,0.263,0.1878,0.05,5,1,380,25,5,25,15,0,N,N,N,0.3
+119,MeatSnacks_119,10,E,"LANDBECK Saletti 5er Kette 125 g, Klassik","LANDBECK Saletti 5er Kette 125 g, Klassik",MeatSnacks,0,2.39,0.2038,0.2806,0.05,4,1,500,30,3,40,35,0,N,N,N,0.2
+120,MeatSnacks_120,10,E,"LANDBECK Salametti 100 g, Pikant","LANDBECK Salametti 100 g, Pikant",MeatSnacks,0,1.99,0.268,0.1612,0.05,5,2,150,6,0,17,0,0,N,N,N,0.4
+121,RawMeat_121,12,E,ALMARE SEAFOOD Sockeye Wildlachs 150 g,ALMARE SEAFOOD Sockeye Wildlachs 150 g,RawMeat,0,4.89,0.2762,0.239,0.05,1,1,450,10,3,20,50,0,N,N,N,0.5
+122,MeatSnacks_122,10,E,"UNSER FRANKEN FrÃ¤nkische Bauernbratuwrst, Klassik 240 g","UNSER FRANKEN FrÃ¤nkische Bauernbratwurst, Klassik 240 g",MeatSnacks,0,2.99,0.2726,0.197,0.05,2,1,320,24,0.5,20,4,0,N,N,N,0.7
+123,MeatSnacks_123,10,E,"KÃ„FER Spare Ribs 600 g, Honey BBQ","KAEFER Spare Ribs 600 g, Honey BBQ",MeatSnacks,0,7.99,0.0938,0.2786,0.05,1,1,500,35,10,30,45,0,N,N,N,0.1
+124,RawMeat_124,12,E,"MEINE METZGEREI Frische HÃ¤hnchen-Schenkel mit RÃ¼ckenstÃ¼ck 1,1 kg",MEINE METZGEREI Frische HÃ¤hnchen-Schenkel mit RÃ¼ckenstÃ¼ck 1.1 kg,RawMeat,0,4.99,0.261,0.1678,0.05,3,2,700,45,0,80,0,0,N,N,N,0.2
+125,MeatSnacks_125,10,E,UNSER BAYERN MÃ¼nchner WeiÃŸwurst 300 g,UNSER BAYERN MÃ¼nchner WeiÃŸwurst 300 g,MeatSnacks,0,2.99,0.263,0.1642,0.05,4,2,250,20,1,15,15,0,N,N,N,0.2
+126,Pizza_126,11,E,AMERICAN Macâ€™nâ€™Cheese-Pizza 550 g,AMERICAN Macâ€™nâ€™Cheese-Pizza 550 g,Pizza,0,3.79,0.2728,0.2692,0.05,3,1,900,35,8,25,95,0,N,N,N,0.3
+127,MeatSnacks_127,10,E,IGLO Filegro Ofen-Backfisch 240 g,IGLO Filegro Ofen-Backfisch 240 g,MeatSnacks,0,3.99,0.2642,0.1954,0.05,3,2,360,10,2,25,45,0,N,N,N,0.2
+128,MeatSnacks_128,10,E,BBQ Grillfackeln 360 g,BBQ Grillfackeln 360 g,MeatSnacks,0,3.99,0.2558,0.1554,0.05,2,2,500,25,3,40,45,0,N,N,N,0.4
+130,RawMeat_130,12,E,GOLDEN SEAFOOD Lachsfilets 250 g,GOLDEN SEAFOOD Salmon Fillets 250 g,RawMeat,0,5.49,0.1908,0.284,0.05,5,2,150,8,0,15,0,0,N,N,N,0.5
+155,Pizza_155,11,E,ORIGINAL WAGNER Piccolinis Brezel KÃ¤se 234 g,ORIGINAL WAGNER Piccolinis Pretzel Cheese 234 g,Pizza,0,1.89,0.2724,0.2816,0.05,4,1,300,15,2,25,35,0,N,N,N,0.7
+156,Pizza_156,11,E,"PIZZâ€˜AH Baguette 500 g, Champignons","PIZZ'AH Baguette 500 g, Mushrooms",Pizza,0,1.99,0.2752,0.1672,0.05,1,1,400,12,2,20,40,0,N,N,N,0.1
+157,Pizza_157,11,E,"PIZZâ€˜AH Baguette 500 g, Diavolo","PIZZ'AH Baguette 500 g, Diavolo",Pizza,0,1.99,0.2736,0.168,0.05,2,2,500,18,3,30,60,0,N,N,N,0.2
+158,Pizza_158,11,E,WAGNER Steinofen Pizza 320 g,WAGNER Stone Oven Pizza 320 g,Pizza,0,3.39,0.2724,0.2816,0.05,5,1,500,20,4,30,55,0,N,N,N,0.2
+159,Pizza_159,11,E,PIZZâ€™AH Gigante Pizza 485 g,PIZZ'AH Gigante Pizza 485 g,Pizza,0,3.49,0.2812,0.28,0.05,5,2,220,60,8,20,120,0,N,N,N,0.3
+160,Pizza_160,11,E,PIZZâ€™AH Gigante Pizza 480 g,PIZZ'AH Gigante Pizza 480 g,Pizza,0,3.49,0.2792,0.28,0.05,4,2,220,60,8,20,120,0,N,N,N,0.2
+166,Crackers_166,7,B,SUN SNACKS Cracker-SpaÃŸ 200 g,SUN SNACKS Cracker Fun 200 g,Crackers,200,1.39,0.2444,0.1896,0.05,5,1,480,37,4,6,85,0,N,N,N,3.5
+167,Crackers_167,7,B,TUC Original,TUC Original,Crackers,300,2.99,0.2016,0.148,0.05,2,1,500,39,3,7,82,0,N,N,N,3.6
+168,Crackers_168,7,B,SUN SNACKS Cracker 3er-Packung,SUN SNACKS Crackers 3-Pack,Crackers,75,1.39,0.0968,0.162,0.05,5,2,590,40,1,7,86,0,N,N,N,2.2
+169,Crackers_169,7,B,TUC Baked Crisp,TUC Baked Crisp,Crackers,100,1.49,0.1996,0.1176,0.05,4,2,595,41,4,7,72,0,N,N,N,2.9
+170,Crackers_170,7,B,TUC Baked Bites,TUC Baked Bites,Crackers,100,1.49,0.1988,0.1718,0.05,4,1,600,43,4,15,90,0,N,N,N,3.5
+171,Toast_171,7,B,GOLDÃ„HREN Bauernschwarzbrot,GOLDÃ„HREN Farmersâ€™ Black Bread,Toast,500,0.99,0.156,0.167,0.05,3,1,500,18,2,8,65,0,N,N,N,3
+172,Toast_172,7,B,GOLDÃ„HREN Sandwichtoast,GOLDÃ„HREN Sandwich Toast,Toast,750,1.29,0.1312,0.077,0.05,3,2,585,17,2,7,70,0,N,N,N,2.5
+173,Toast_173,7,B,GOLDÃ„HREN Kleiner Sandwich Toast Dinkel,GOLDÃ„HREN Small Spelt Sandwich Toast,Toast,375,1.19,0.118,0.1054,0.05,1,1,450,12,1,8,65,0,N,N,N,4.4
+174,Toast_174,7,B,GOLDÃ„HREN Vollkorn-Toast,GOLDÃ„HREN Whole Grain Toast,Toast,500,0.99,0.0522,0.1298,0.05,2,3,610,23,2,7,70,0,N,N,N,3.2
+175,Toast_175,7,B,GOLDÃ„HREN KÃ¶rner Balance Sandwich,GOLDÃ„HREN Seeded Balance Sandwich,Toast,750,1.79,0.1426,0.067,0.05,2,4,120,0.5,0.1,0,20,0,Y,N,N,2.8
+176,Toast_176,7,B,GOLDÃ„HREN Brotbackmischung,GOLDÃ„HREN Bread Mix,Toast,1000,1.29,0.1978,0.0956,0.05,3,3,350,3.5,0.5,9,82,0,N,N,N,2.6
+177,Crackers_177,7,B,LORENZ Saltletts,LORENZ Saltletts,Crackers,100,1.11,0.1864,0.1332,0.05,2,2,467,21,1,13,52,0,N,N,N,3.2
+178,Cleaning_178,18,C,"OPTIWISCH SchwammtÃƒÂ¼cher, 5er-Set","OPTIWISCH Sponge Cloths, Pack of 5",Cleaning,0,0.95,0.21,0.19,0.05,3,1,0,0,0,0,0,0,N,N,N,0.1
+179,Cleaning_179,18,C,"TANDIL Kalkstopptabs, 51 StÃƒÂ¼ck","TANDIL Limescale Prevention Tablets, Pack of 51",Cleaning,0,2.75,0.22,0.28,0.05,1,1,0,0,0,0,0,0,N,N,N,0.1
+181,Cleaning_181,18,C,"Classic Vollwaschmittel, 2x 5,2 kg","Classic Universal Detergent, 2x 5.2 kg",Cleaning,0,21.9,0.26,0.23,0.05,1,3,0,0,0,0,0,0,N,N,N,0.1
+182,Cleaning_182,18,C,"Classic Colorwaschmittel, 2x 5,2 kg","Classic Color Detergent, 2x 5.2 kg",Cleaning,0,21.9,0.26,0.23,0.05,1,2,0,0,0,0,0,0,N,N,N,0.1
+183,Cleaning_183,18,C,"Waschmittel Pulver Sensitiv Aloe Vera, 50 Wl","Sensitive Aloe Vera Powder Detergent, 50 washes",Cleaning,0,9.65,0.21,0.15,0.05,3,2,0,0,0,0,0,0,N,N,N,0.1
+185,Cleaning_185,18,C,"WeiÃŸer Riese Vollwaschmittel Pulver, 50 Wl","WeiÃŸer Riese Universal Powder Detergent, 50 washes",Cleaning,0,8.45,0.22,0.17,0.05,1,4,0,0,0,0,0,0,N,N,N,0.1
+186,Kitchen_186,18,C,Gefrierbeutel 1/3/6l,Freezer Bags 1/3/6 l,Kitchen,0,1.25,0.08,0.28,0.05,4,1,0,0,0,0,0,0,N,N,N,0.1
+187,Kitchen_187,18,C,"Profissimo Backpapier Zuschnitte, 30 St","Profissimo Baking Paper Cuts, 30 pcs",Kitchen,0,0.95,0.0214,0.24,0.05,5,1,0,0,0,0,0,0,N,N,N,0.1
+188,Cleaning_188,18,C,"Denkmit Vollwaschmittel Pulver, 80 Wl","Denkmit Universal Powder Detergent, 80 washes",Cleaning,0,10.95,0.1974,0.1338,0.05,5,6,0,0,0,0,0,0,N,N,N,0.1
+189,Cleaning_189,18,C,WC FRISCH Kraft Aktiv 2 x 50 g,WC FRISCH Power Active 2 x 50 g,Cleaning,0,3.45,0.2,0.14,0.05,2,3,0,0,0,0,0,0,N,N,N,0.1
+191,Cleaning_191,18,C,TANDIL Kalkstopp-Tabs 510 g,TANDIL Limescale Prevention Tablets 510 g,Cleaning,0,2.75,0.25,0.2,0.05,2,1,0,0,0,0,0,0,N,N,N,0.1
+195,Cleaning_195,18,C,"Denkmit Vollwaschmittel 3in1 Aktiv Caps, 22 Wl","Denkmit Universal 3in1 Active Caps Detergent, 22 washes",Cleaning,0,4.45,0.1974,0.2232,0.05,5,4,0,0,0,0,0,0,N,N,N,0.1
+198,Cleaning_198,18,C,"Denkmit SpÃ¼lmaschinen-Tabs Classic, 65 St","Denkmit Dishwasher Tabs Classic, 65 pcs",Cleaning,0,3.25,0.15,0.2,0.05,2,2,0,0,0,0,0,0,N,N,N,0.1
+200,Cleaning_200,18,C,CLINAIR WC-Duftjuwelen 96 g Crazy Floral,CLINAIR WC Fragrance Jewels 96 g Crazy Floral,Cleaning,0,0.96,0.2088,0.1584,0.05,5,2,0,0,0,0,0,0,N,N,N,0.1
+201,Cleaning_201,18,C,CLINAIR WC-Duftjuwelen 96 g Blue Water Ocean,CLINAIR WC Fragrance Jewels 96 g Blue Water Ocean,Cleaning,0,0.97,0.2,0.15,0.05,3,3,0,0,0,0,0,0,N,N,N,0.1
+202,Hygiene_202,17,C,KOKETT Recycling Toilettenpapier XXL,KOKETT XXL Recycled Toilet Paper,Hygiene,0,4.49,0.22,0.42,0.1,1,1,0,0,0,0,0,0,N,N,N,0.1
+203,Hygiene_203,17,C,"Sanft&Sicher Toilettenpapier Saison 3lagig (8x180 Blatt), 8 St","Sanft&Sicher Toilet Paper Season 3-ply (8x180 sheets), 8 pcs",Hygiene,0,2.95,0.22,0.42,0.1,2,1,0,0,0,0,0,0,N,N,N,0.1
+204,Hygiene_204,17,C,"Balea med seifenfreies WaschstÃ¼ck hautneutral, 150 g","Balea med soap-free cleansing bar skin-neutral, 150 g",Hygiene,0,1.75,0.134,0.078,0.05,4,3,0,0,0,0,0,0,N,N,N,0.1
+205,Hygiene_205,17,C,"Speick SeifenstÃ¼ck Bionatur Carpe Diem Grapefruit & Limette, 100 g","Speick Soap Bar Bionatur Carpe Diem Grapefruit & Lime, 100 g",Hygiene,0,2.15,0.0952,0.1316,0.05,4,2,0,0,0,0,0,0,N,N,N,0.1
+207,Hygiene_207,16,C,"Sagrotan DesinfektionstÃ¼cher 2in1 fÃ¼r Unterwegs, 15 St","Sagrotan 2in1 Disinfectant Wipes for On-the-Go, 15 pcs",Hygiene,0,1.95,0.09,0.13,0.05,2,1,0,0,0,0,0,0,N,N,N,0.1
+208,Hygiene_208,17,C,"KOKETT Toilettenpapier ""Pink Oktober""",KOKETT Toilet Paper Pink October,Hygiene,0,2.85,0.22,0.42,0.1,1,2,0,0,0,0,0,0,N,N,N,0.1
+209,Sauce_209,13,D,"LE GUSTO Fix fÃ¼r Salat-Sauce 5 x 8 g, GartenkrÃ¤uter","LE GUSTO Salad Dressing Mix 5 x 8 g, Garden Herbs",Sauce,0,0.49,0.06,0.04,0.04,3,4,402,42,3.5,0.2,4.8,0,N,N,Vegetarian,0.4
+210,Sauce_210,13,D,"MEIN VEGGIE TAG Vegane Fleischalternativen, Sauce Bolognese 80 g","MEIN VEGGIE TAG Vegan Meat Alternative, Bolognese Sauce 80 g",Sauce,0,1.29,0.18,0.12,0.05,5,2,436,45,3.7,0.3,6.1,0,N,N,Vegetarian,0.5
+211,Sauce_211,13,D,"LE GUSTO Fix fÃ¼r Salat-Sauce 5 x 8 g, Italienische Art","LE GUSTO Salad Dressing Mix 5 x 8 g, Italian Style",Sauce,0,0.49,0.06,0.04,0.04,3,3,437,46.9,3.8,0.2,5.1,0,N,N,Vegetarian,0.7
+212,Sauce_212,13,D,"LE GUSTO Fix fÃ¼r Salat-Sauce 5 x 8 g, Dill-KrÃ¤uter","LE GUSTO Salad Dressing Mix 5 x 8 g, Dill Herbs",Sauce,0,0.49,0.06,0.04,0.04,3,5,100,2,5,5,15,0,Y,Y,Vegan,0.1
+213,Oil_213,13,D,Oliehoorn FrittierÃ¶l BIB Tasche im Karton 15 Liter,Oliehoorn Frying Oil BIB Bag in Box 15 Liters,Oil,0,54.38,0.3,0.18,0.15,1,1,900,100,0,0,0,0,Y,Y,Vegan,0.2
+214,Oil_214,13,D,Remia FrittierÃ¶l flÃ¼ssig natÃ¼rlich Tasche im Karton 10 Liter,"Remia Liquid Frying Oil, Natural Bag in Box 10 Liters",Oil,0,49.75,0.2,0.13,0.1,2,1,900,100,0,0,0,0,Y,Y,Vegan,0.2
+215,Oil_215,13,D,OlivenÃ¶l 5Liter extravergine Farchioni,"Extra Virgin Olive Oil 5 Liters, Farchioni",Oil,0,84.99,0.1782,0.1002,0.05,2,2,884,100,0,0,0,0,Y,Y,Vegan,0.3
+216,Oil_216,13,D,Levo Erdnuss Ã–l 20l Kanister (Gastronomie),Levo Peanut Oil 20 l Canister (Catering),Oil,0,126.5,0.35,0.2,0.15,1,2,900,100,0,0,0,0,Y,Y,Vegan,0.2
+217,Spice_217,14,D,Rajah Chili Extra Hot - Spicy Chili Powder for Seasoning and Cooking - 1 x 100g,Rajah Extra Hot Chili Spicy Chili Powder for Seasoning and Cooking 1 x 100 g,Spice,0,5,0.18,0.11,0.02,4,1,350,15,10,12,50,0,Y,Y,Vegan,0.4
+218,Spice_218,14,D,Rajah Mild Madras Curry Powder - Aromatic Spice Blend with Mild Sharpness - 1 x 100g,Rajah Mild Madras Curry Powder Aromatic Spice Blend with Mild Heat 1 x 100 g,Spice,0,1.59,0.18,0.11,0.02,4,2,325,14,8,10,45,0,Y,Y,Vegan,0.5
+219,Spice_219,14,D,Rajah Hot Madras Currypulver â€“ Aromatische GewÃ¼rzmischung mit intensiver SchÃ¤rfe â€“ 1 x 100 g,Rajah Hot Madras Curry Powder Aromatic Spice Blend with Intense Heat 1 x 100 g,Spice,0,1.12,0.15,0.08,0.02,3,2,325,14,8,10,45,0,Y,Y,Vegan,0.7
+220,Spice_220,14,D,"Rajah , Metal Whole Cardamom - Green Cardamom Spice for Seasoning, Cooking and Baking - 1 x 50g","Rajah Whole Green Cardamom Green Cardamom Spice for Seasoning, Cooking, and Baking 1 x 50 g",Spice,0,9.99,0.15,0.08,0.01,3,1,311,6.7,0,10.8,68.5,0,Y,Y,Vegan,0.1
+221,Spice_221,14,D,Rajah gemahlener Koriander â€“ Korianderpulver zum WÃ¼rzen und Kochen â€“ 1 x 100 g,Rajah Ground Coriander Coriander Powder for Seasoning and Cooking 1 x 100 g,Spice,0,1.39,0.18,0.11,0.02,5,2,298,3.5,0,12,55,0,Y,Y,Vegan,0.2
+222,Spice_222,14,D,Rajah Mustard Seeds - Whole Black Mustard Seeds for Seasoning and Cooking - 1 x 100g,Rajah Mustard Seeds Whole Black Mustard Seeds for Seasoning and Cooking 1 x 100 g,Spice,0,1.09,0.18,0.11,0.02,5,1,508,36.2,0,26,28,0,Y,Y,Vegan,0.2
+223,Spice_223,13,D,Ostmann Spices - Aniseed Whole | Unground Aniseed Ideal for Anise Tea | 15 g in Bag,Ostmann Spices Whole Aniseed Ideal for Anise Tea 15 g in Bag,Spice,0,1.89,0.13,0.06,0.01,3,1,337,15.9,0,17.6,50,0,Y,Y,Vegan,0.3
+224,Spice_224,13,D,Ostmann Spices - Grandma's Red Cabbage Spice Mix 4 Servings with Winter Spices 8g in Bag (Packaging Design May Vary),"Ostmann Spices Grandmas Red Cabbage Spice Mix, 4 Servings with Winter Spices, 8 g in Bag (Packaging Design May Vary)",Spice,0,1.79,0.06,0.03,0.02,3,2,300,2,10,3,50,0,N,N,Vegetarian,0.2
+225,Spice_225,13,D,Organic Turmeric Powder 250g â€“ Guards Hof Turmeric Root Ground Spice Paste or Curcuma Latte Natural,Organic Turmeric Powder 250g Guards Hof Turmeric Root Ground Spice Paste or Curcuma Latte Natural,Spice,0,8.95,0.1824,0.13,0.02,4,2,354,10,3,8,65,0,Y,Y,Vegan,0.4
+226,Spice_226,14,D,Fuchs Paprika Elegant Sweet Mild (1 x 1 kg),Fuchs Paprika Elegant Sweet Mild (1 x 1 kg),Spice,0,12.83,0.2,0.12,0.04,1,3,289,13,8,14,48,0,Y,Y,Vegan,0.5
+227,Spice_227,14,D,Fuchs Pfeffer schwarz gemahlen (1 x 1 kg),Fox pepper black ground (1 x 1 kg),Spice,0,16.99,0.2,0.12,0.04,1,4,304,15,0,11,54,0,Y,Y,Vegan,0.7
+228,Spice_228,14,D,Fuchs Pepper Black Whole Special (1 x 1 kg) | Pack of 1,Fuchs Pepper Black Whole Special (1 x 1 kg) Pack of 1,Spice,0,16.57,0.2,0.12,0.04,1,2,304,15,0,11,54,0,Y,Y,Vegan,0.1
+229,Spice_229,14,D,Fuchs Pepper White Whole Pack of 1 (1 x 1 kg),Fuchs Pepper White Whole Pack of 1 (1 x 1 kg),Spice,0,19.78,0.2,0.12,0.04,2,1,315,3.5,0,12,68,0,Y,Y,Vegan,0.2
+230,Spice_230,14,D,Fuchs Pizza seasoning (1 x 500 g),Fuchs Pizza seasoning (1 x 500 g),Spice,0,9.62,0.14,0.08,0.04,2,2,270,4,0,8,52,0,Y,Y,Vegan,0.2
+231,Spice_231,14,D,Fuchs Chicken Seasoning Salt GV 2 kg (1 x 2 kg),Fuchs Chicken Seasoning Salt GV 2 kg (1 x 2 kg),Spice,0,10.69,0.25,0.17,0.05,1,1,360,0,0,0,0,0,Y,Y,Vegan,0.3
+232,Spice_232,14,D,Fuchs Shashlik Spice (1 x 1 kg),Fuchs Shashlik Spice (1 x 1 kg),Spice,0,13.99,0.2,0.12,0.04,2,3,325,7,0,9,55,0,Y,Y,Vegan,0.2
+233,Spice_233,13,D,Bertram Root Sharply Ground (250 g) | Bertram Root Powder | Bertram Root Powder | 100% Real Bertramp Powder from Achterhof,Bertram Root Sharply Ground (250 g) Bertram Root Powder Bertram Root Powder 100% Real Bertramp Powder from Achterhof,Spice,0,25.95,0.2136,0.164,0.02,4,1,350,3,0,15,65,0,Y,Y,Vegan,0.4
+234,Spice_234,13,D,La Baleine - Coarse Sea Salt - Value Pack 1 kg - Harvested in Salt Gardens in Southern France on the Mediterranean Sea - Unique Purity,La Baleine - Coarse Sea Salt - Value Pack 1 kg - Harvested in Salt Gardens in Southern France on the Mediterranean Sea - Unique Purity,Spice,0,1.69,0.18,0.12,0.04,5,1,0,0,0,0,0,0,Y,Y,Vegan,0.5
+235,Cleaning_235,18,C,"Swiffer WischtÃ¼cher NachfÃ¼llpack (2x24 TÃ¼cher), 48 St","Swiffer cleaning cloth refill pack (2x24 cloths), 48 pcs",Cleaning,0,9.95,0.1,0.2,0.05,2,4,0,0,0,0,0,0,N,N,N,0.1
+237,Hygiene_237,17,C,"ZahnbÃ¼rstenkÃ¶pfe, schwarz, 6er Set","Toothbrush heads, black, set of 6",Hygiene,0,19.99,0.11,0.0346,0.02,3,3,0,0,0,0,0,0,N,N,N,0.1
+238,Hygiene_238,17,C,"ZahnbÃ¼rstenkÃ¶pfe, sonic, 8er Set","Toothbrush heads, sonic, set of 8",Hygiene,0,7.99,0.11,0.04,0.05,3,4,0,0,0,0,0,0,N,N,N,0.1
+239,Hygiene_239,17,C,Elmex Sensitive Professional toothpaste,Elmex Sensitive Professional toothpaste,Hygiene,0,5.65,0.0526,0.2008,0.05,3,2,0,0,0,0,0,0,N,N,N,0.1
+240,Hygiene_240,17,C,"meridol Zahnpasta Parodont Expert, 75 ml","Meridol toothpaste Parodont Expert, 75 ml",Hygiene,0,6.95,0.0526,0.2008,0.05,3,1,0,0,0,0,0,0,N,N,N,0.1
+241,Hygiene_241,17,C,"Physio Tape, 2er Set, schwarz","Physio tape, set of 2, black",Hygiene,0,9.98,0.0508,0.1022,0.05,5,3,0,0,0,0,0,0,N,N,N,0.1
+242,Hygiene_242,16,C,"Sport-Tape, 3er Set","Sports tape, set of 3",Hygiene,0,5.97,0.0924,0.092,0.05,4,3,0,0,0,0,0,0,N,N,N,0.1
+243,Hygiene_243,16,C,LACURA Bio-Baumwoll-WattestÃ¤bchen,LACURA organic cotton swabs,Hygiene,0,0.7,0.13,0.16,0.05,1,2,0,0,0,0,0,0,N,N,N,0.1
+244,Health_244,16,C,VITALIS Magnesium und Calcium Tabletten im Bundle,VITALIS magnesium and calcium tablets bundle,Health,0,5.98,0.11,0.0506,0.02,5,1,0,0,0,0,0,0,N,N,N,0.1
+245,Health_245,16,C,"tetesept Vitamin D3 2000 I.E Tabletten 50 St, 15,3 g","Tetesept Vitamin D3 2000 IU tablets 50 pcs, 15.3 g",Health,0,2.95,0.134,0.078,0.05,5,3,0,0,0,0,0,0,N,N,N,0.1
+246,Health_246,16,C,"Doppelherz Vitamin C 1000 + D3 + Zink Depot Tabletten 30 St, 42,9 g","Doppelherz Vitamin C 1000 + D3 + Zinc Depot tablets 30 pcs, 42.9 g",Health,0,4.75,0.134,0.078,0.05,5,4,0,0,0,0,0,0,N,N,N,0.1
+247,Health_247,16,C,VITALIS Hustenreiz-Sticks & Halstabletten (2 x 2 StÃ¼ck),VITALIS cough relief sticks & throat lozenges (2 x 2 pieces),Health,0,11.96,0.097,0.0578,0.05,4,1,0,0,0,0,0,0,N,N,N,0.1
+249,Kitchen_249,18,C,"Profissimo Alufolie, 30 m","Profissimo Aluminum Foil, 30 m",Kitchen,0,1.75,0.0296,0.238,0.05,5,3,0,0,0,0,0,0,N,N,N,0.1
+250,Kitchen_250,18,C,"Profissimo Gefrierbeutel 1 l mit Schnellverschluss, 15 St","Profissimo Freezer Bags 1 L with Quick Closure, 15 pieces",Kitchen,0,1.15,0.2344,0.0774,0.05,4,2,0,0,0,0,0,0,N,N,N,0.1
+251,Kitchen_251,18,C,"Profissimo Gefrierbeutel 3 l mit VerschlÃ¼ssen, 50 St","Profissimo Freezer Bags 3 L with Closures, 50 pieces",Kitchen,0,0.95,0.0852,0.2212,0.05,5,5,0,0,0,0,0,0,N,N,N,0.1
+252,Hygiene_252,17,C,"NIVEA SeifenstÃ¼ck Creme Soft Pflegeseife, 100 g","NIVEA Soap Bar Creme Soft Care Soap, 100 g",Hygiene,0,1.45,0.0952,0.1316,0.05,4,4,0,0,0,0,0,0,N,N,N,0.1
+253,Hygiene_253,17,C,"Dove SeifenstÃ¼ck beauty cream (2x90g), 180 g","Dove Soap Bar Beauty Cream (2x90g), 180 g",Hygiene,0,2.45,0.0952,0.1316,0.05,4,1,0,0,0,0,0,0,N,N,N,0.1
+254,Hygiene_254,16,C,"alverde NATURKOSMETIK SeifenstÃ¼ck PflanzenÃ¶lseife mit Bio-Lavendel, 100 g","alverde NATURAL COSMETICS Soap Bar Plant Oil Soap with Organic Lavender, 100 g",Hygiene,0,0.95,0.134,0.078,0.05,3,2,0,0,0,0,0,0,N,N,N,0.1
+255,Hygiene_255,17,C,"alverde NATURKOSMETIK SeifenstÃ¼ck PflanzenÃ¶lseife mit Bio-Verveine, 100 g","alverde NATURAL COSMETICS Soap Bar Plant Oil Soap with Organic Verbena, 100 g",Hygiene,0,0.95,0.134,0.078,0.05,5,1,0,0,0,0,0,0,N,N,N,0.1
+256,Hygiene_256,17,C,"alverde NATURKOSMETIK Cremeseife Bio-Sheabutter, Bio-Mandelmilch, 100 g","alverde NATURAL COSMETICS Cream Soap Organic Shea Butter, Organic Almond Milk, 100 g",Hygiene,0,0.8,0.134,0.078,0.05,5,2,0,0,0,0,0,0,N,N,N,0.1
+257,Hygiene_257,16,C,"share SeifenstÃ¼ck Pfirsich & Orange, 100 g","share Soap Bar Peach & Orange, 100 g",Hygiene,0,1.95,0.134,0.078,0.05,3,1,0,0,0,0,0,0,N,N,N,0.1
+258,Hygiene_258,16,C,"Speick SeifenstÃ¼ck, 100 g","Speick Soap Bar, 100 g",Hygiene,0,1.95,0.154,0.098,0.05,2,2,0,0,0,0,0,0,N,N,N,0.1
+260,Hygiene_260,16,C,"Dalli Kernseife (3 StÃ¼ck), 300 g","Dalli Pure Soap (3 pieces), 300 g",Hygiene,0,1.45,0.13,0.17,0.05,1,1,0,0,0,0,0,0,N,N,N,0.1
+261,Health_261,16,C,"Mivolis Vitamin D3 fÃ¼r Kinder, Kautabletten 60 St., 51 g","Mivolis Vitamin D3 for Children, Chewable Tablets 60 pcs, 51 g",Health,0,2.95,0.134,0.078,0.05,5,2,0,0,0,0,0,0,N,N,N,0.1
+262,Health_262,16,C,"VITALIS Physio Tape, 2er Set, schwarz","VITALIS Physio Tape, 2-piece set, black",Health,0,9.98,0.0506,0.1024,0.05,4,4,0,0,0,0,0,0,N,N,N,0.1
+263,Health_263,16,C,"VITALIS Fixierbinde, kohÃ¤siv, 3er Set","VITALIS Cohesive Bandage, 3-piece set",Health,0,5.97,0.069,0.1002,0.05,4,2,0,0,0,0,0,0,N,N,N,0.1

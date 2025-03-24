@@ -26,9 +26,11 @@ namespace DxR
 
         private void Start()
         {
+#if UNITY_EDITOR
             parentVis = GetComponent<Vis>();
             parentVis.VisUpdated.AddListener(UpdateInternalSpecification);
             UpdateInternalSpecification(parentVis, parentVis.GetVisSpecs());
+#endif
         }
 
         public void UpdateVis()

@@ -21,7 +21,7 @@ namespace DxR
                 CopyNodeToList(scaleSpecs["domain"], ref domain);
             } else if(scaleSpecs["type"] != "custom" && scaleSpecs["type"] != "none")
             {
-                throw new Exception("Scale is missing domain.");
+                throw new Exception("[DebugUnity] Scale is missing domain.");
             }
 
             if (scaleSpecs["range"] != null)
@@ -30,7 +30,7 @@ namespace DxR
             }
             else if(scaleSpecs["type"] != "custom" && scaleSpecs["type"] != "none")
             {
-                throw new Exception("Scale is missing range.");
+                throw new Exception("[DebugUnity] Scale is missing range.");
             }
         }
 

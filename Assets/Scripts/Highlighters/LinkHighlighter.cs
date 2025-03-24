@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BrushingAndLinking
 {
+    [DisallowMultipleComponent]
     public class LinkHighlighter : Highlighter
     {
         public override HighlightTechnique Mode { get { return HighlightTechnique.Link; } }
@@ -24,7 +25,8 @@ namespace BrushingAndLinking
             if (!unbundleFD.enabled)
                 unbundleFD.enabled = true;
 
-            unbundleFD.SetManageDisplayer(AlwaysVisualLink);
+            AlwaysVisualLink = true;
+            UpdateVisualLink();
 
             if (marksDict == null)
                 CreateMarksDictionary();
@@ -92,6 +94,11 @@ namespace BrushingAndLinking
         public void OnDestroy()
         {
             Unhighlight();
+        }
+
+        public void UpdateVisualLink()
+        {
+            unbundleFD.SetManageDisplayer(AlwaysVisualLink);
         }
 
         public static void VisMarksChanged()

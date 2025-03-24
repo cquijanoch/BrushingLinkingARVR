@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ namespace BrushingAndLinking
     {
         public List<ButtonGroupChild> Buttons = new List<ButtonGroupChild>();
         public int DefaultButton;
+        public ButtonGroupChild ActiveButton;
 
         private List<Outline> outlines = new List<Outline>();
 
@@ -25,6 +25,8 @@ namespace BrushingAndLinking
                     button.Deselect();
                 }
             }
+
+            ActiveButton = selectedButton;
         }
 
         public void HighlightButtonByDimensionName(string dimName)
@@ -46,6 +48,7 @@ namespace BrushingAndLinking
             outline.OutlineWidth = 10f;
             outline.OutlineColor = new Color(0.545f, 0, 0);
             outline.OutlineMode = Outline.Mode.OutlineVisible;
+
             outlines.Add(outline);
         }
 

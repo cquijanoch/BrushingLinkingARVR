@@ -84,7 +84,7 @@ namespace DxR
             switch (channel)
             {
                 case "length":
-                    throw new Exception("Length for GeoShapes is not yet implemented.");
+                    throw new Exception("[DebugUnity] Length for GeoShapes is not yet implemented.");
                 case "width":
                     SetSize(value, 0);
                     break;

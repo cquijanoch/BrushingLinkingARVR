@@ -86,7 +86,7 @@ namespace DxR
 
             if (viewParentObject == null || marksParentObject == null)
             {
-                throw new Exception("Unable to load DxRView and/or DxRMarks objects.");
+                throw new Exception("[DebugUnity] Unable to load DxRView and/or DxRMarks objects.");
             }
 
             InitialiseVis();
@@ -102,6 +102,7 @@ namespace DxR
                 parser = new Parser();
 
             // If there is a RuntimeInspectorVisSpecs component attached to this GameObject, then we parse the specifications contained in it instead
+#if UNITY_EDITOR
             RuntimeInspectorVisSpecs runtimeSpecs = GetComponent<RuntimeInspectorVisSpecs>();
             if (runtimeSpecs != null)
             {
@@ -113,10 +114,13 @@ namespace DxR
             {
                 parser.Parse(visSpecsURL, out visSpecs);
             }
+#else
+    parser.Parse(visSpecsURL, out visSpecs);
+#endif
 
             // If the mark is set to undefined, this is a sign that the vis specs isn't valid. Throw an exception here
             if (visSpecs["mark"] == DxR.Vis.UNDEFINED)
-                throw new Exception("Provided vis specs is not valid.");
+                throw new Exception("[DebugUnity] Provided vis specs is not valid.");
 
             InitDataList();
             InitMarksList();
@@ -166,7 +170,7 @@ namespace DxR
         private void UpdateVis()
         {
             if (!IsReady)
-                throw new Exception("DxR Vis is not yet initialised. Cannot update Vis.");
+                throw new Exception("[DebugUnity] DxR Vis is not yet initialised. Cannot update Vis.");
 
             DeleteInteractions();                                   // Delete old GameObjects that we cannot update
             DeleteLegends();                                        // No longer deletes marks and axes
@@ -198,10 +202,13 @@ namespace DxR
 
         private void InitDataList()
         {
-            string[] dirs = Directory.GetFiles(Application.dataPath + "/StreamingAssets/DxRData");
+            Debug.Log("[DebugUnity] Vis.InitDataList()"); 
             dataList = new List<string>();
             dataList.Add(DxR.Vis.UNDEFINED);
             dataList.Add("inline");
+
+#if UNITY_EDITOR
+            string[] dirs = Directory.GetFiles(Application.dataPath + "/StreamingAssets/DxRData");
             for (int i = 0; i < dirs.Length; i++)
             {
                 if (Path.GetExtension(dirs[i]) != ".meta")
@@ -209,6 +216,12 @@ namespace DxR
                     dataList.Add(Path.GetFileName(dirs[i]));
                 }
             }
+
+#elif PLATFORM_ANDROID
+            string[] dirs = Constants.FileData;
+            dataList.AddRange(dirs);
+#endif
+            Debug.Log("[DebugUnity] End Vis.InitDataList()");
         }
 
         public List<string> GetDataList()
@@ -481,7 +494,7 @@ namespace DxR
         }
 
 
-        #endregion Data loading functions
+#endregion Data loading functions
 
         #region Vis specification functions
 
@@ -511,18 +524,19 @@ namespace DxR
                         visSpecsToWrite.Remove("interaction");
                     }
 
-                    #if UNITY_EDITOR
+                    //if UNITY_EDITOR
                     System.IO.File.WriteAllText(Parser.GetFullSpecsPath(visSpecsURL), visSpecsToWrite.ToString(2));
-                    
-                    #elif UNITY_STANDALONE_WIN
+
+                    //elif
+#if UNITY_STANDALONE_WIN
                         UnityEngine.Windows.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
                             System.Text.Encoding.UTF8.GetBytes(visSpecsToWrite.ToString(2)));
-                    #endif
+#endif
                 }
             }
             else
             {
-                throw new Exception("Cannot perform inferrence without mark prefab loaded.");
+                throw new Exception("[DebugUnity] Cannot perform inferrence without mark prefab loaded.");
             }
         }
 
@@ -596,7 +610,7 @@ namespace DxR
                     // Check validity of data field
                     if(!data.fieldNames.Contains(channelEncoding.field))
                     {
-                        throw new Exception("Cannot find data field " + channelEncoding.field + " in data. Please check your spelling (case sensitive).");
+                        throw new Exception("[DebugUnity] Cannot find data field " + channelEncoding.field + " in data. Please check your spelling (case sensitive).");
                     }
 
                     if (channelSpecs["type"] != null)
@@ -605,7 +619,7 @@ namespace DxR
                     }
                     else
                     {
-                        throw new Exception("Missing type for field in channel " + channelEncoding.channel);
+                        throw new Exception("[DebugUnity] Missing type for field in channel " + channelEncoding.channel);
                     }
                 }
 
@@ -687,7 +701,7 @@ namespace DxR
                 Mark markComponent = markInstances[i].GetComponent<Mark>();
                 if (markComponent == null)
                 {
-                    throw new Exception("Mark component not present in mark prefab.");
+                    throw new Exception("[DebugUnity] Mark component not present in mark prefab.");
                 }
 
                 markComponent.ApplyChannelEncoding(channelEncoding, i);
@@ -721,7 +735,7 @@ namespace DxR
             }
             else
             {
-                throw new System.Exception("Cannot find marks.json file in Assets/DxR/Resources/Marks/ directory");
+                throw new System.Exception("[DebugUnity] Cannot find marks.json file in Assets/DxR/Resources/Marks/ directory");
             }
 
 #if UNITY_EDITOR
@@ -872,11 +886,11 @@ namespace DxR
 
             if (markPrefabResult == null)
             {
-                throw new Exception("Cannot load mark " + markNameLowerCase);
+                throw new Exception("[DebugUnity] Cannot load mark " + markNameLowerCase);
             }
             else if (verbose)
             {
-                Debug.Log("Loaded mark " + markNameLowerCase);
+                Debug.Log("[DebugUnity] Loaded mark " + markNameLowerCase);
             }
 
             // If the prefab does not have a Mark script attached to it, attach the default base Mark script object, i.e., core mark.
@@ -928,7 +942,7 @@ namespace DxR
             }
             else
             {
-                throw new Exception("Cannot find axis prefab.");
+                throw new Exception("[DebugUnity] Cannot find axis prefab.");
             }
         }
 
@@ -1029,7 +1043,7 @@ namespace DxR
             }
             else
             {
-                throw new Exception("Cannot find legend prefab.");
+                throw new Exception("[DebugUnity] Cannot find legend prefab.");
             }
         }
 
@@ -1065,8 +1079,8 @@ namespace DxR
                         " for data field " + interactionSpecs["field"].Value);
                 } else
                 {
-                    if (verbose) Debug.Log("Make sure interaction object has type, field, and domain specs.");
-//                    throw new System.Exception("Make sure interaction object has type, field, and domain specs.");
+                    if (verbose) Debug.Log("[DebugUnity] Make sure interaction object has type, field, and domain specs.");
+//                    throw new System.Exception("[DebugUnity] Make sure interaction object has type, field, and domain specs.");
                 }
 
             }
@@ -1220,13 +1234,14 @@ namespace DxR
                 visSpecsToWrite.Remove("interaction");
             }
 
-            #if UNITY_EDITOR
+            //#if UNITY_EDITOR
             System.IO.File.WriteAllText(Parser.GetFullSpecsPath(visSpecsURL), visSpecsToWrite.ToString(2));
-            #elif UNITY_STANDALONE_WIN
 
+            //#elif UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN
                 UnityEngine.Windows.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
                     System.Text.Encoding.UTF8.GetBytes(visSpecsToWrite.ToString(2)));
-            #endif
+#endif
         }
 
         private void UpdateGUISpecsFromVisSpecs()

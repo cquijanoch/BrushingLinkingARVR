@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using DxR;
-using UnityEngine;
 
 namespace BrushingAndLinking
 {

@@ -12,6 +12,7 @@ namespace BrushingAndLinking
         // The Oculus SDK RayInteractor component. Used to perform raycasts from the controller which contains this component
         public RayInteractor LeftRayInteractor;
         public RayInteractor RightRayInteractor;
+
         public Handedness Handedness = Handedness.Right;
         public InputMode InputMode = InputMode.Controller;
         #endregion Public variables

@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using BrushingAndLinking;
+using Oculus.Interaction.Input;
 using UnityEngine;
 
 public class MenuUI : MonoBehaviour
@@ -8,6 +8,9 @@ public class MenuUI : MonoBehaviour
     public Transform LeftHandAnchor;
     public Vector3 LeftHandTranslationOffset;
     public Vector3 LeftHandRotationOffset;
+
+
+    public ButtonGroup CalibrationButtons;
 
     private bool visibility = false;
 
@@ -25,7 +28,6 @@ public class MenuUI : MonoBehaviour
     {
         if (!visibility)
             return;
-
 
         transform.SetParent(LeftHandAnchor);
         transform.localPosition = LeftHandTranslationOffset;
@@ -51,5 +53,8 @@ public class MenuUI : MonoBehaviour
 
         if (!visibility)
             transform.position = new Vector3(0, -10, 0);
+        else
+            CalibrationButtons.UnhighlightButtons();
+
     }
 }

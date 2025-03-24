@@ -4,35 +4,50 @@ namespace BrushingAndLinking
     {
         Start,
         FloorPoints,
-        Shelves,
-        Demo
+        ShowShelves,
+        MoveShelves,
+        Demo,
+        StartStudy,
+        StopStudy
     }
 
     public class CalibrationModeButton : ButtonGroupChild
     {
         public CalibrationSetup CalibrationSetup;
         public CalibrationStep Step;
+
         public override void Select()
         {
-            base.Select();
+            bool status = false;
 
             switch (Step)
             {
                 case CalibrationStep.Start:
-                    CalibrationSetup.CalibrationInit();
+                    status = CalibrationSetup.CalibrationInit();
                     break;
                 case CalibrationStep.FloorPoints:
-                    CalibrationSetup.ShowFloorPoints();
+                    status = CalibrationSetup.ShowFloorPoints();
                     break;
-                case CalibrationStep.Shelves:
-                    CalibrationSetup.ShelvesCalibration();
+                case CalibrationStep.ShowShelves:
+                    status = CalibrationSetup.ShowShelvesCalibration();
+                    break;
+                case CalibrationStep.MoveShelves:
+                    CalibrationSetup.FinishShelvesCalibration();
+                    status = true;
                     break;
                 case CalibrationStep.Demo:
-                    CalibrationSetup.StartDemo();
+                    status = CalibrationSetup.StartDemo();
                     break;
-
+                case CalibrationStep.StartStudy:
+                    status = CalibrationSetup.StartStudy();
+                    break;
+                case CalibrationStep.StopStudy:
+                    status = CalibrationSetup.StopStudy();
+                    break;
             }
-           
+
+            if (status)
+                base.Select();
         }
     }
 }

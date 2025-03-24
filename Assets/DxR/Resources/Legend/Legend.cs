@@ -60,7 +60,7 @@ public class Legend : MonoBehaviour {
         }
         else
         {
-            throw new Exception("Legend requires both orient and face specs.");
+            throw new Exception("[DebugUnity] Legend requires both orient and face specs.");
         }
     }
 
@@ -81,7 +81,7 @@ public class Legend : MonoBehaviour {
 
         if (colorLine == null)
         {
-            throw new Exception("Cannot find ColorLine LineRenderer object in legend.");
+            throw new Exception("[DebugUnity] Cannot find ColorLine LineRenderer object in legend.");
         }
 
         colorLine.gameObject.SetActive(true);
@@ -189,7 +189,7 @@ public class Legend : MonoBehaviour {
         }
         else
         {
-            throw new Exception("Legend constructor does not know how to construct legend for " + channelEncoding.channel);
+            throw new Exception("[DebugUnity] Legend constructor does not know how to construct legend for " + channelEncoding.channel);
         }
     }
 

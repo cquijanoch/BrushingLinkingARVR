@@ -1,0 +1,22 @@
+{
+  "mark": "sphere",
+  "width": 200,
+  "height": 200,
+  "data": {
+    "url": "data_source_demo.csv"
+  }
+,
+  "encoding": {
+    "x": {
+      "field": "Price (EUR)",
+      "type": "quantitative"
+    },
+    "y": {
+      "field": "Rating (u)",
+      "type": "quantitative"
+    },
+    "size": {
+      "value": 4
+    }
+  }
+}

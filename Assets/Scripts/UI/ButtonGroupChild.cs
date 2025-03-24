@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Oculus.Interaction;
 using UnityEngine;
 
 namespace BrushingAndLinking
@@ -14,7 +10,7 @@ namespace BrushingAndLinking
 
         private Color defaultColour;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
             base.Awake();
 
