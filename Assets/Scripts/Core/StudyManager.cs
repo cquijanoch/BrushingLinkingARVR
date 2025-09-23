@@ -128,7 +128,7 @@ namespace BrushingAndLinking
 
             // Change the vis data set to a training one
             var json = MainVis.GetVisSpecs();
-            json["data"]["url"] = "data_source_demo.csv";
+            json["data"]["url"] = "data_source_demo_IMPRS.csv";
             MainVis.UpdateVisSpecsFromJSONNode(json);
 
             Tablet.SetOverallVisibility(true);
@@ -237,9 +237,9 @@ namespace BrushingAndLinking
             var json = MainVis.GetVisSpecs();
 
             if (TaskType.Tutorial == trialToLoad.Task)
-                json["data"]["url"] = "data_source_tutorial.csv";
+                json["data"]["url"] = "data_source_demo_IMPRS.csv";
             else
-                json["data"]["url"] = "data_source_study.csv";//"ProductData_Tutorial.csv";
+                json["data"]["url"] = "data_source_demo_IMPRS.csv";//"ProductData_Tutorial.csv";
 
             MainVis.UpdateVisSpecsFromJSONNode(json);
             ResetAllBrushingAndLinking();
@@ -504,7 +504,7 @@ namespace BrushingAndLinking
         }
         private void SetProductsVisibility(ApplicationMode visibilityMode)
         {
-            MainManager.Instance.GetVisibility(visibilityMode);
+            MainManager.Instance.GetVisibilityDemo(visibilityMode);
             HighlightManager.Instance.ResetProductReferences();
         }
 

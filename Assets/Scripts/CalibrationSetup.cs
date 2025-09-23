@@ -10,8 +10,20 @@ public class CalibrationSetup : MonoBehaviour
     [Header("Elements from the environment")]
     public GameObject Infraestructure;
     public GameObject Baseplate;
-    public GameObject FloorPoints;
-    public Transform PivotCalibration;
+    public GameObject InfraestructureS1VR;
+    public GameObject InfraestructureS2VR;
+    public GameObject InfraestructureS1AR;
+    public GameObject InfraestructureS2AR;
+    //public GameObject FloorPoints;
+    //public Transform PivotCalibration;
+
+    [Header("Pivot Demo Shelf 1")]
+    public GameObject FloorDemo1;
+    public Transform PivotDemo1;
+
+    [Header("Pivot Demo Shelf 2")]
+    public GameObject FloorDemo2;
+    public Transform PivotDemo2;
 
     public List<Transform> Shelves = new List<Transform>();
     public List<Transform> Points = new List<Transform>();
@@ -78,8 +90,10 @@ public class CalibrationSetup : MonoBehaviour
 
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(true);
-        FloorPoints.SetActive(false);
-        MainManager.Instance.GetVisibility(ApplicationMode.Demo);
+        //FloorPoints.SetActive(false);
+        FloorDemo1.SetActive(false);
+        FloorDemo2.SetActive(false);
+        MainManager.Instance.GetVisibilityDemo(ApplicationMode.Demo);
         StartCoroutine(ResetAllCues());
 
         return true;
@@ -90,8 +104,10 @@ public class CalibrationSetup : MonoBehaviour
         StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(true);
-        MainManager.Instance.GetVisibility(ApplicationMode.Demo);
+        //FloorPoints.SetActive(true);
+        FloorDemo1.SetActive(true);
+        FloorDemo2.SetActive(true);
+        MainManager.Instance.GetVisibilityDemo(ApplicationMode.Demo);
 
         return true;
     }
@@ -108,10 +124,12 @@ public class CalibrationSetup : MonoBehaviour
 
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(true);
+        //FloorPoints.SetActive(true);
+        FloorDemo1.SetActive(true);
+        FloorDemo2.SetActive(true);
         FinishShelvesCalibration();
 
-        MainManager.Instance.GetVisibility(ApplicationMode.Demo);
+        MainManager.Instance.GetVisibilityDemo(ApplicationMode.Demo);
 
         StartCoroutine(ShowAllCues());
 
@@ -121,12 +139,25 @@ public class CalibrationSetup : MonoBehaviour
 
     public void FinishShelvesCalibration()
     {
-        Infraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
-        Baseplate.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        //Infraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        //Baseplate.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        //Infraestructure.transform.SetPositionAndRotation(PivotDemo1.transform.position, PivotDemo1.transform.rotation);
+        //Infraestructure.transform.SetPositionAndRotation(PivotDemo2.transform.position, PivotDemo2.transform.rotation);
+
+        InfraestructureS1VR.transform.SetPositionAndRotation(PivotDemo1.transform.position, PivotDemo1.transform.rotation);
+        InfraestructureS2VR.transform.SetPositionAndRotation(PivotDemo2.transform.position, PivotDemo2.transform.rotation);
+        InfraestructureS1AR.transform.SetPositionAndRotation(PivotDemo1.transform.position, PivotDemo1.transform.rotation);
+        InfraestructureS2AR.transform.SetPositionAndRotation(PivotDemo2.transform.position, PivotDemo2.transform.rotation);
+
         Baseplate.transform.position = Baseplate.transform.position + new Vector3(0f, 0.001f, 0f);
         Baseplate.transform.Rotate(new Vector3(90f, 0, -180));
 
-        MainManager.Instance.EnvironmnetInfraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        //MainManager.Instance.EnvironmnetInfraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+
+        MainManager.Instance.OccludersS1.transform.SetPositionAndRotation(PivotDemo1.transform.position, PivotDemo1.transform.rotation);
+        MainManager.Instance.OccludersS2.transform.SetPositionAndRotation(PivotDemo2.transform.position, PivotDemo2.transform.rotation);
+        MainManager.Instance.Shelves1Infraestructure.transform.SetPositionAndRotation(PivotDemo1.transform.position, PivotDemo1.transform.rotation);
+        MainManager.Instance.Shelves2Infraestructure.transform.SetPositionAndRotation(PivotDemo2.transform.position, PivotDemo2.transform.rotation);
     }
 
     private IEnumerator ResetAllCues()
@@ -161,7 +192,9 @@ public class CalibrationSetup : MonoBehaviour
         StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(false);
+        //FloorPoints.SetActive(false);
+        FloorDemo1.SetActive(false);
+        FloorDemo2.SetActive(false);
         Infraestructure.SetActive(true);
 
         MainManager.Instance.StartDemo();
@@ -177,7 +210,9 @@ public class CalibrationSetup : MonoBehaviour
         StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(true);
-        FloorPoints.SetActive(false);
+        //FloorPoints.SetActive(false);
+        FloorDemo1.SetActive(false);
+        FloorDemo2.SetActive(false);
         Infraestructure.SetActive(true);
 
         if (MainManager.Instance.AppMode == ApplicationMode.Study)
