@@ -204,8 +204,8 @@ namespace BrushingAndLinking
             else
             {
                 EnvironmnetInfraestructure.SetActive(false);
-                OccludersS2.SetActive(false);
-                OccludersS2.SetActive(false);
+                OccludersS1.SetActive(true);
+                OccludersS2.SetActive(true);
                 LightInfraestructure.type = LightType.Directional;
             }
 

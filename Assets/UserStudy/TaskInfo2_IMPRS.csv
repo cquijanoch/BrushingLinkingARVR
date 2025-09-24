@@ -1,0 +1,19 @@
+Type,FOV,ID,Question,Answer,Dimension1,Direction1,Value1,Dimension2,Direction2,Value2
+Single,Out,QS1,Select the product that has <color=#ff8000>more than</color> 85 g Sugar and <color=#ff8000>less than</color> 97 g Carbohydrates,Chocolate_23,Sugar (g),more,85,Carbohydrate (g),less,97
+Single,Out,QS2,Select the product that has <color=#ff8000> more than </color>585 kcal Calories and <color=#ff8000>less than </color> 35 g Fat,Baking_13,Calories (kcal),more,585,Fat (g),less,35
+Single,Out,QS3,Select the product that has <color=#ff8000>less than</color> 30 g Carbohydrate and is Lactose Free,Snacks_46,Carbohydrate (g),less,30,Lactose (Y/N),,N
+Single,Out,QS4,Select the product that has <color=#ff8000>more than </color> 15 g Protein and <color=#ff8000>less than </color> 12 g Sugar,Snacks_41,Protein (g),more,15,Sugar (g),less,12
+Single,Out,QS5,Select the product that has <color=#ff8000>more than</color> 30g Fat and has Gluten,Snacks_37,Fat (g),more,30,Gluten (Y/N),,Y
+Single,Out,QS6,Select the product that has <color=#ff8000>more than</color> 420 kcal Calories and <color=#ff8000>less than</color> 20 g Fat,Snacks_45,Calories (kcal),more,420,Fat (g),less,20
+Multiple,Out,QM1,Select all the products that cost <color=#ff8000>less than</color> 1.3 EUR and have <color=#ff8000>less than</color> 450 kcal Calories,Baking_14;Snacks_40;Chocolate_23;Baking_21,Price (EUR),less,1.3,Calories (kcal),less,450
+Multiple,Out,QM2,Select all the products that have <color=#ff8000>more than</color> 550 kcal Calories and cost <color=#ff8000>less than</color> 2 EUR,Baking_13;Chocolate_28;Chocolate_48,Calories (kcal),more,550,Price (EUR),less,2
+Multiple,Out,QM3,Select all the products that <color=#ff8000>cost more</color> than 1.3 EUR and have <color=#ff8000>less than</color> 415 kcal Calories,Baking_15;Baking_20;Snacks_42,Price (EUR),more,1.3,Calories (kcal),less,415
+Multiple,Out,QM4,Select all the products that have <color=#ff8000>less than </color>14 g Protein and have <color=#ff8000>more than</color> 35 g Fat,Chocolate_28;Chocolate_48,Protein (g),less,14,Fat (g),more,35
+Multiple,Out,QM5,Select all the products that have <color=#ff8000>less than</color> 10 g Sugar and have <color=#ff8000>more than</color> 76 g Carbohydrate,Snacks_40;Baking_21;Baking_20;Snacks_42,Sugar (g),less,10,Carbohydrate (g),more,76
+Multiple,Out,QM6,Select all the products that have <color=#ff8000>less than</color> 32 g Fat and have <color=#ff8000>more than</color> 40 g Sugar,Chocolate_29;Baking_11;Baking_12;Baking_13,Fat (g),less,32,Sugar (g),more,40
+Hypothesis,Out,QH1,"You can ignore this question for this demo, please press any button just on the right ",Yes,Rating (u),more,4,Gluten (Y/N),,N
+Hypothesis,Out,QH2,"You can ignore this question for this demo, please press any button just on the right ",No,Protein (g),more,5,N/Vegan/Vegetarian,,Vegan
+Hypothesis,Out,QH3,"You can ignore this question for this demo, please press any button just on the right ",Yes,N/Vegan/Vegetarian,,Vegetarian,Carbohydrate (g),more,28
+Hypothesis,Out,QH4,"You can ignore this question for this demo, please press any button just on the right ",No,Fat (g),less,3.3,Lactose (Y/N),,N
+Hypothesis,Out,QH5,"You can ignore this question for this demo, please press any button just on the right ",Yes,Lactose (Y/N),,Y,Rating (u),less,2
+Hypothesis,Out,QH6,"You can ignore this question for this demo, please press any button just on the right ",No,Rating (u),more,4,Gluten (Y/N),,Y
