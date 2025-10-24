@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using DxR;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BrushingAndLinking
@@ -14,13 +15,15 @@ namespace BrushingAndLinking
         private static List<KeyValuePair<GameObject, GameObject>> linkPairList = new ();
 
         private GameObject markGameObject;
+        private List<GameObject> stepsPoints;
+        private GameObject targetReferent;
 
         //private bool isHighlighted = false;
 
         private void Start()
         {
             if (unbundleFD == null)
-                unbundleFD = FindObjectOfType<UnbundleFD>();
+                unbundleFD = FindAnyObjectByType<UnbundleFD>();
 
             if (!unbundleFD.enabled)
                 unbundleFD.enabled = true;
@@ -32,12 +35,13 @@ namespace BrushingAndLinking
                 CreateMarksDictionary();
 
             markGameObject = marksDict[gameObject.name].gameObject;
+            targetReferent = GetComponent<Product>().LinkToChildForwarding ? transform.GetChild(0).gameObject : gameObject;
         }
 
         private void CreateMarksDictionary()
         {
             marksDict = new Dictionary<string, Mark>();
-            var marks = FindObjectsOfType<Mark>();
+            var marks = FindObjectsByType<Mark>(FindObjectsSortMode.None);
             foreach (var mark in marks)
                 marksDict.Add(mark.GameObjectName, mark);
         }
@@ -52,7 +56,16 @@ namespace BrushingAndLinking
 
             if (!isHighlighted)
             {
-                linkPairList.Add(new KeyValuePair<GameObject, GameObject>(gameObject, markGameObject));
+                stepsPoints = OcclusionManager.Instance.GetSteps(gameObject, Camera.main.transform.position);
+                GameObject pNode = targetReferent;
+              
+                for (int i = 0; i < stepsPoints.Count; i++)
+                {
+                    linkPairList.Add(new KeyValuePair<GameObject, GameObject>(pNode, stepsPoints[i]));
+                    pNode = stepsPoints[i];
+                }   
+               
+                linkPairList.Add(new KeyValuePair<GameObject, GameObject>(pNode, markGameObject));
                 unbundleFD.ResetBundling();
                 unbundleFD.InitUnbundling(linkPairList);
 
@@ -67,9 +80,28 @@ namespace BrushingAndLinking
                 bool isRemoved = false;
                 for (int i = 0; i < linkPairList.Count; i++)
                 {
-                    if (linkPairList[i].Key == gameObject)
+                    var idxs = new List<int>();
+                    if (linkPairList[i].Key == targetReferent)
                     {
-                        linkPairList.RemoveAt(i);
+                        if (stepsPoints.Count == 2)
+                        {
+                            var idx1 = linkPairList.FindIndex(o => o.Key == stepsPoints[0] && o.Value == stepsPoints[1]);
+                            var idx2 = linkPairList.FindIndex(o => o.Key == stepsPoints[1] && o.Value == markGameObject);
+                            idxs.Add(idx1);
+                            idxs.Add(idx2);
+                        }
+
+                        if (stepsPoints.Count == 1)
+                        {
+                            var idx = linkPairList.FindIndex(o => o.Key == stepsPoints[0] && o.Value == markGameObject);
+                            idxs.Add(idx);
+                        }
+
+                        idxs.Add(i);
+
+                        foreach (var idx in idxs.OrderByDescending(c => c).ToArray())
+                            linkPairList.RemoveAt(idx);
+
                         isRemoved = true;
                         break;
                     }

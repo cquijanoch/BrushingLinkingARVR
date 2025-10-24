@@ -18,6 +18,8 @@ namespace BrushingAndLinking
 
         public  HighlightTechnique highlightTechnique = HighlightTechnique.None;
         public  LinkTechnique visualLinkTechnique = LinkTechnique.None;
+        public bool LinkToChildForwarding = false;
+
         private bool isHighlighted = false;
         private Highlighter highlighter;
         private Highlighter visualLinker;
@@ -26,6 +28,7 @@ namespace BrushingAndLinking
         private new Collider collider;
         private ColliderSurface colliderSurface;
         private Dictionary<Renderer, Material[]> originalMaterials;
+        
 
         private void Awake()
         {

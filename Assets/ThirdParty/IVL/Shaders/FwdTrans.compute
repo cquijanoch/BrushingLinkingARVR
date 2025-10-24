@@ -215,10 +215,11 @@ float3 calculateLinkRepulsion(float3 pj, float3 pi, float kRep, float distThres)
 {
 	float3 normi = normalize(pi);
 	float3 normj = normalize(pj);
-	float dist = atan(length(cross(normj, normi)) / dot(normj, normi));
+    float dist = atan(length(cross(normj, normi)) / dot(normj, normi)); //* float3(0.5);
 	float kCorrect = length(pi) / length(pj);
 	float3 vecT = cross(normi, cross(normalize(pj - pi), normi));
-	return (dist > 0.00000001 && dist < distThres) ? kRep * kCorrect / pow(dist, 2) * vecT : float3(0.0, 0.0, 0.0); // square distance stuff
+    return (dist > 0.00000001 && dist < distThres) ? kRep / pow(dist, 2) * vecT: float3(0.0, 0.0, 0.0); // square distance stuff
+//kRep * kCorrect/ pow(dist, 2) * vecT
 }
 
 float3 calculateLinkAttraction(float3 pj, float3 pi, float3 linkDir, float kAttract)
@@ -308,6 +309,7 @@ void executeFDEUB(uint3 id : SV_DispatchThreadID, uint3 groupId : SV_GroupThread
 	//	// NB: Here we divide the distance threshold by the lenght (i.e. distance to eye) of the opbstacle).
 	//	// Doing this counteract the change of angular resolution based on distance
 	//	// This means that we always repulse until a distance from obstacle that is independent from pov.
+		
 	}
 
 	float3 fap = float3(0.0, 0.0, 0.0);

@@ -9,10 +9,13 @@ public class UnbundleFD : MonoBehaviour {
     // Visual Object Data
     public List<GameObject> sensorToTakeIntoAccount = new ();
     public List<KeyValuePair<GameObject, GameObject>> pointsList = new ();
+    public List<KeyValuePair<GameObject, GameObject>> pointsUptList = new();
     public List<GameObject> gameObjectToAvoid = new ();
     public List<GameObject> attractivePlane = new ();
     //public Dictionary<int, TubeRenderer> tubeList = new Dictionary<int, TubeRenderer>();
     public Dictionary<int, LineRenderer> tubeList = new ();
+
+    public GameObject ObjectsToAvoid;
 
     #region Debug Params
     private List<GameObject> sphereNodes = new List<GameObject>();
@@ -23,6 +26,8 @@ public class UnbundleFD : MonoBehaviour {
     public List<GameObject> otherClients;
     public bool isMaster;
     public bool SyncOtherClient = true;
+
+    public List<Transform> GuidanceStops;
 
     // View
     //public Text myText;
@@ -118,7 +123,10 @@ public class UnbundleFD : MonoBehaviour {
 
     public void InitUnbundling(List<KeyValuePair<GameObject, GameObject>> listGO)
     {
-        InitUnbundling(listGO, true);
+        //if (GuidanceStops != null && GuidanceStops.Count > 0)
+        //    InitUnbundling(AddStops(listGO), true);
+        //else
+            InitUnbundling(listGO, true);
     }
 
     public void InitUnbundling(List<KeyValuePair<GameObject, GameObject>> listGO, bool drawing)
@@ -262,11 +270,33 @@ public class UnbundleFD : MonoBehaviour {
         InitShaders();
         initDone = true;
     }
+    
+    //private List<KeyValuePair<GameObject, GameObject>> AddStops(List<KeyValuePair<GameObject, GameObject>> listGO)
+    //{
+    //    List<KeyValuePair<GameObject, GameObject>> newList = new();
+    //    foreach (KeyValuePair<GameObject, GameObject> kv in listGO)
+    //    {
+    //        GameObject target = kv.Key; //Referent
+    //        GameObject source = kv.Value; //Mark
+
+    //        KeyValuePair<GameObject, GameObject> stop1 = new(target, GuidanceStops[0].gameObject);
+    //        KeyValuePair<GameObject, GameObject> stop2 = new(GuidanceStops[0].gameObject, GuidanceStops[1].gameObject);
+    //        KeyValuePair<GameObject, GameObject> stop3 = new(GuidanceStops[1].gameObject, source);
+    //        newList.Add(stop1);
+    //        newList.Add(stop2);
+    //        newList.Add(stop3);
+    //    }
+            
+    //    return newList;
+    //}
 
     // Create the private array of points to avoid.
     // Should put here the method to handle the decomposition of complex obstacles into point based skeletons.
     private void CreateAvoidPointsArray()
     {
+        //foreach (Transform ch in ObjectsToAvoid.transform)
+        //    gameObjectToAvoid.Add(ch.gameObject);
+
         pointsToAvoid = new Vector3[gameObjectToAvoid.Count];
 
         for (int i = 0; i < gameObjectToAvoid.Count; i++)
@@ -275,6 +305,10 @@ public class UnbundleFD : MonoBehaviour {
 
     private void UpdateAvoidPointArray()
     {
+        //gameObjectToAvoid.Clear();
+        //foreach (Transform ch in ObjectsToAvoid.transform)
+        //    gameObjectToAvoid.Add(ch.gameObject);
+
         for (int i = 0; i < gameObjectToAvoid.Count; i++)
             pointsToAvoid[i] = gameObjectToAvoid[i].transform.position;
     }
@@ -511,6 +545,12 @@ public class UnbundleFD : MonoBehaviour {
             ApplyDisplacement();
             RedrawTube();
         }
+
+        //if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))
+        //{
+         //   ApplyDisplacement();
+        //    RedrawTube();
+        //}
 
         //if (Input.GetKey(KeyCode.T))
         //{
@@ -820,7 +860,7 @@ public class UnbundleFD : MonoBehaviour {
         }
     }
 
-    void RedrawTube()
+    private void RedrawTube()
     {
         if (LineRendererDrawing) 
         {

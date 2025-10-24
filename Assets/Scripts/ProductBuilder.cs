@@ -12,8 +12,8 @@ namespace BrushingAndLinking
         public bool prepertiesCreated = false;
         public bool transparentMaterial = false;
         public Material material;
-        //public bool showShelves = false;
-        //public Material material;
+        public GameObject TargetDirection;
+        public bool forwardingTarget = false;
         public List<Product> products;
 
         [Header("Data Logging")]
@@ -39,6 +39,11 @@ namespace BrushingAndLinking
                     child.AddComponent<RayInteractable>();
                     var product = child.AddComponent<Product>();
                     product.ShowOriginalMaterial(!transparentMaterial);
+
+                    if (forwardingTarget)
+                        Forwarding(child);
+                    
+                    product.LinkToChildForwarding = forwardingTarget;
                     products.Add(product);
                 }
             }
@@ -108,6 +113,18 @@ namespace BrushingAndLinking
         {
             if (LogTransformProducts && mainDataStreamWriter != null)
                 mainDataStreamWriter.Close();
+        }
+
+        private void Forwarding(Transform referent)
+        {
+            TargetDirection = new GameObject("TargetDir_" + referent.name);
+           
+            TargetDirection.transform.SetPositionAndRotation(referent.position, transform.rotation);
+             var pos = new Vector3(0f, -0.005f, 0f);
+            TargetDirection.transform.parent = referent;
+            TargetDirection.transform.localScale = Vector3.one;
+            TargetDirection.transform.localPosition = pos;
+
         }
 
     }

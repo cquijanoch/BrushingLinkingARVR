@@ -106,6 +106,23 @@ namespace BrushingAndLinking
             }
         }
 
+        public void ReHighlightProducts()
+        {
+            if (HighlightDictionary.Count == 0 || !HighlightDictionary.ContainsValue(true))
+                return;
+
+
+            foreach (Product product in ProductsDictionary.SelectMany(p => p.Value))
+            {
+                if (HighlightDictionary[product.name])
+                {
+                    product.SetHighlightState(false);
+                    product.SetHighlightState(true);
+                } 
+            }
+                
+        }
+
         public void UnhighlightAllProducts()
         {
             foreach (Product product in ProductsDictionary.SelectMany(x => x.Value))

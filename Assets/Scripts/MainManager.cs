@@ -85,12 +85,19 @@ namespace BrushingAndLinking
         {
             ProductDictionary = new Dictionary<Tuple<ApplicationMode, EnvironmentMode>, List<Product>>();
 
-            var keyDemo = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.AR);
-            ProductDictionary.Add(keyDemo, Shelves_A.GetComponent<ProductBuilder>().products);
-            ProductDictionary[keyDemo].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
-            ProductDictionary[keyDemo].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
-            ProductDictionary[keyDemo].AddRange(Shelves_D.GetComponent<ProductBuilder>().products);
-            ProductDictionary[keyDemo].AddRange(Shelves_E.GetComponent<ProductBuilder>().products);
+            var keyDemoAR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.AR);
+            ProductDictionary.Add(keyDemoAR, Shelves_A.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoAR].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoAR].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoAR].AddRange(Shelves_D.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoAR].AddRange(Shelves_E.GetComponent<ProductBuilder>().products);
+
+            var keyDemoVR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.VR);
+            ProductDictionary.Add(keyDemoVR, Shelves_A.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoVR].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoVR].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoVR].AddRange(Shelves_D.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoVR].AddRange(Shelves_E.GetComponent<ProductBuilder>().products);
 
             var keyStudyAR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Study, EnvironmentMode.AR);
             ProductDictionary.Add(keyStudyAR, Shelves_A.GetComponent<ProductBuilder>().products);
