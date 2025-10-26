@@ -33,11 +33,13 @@ public static class DijkstraAlgorithm
         int vertices = graph.GetAdjacencyList().Length;
         int[] distances = new int[vertices];
         bool[] shortestPathTreeSet = new bool[vertices];
+        Dictionary<int, List<int>> shortPath = new Dictionary<int, List<int>>();
 
         for (int i = 0; i < vertices; i++)
         {
             distances[i] = int.MaxValue;
             shortestPathTreeSet[i] = false;
+            shortPath.Add(i, new List<int>());
         }
 
         distances[source] = 0;
@@ -53,7 +55,10 @@ public static class DijkstraAlgorithm
                 int weight = neighbor.Item2;
 
                 if (!shortestPathTreeSet[v] && distances[u] != int.MaxValue && distances[u] + weight < distances[v])
+                {
                     distances[v] = distances[u] + weight;
+                    shortPath[v].Add(u);
+                }
             }
         }
 
