@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public static class Extensions
@@ -9,5 +11,11 @@ public static class Extensions
         {
             SetActiveRecursivelyExt(child.gameObject, state);
         }
+    }
+
+    public static Stack<T> Clone<T>(this Stack<T> stack)
+    {
+        Contract.Requires(stack != null);
+        return new Stack<T>(new Stack<T>(stack));
     }
 }

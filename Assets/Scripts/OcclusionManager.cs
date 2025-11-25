@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static OVRPlugin;
 
 namespace BrushingAndLinking
 {
@@ -44,16 +42,24 @@ namespace BrushingAndLinking
         public GameObject Shelf_14131; // Aisle #3
         public GameObject Shelf_101112;// Aisle #4
 
-        //private enum ShelfGroup { G1, G2, G3, G4 }
         public enum AisleArea { A1, A2, A3, A4, A5, None } //A14, A24, A34
 
         private Dictionary<AisleArea, List<GameObject>> ShelvesGroup;
-        //private Dictionary<AisleArea, List<ShelfGroup>> AisleShelvesConnections;
 
-        private AisleArea CurrentUserAisle;
+        //private AisleArea LastUserAisle;
+        private GameObject LastUserStep;
+
         private Graph graphSteps;
-
         public Transform PivotCalibration;
+
+        //private Dictionary<AisleArea, bool> AislesVisited = new Dictionary<AisleArea, bool>();
+        private List<KeyValuePair<GameObject, GameObject>> StepsFrustum = new List<KeyValuePair<GameObject, GameObject>>();
+        private Dictionary<string, int> FrustumCount = new Dictionary<string, int>();
+        private Dictionary<GameObject, int> EndSteps = new ();
+
+        public List<GameObject> EndStepList = new();
+        private List<int> Distances = new ();
+        public int count = 0;
 
         public static OcclusionManager Instance { get; private set; }
 
@@ -65,21 +71,11 @@ namespace BrushingAndLinking
 
         void Start()
         {
+            RestartFrustum();
             InitializeShelvesGroup();
             InitializeGraphSteps();
 
-            CurrentUserAisle = AisleArea.None;
-        }
-
-        private void LateUpdate()
-        {
-            var previousAisle = CurrentUserAisle;
-            CurrentUserAisle = GetPositionAisle(Camera.main.transform.position);
-            if (CurrentUserAisle != AisleArea.None)
-            {
-                if (previousAisle != CurrentUserAisle)
-                    HighlightManager.Instance.ReHighlightProducts(); 
-            }
+            //LastUserAisle = GetPositionAisle(Camera.main.transform.position);
         }
 
         private AisleArea GetReferentAisle(Transform referent)
@@ -88,50 +84,174 @@ namespace BrushingAndLinking
             return aisle.Key;
         }
 
-        public List<GameObject> GetSteps(GameObject referent, Vector3 userPos)
+        public List<KeyValuePair<GameObject, GameObject>> GetSteps(GameObject referent, Vector3 userPos, bool addOrRemove)
         {
-            return GetSteps(new List<GameObject>() { referent }, userPos);
-        }
+            if (LastUserStep == null)
+                return StepsFrustum;
 
-        public List<GameObject> GetSteps(List<GameObject> referents, Vector3 userPos)
-        {
-            CurrentUserAisle = GetPositionAisle(userPos);
+            var referentAisle = GetReferentAisle(referent.transform);
+            var stepRef = GetClosestStep(referent.transform.position, referentAisle);
 
-            List<AisleArea> aislesReferents = new List<AisleArea>();
-
-            foreach (var refObj in referents)
-                aislesReferents.Add(GetReferentAisle(refObj.transform));
-            
-            if (CurrentUserAisle == AisleArea.None || aislesReferents.Count == 0 || aislesReferents.TrueForAll(a => a == AisleArea.None))
-                return new List<GameObject>();
-
-            if (aislesReferents.Distinct().Count() == 1)
+            if (addOrRemove)
             {
-                foreach (var refObj in referents)
+                int idxClosest = VertexDic[stepRef];
+                var stepsToClosest = DijkstraAlgorithm.ReturnPath(Distances, idxClosest);
+                AddPathRouting(stepsToClosest, stepRef);
+                count++;
+            }  
+            else
+            {
+                if (EndSteps.ContainsKey(stepRef) && EndSteps[stepRef] > 0)
                 {
-                    var stepUser = GetClosestStep(userPos);
-
-                    DijkstraAlgorithm.Dijkstra(graphSteps, VertexDic[stepUser]);
-
+                    EndSteps[stepRef]--;
+                    
                 }
-                    //GetStepsFromAisle(aislesReferents.First())
+
+                if (EndSteps.ContainsKey(stepRef) && EndSteps[stepRef] == 0)
+                {
+                    EndSteps.Remove(stepRef);
+                    EndStepList.Remove(stepRef);
+                }    
+
+                RecalculatePath(userPos);
+                count--;
+                //RemovePathRouting(stepsToClosest, stepRef);
             }
-            //var ReferentPoint = GetClosestStep(referent.transform.position, PivotCalibration.position);
-            //var UserPoint = GetClosestStep(userPos, PivotCalibration.position);
+                
 
-            //graphSteps
-
-            return new List<GameObject>();
+            return StepsFrustum;
         }
+
+        private List<GameObject> AddPathRouting(Stack<int> path, GameObject stepRef, bool recalculating = false)
+        {
+            if (!recalculating)
+            {
+                if (!EndSteps.ContainsKey(stepRef))
+                    EndSteps.Add(stepRef, 1);
+                else
+                    EndSteps[stepRef]++;
+
+                if (!EndStepList.Contains(stepRef))
+                    EndStepList.Add(stepRef);
+            }
+            
+            var steps = new List<GameObject>();
+            GameObject previous = null;
+
+            while (path.Count > 0)
+            {
+                var idx = path.Pop();
+                var step = VertexDic.FirstOrDefault(kv => kv.Value == idx);
+
+                if (steps.Count > 0)
+                {
+                    var edge = previous.name + "_" + step.Key.name;
+                    if (StepsFrustum.Count(p => p.Key == previous && p.Value == step.Key)  == 0)
+                    {
+                        StepsFrustum.Add(new KeyValuePair<GameObject, GameObject>(previous, step.Key));
+                        FrustumCount.Add(edge, 1);
+                    }
+                    else if (StepsFrustum.Count(p => p.Key == previous && p.Value == step.Key) > 0)
+                        FrustumCount[edge]++;
+                }
+
+                previous = step.Key;
+                steps.Add(previous);
+            }
+
+            return steps;
+        }
+
+        public List<KeyValuePair<GameObject, GameObject>> RecalculatePath(Vector3 userPos)
+        {
+            LastUserStep = GetClosestStep(userPos);
+            if (LastUserStep == null)
+                return StepsFrustum;
+
+            var distancePaths = DijkstraAlgorithm.Dijkstra(graphSteps, VertexDic[LastUserStep]);
+            Distances = distancePaths.Item2.ToList();
+
+            RestartFrustum();
+
+            for (int i = 0; i < EndSteps.Count;i++)
+            {
+                var gO = EndSteps.ElementAt(i);
+                if (gO.Value > 0)
+                {
+                    var stepsToClosest = DijkstraAlgorithm.ReturnPath(Distances, VertexDic[gO.Key]);
+                    for (int j = 0; j < EndSteps[gO.Key]; j++)
+                    {
+                        var copy = stepsToClosest.Clone();
+                        AddPathRouting(copy, gO.Key, true);
+                    }
+                }
+            }
+            
+            return StepsFrustum;
+        }
+
+        //private List<string> RemovePathRouting(GameObject stepRef)
+        //{
+        //    if (EndSteps.ContainsKey(stepRef) && EndSteps[stepRef] > 0)
+        //    {
+        //        EndSteps[stepRef]--;
+        //        EndStepList.Remove(stepRef);
+        //    }
+
+        //    var stepsToRemove = new List<string>();
+        //    GameObject previous = null;
+
+        //    while (path.Count > 0)
+        //    {
+        //        var idx = path.Pop();
+        //        var step = VertexDic.FirstOrDefault(kv => kv.Value == idx);
+
+        //        if (previous != null)
+        //        {
+        //            var edge = previous.name + "_" + step.Key.name;
+        //            if (!FrustumCount.ContainsKey(edge))
+        //                Debug.LogError("[OcclusionManager]::edge::No exist::" + edge);
+        //            else if (FrustumCount[edge] == 0)
+        //                Debug.LogError("[OcclusionManager]::edge::ZERO::" + edge);
+        //            else
+        //            {
+        //                FrustumCount[edge]--;
+
+        //                if (FrustumCount[edge] == 0)
+        //                {
+        //                    var index = StepsFrustum.IndexOf(new KeyValuePair<GameObject, GameObject>(previous, step.Key));
+        //                    StepsFrustum.RemoveAt(index);
+        //                    stepsToRemove.Add(edge);
+        //                }
+        //            }
+        //        }
+
+        //        previous = step.Key;
+        //    }
+
+        //    foreach (var k in stepsToRemove)
+        //        FrustumCount.Remove(k);
+
+        //    return stepsToRemove;
+        //}
 
         private void InitializeShelvesGroup()
         {
-            ShelvesGroup = new Dictionary<AisleArea, List<GameObject>>();
-            ShelvesGroup.Add(AisleArea.A1, new List<GameObject>() { Shelf_181716 });
-            ShelvesGroup.Add(AisleArea.A2, new List<GameObject>() { Shelf_234, Shelf_765 });
-            ShelvesGroup.Add(AisleArea.A3, new List<GameObject>() { Shelf_14131 });
-            ShelvesGroup.Add(AisleArea.A4, new List<GameObject>() { Shelf_101112 });
-            ShelvesGroup.Add(AisleArea.A5, new List<GameObject>());
+            ShelvesGroup = new Dictionary<AisleArea, List<GameObject>>()
+            {
+                { AisleArea.A1, new List<GameObject>() { Shelf_181716 } },
+                { AisleArea.A2, new List<GameObject>() { Shelf_234, Shelf_765 } },
+                { AisleArea.A3, new List<GameObject>() { Shelf_14131 } },
+                { AisleArea.A4, new List<GameObject>() { Shelf_101112 } },
+                { AisleArea.A5, new List<GameObject>() }
+            };
+        }
+
+        public void RestartFrustum()
+        {
+            StepsFrustum = new ();
+            FrustumCount = new ();
+            //EndStepList = new();
         }
 
         //private void InitializeShelvesConnections()
@@ -236,16 +356,46 @@ namespace BrushingAndLinking
             return null;
         }
 
-        private GameObject GetClosestStep(Vector3 Position)
+        public bool DoINeedNewPath()
         {
-            var currentAisle = GetPositionAisle(Position);
+            var userPos = Camera.main.transform.position;
+            var newUserStep = GetClosestStep(userPos);
 
-            var StepByAisle = GetStepsFromAisle(currentAisle);
+            if (newUserStep == null)
+                return false;
 
-            if (StepByAisle == null)
+            if (LastUserStep != newUserStep)
+            {
+                LastUserStep = newUserStep;
+                return true;
+            }
+
+            return false;
+        }
+
+        public GameObject GetStepReferent(Transform referent)
+        {
+            var Position = referent.position;
+            var currentAisle = GetReferentAisle(referent);
+            var StepsByAisle = GetStepsFromAisle(currentAisle);
+
+            if (StepsByAisle == null)
                 return null;
 
-            var sorted = StepByAisle.OrderBy(pos => (Position - pos.transform.position).sqrMagnitude);
+            var sorted = StepsByAisle.OrderBy(pos => (Position - pos.transform.position).sqrMagnitude);
+            return sorted.FirstOrDefault();
+        }
+
+        private GameObject GetClosestStep(Vector3 Position, AisleArea Area = AisleArea.None)
+        {
+            var currentAisle = Area == AisleArea.None? GetPositionAisle(Position) : Area;
+
+            var StepsByAisle = GetStepsFromAisle(currentAisle);
+
+            if (StepsByAisle == null)
+                return null;
+
+            var sorted = StepsByAisle.OrderBy(pos => (Position - pos.transform.position).sqrMagnitude);
             return sorted.FirstOrDefault();
         }
 
@@ -254,7 +404,7 @@ namespace BrushingAndLinking
             var CenterPivot = PivotCalibration.position;
 
             //Aisle 1   
-            var Pos0 = CenterPivot + new Vector3(1.8f, 0, -1.5f);
+            var Pos0 = CenterPivot + new Vector3(2.5f, 0, -1.5f);
             var Pos1 = CenterPivot + new Vector3(1.05f, 0, 1.5f);
 
             //Aisle 2
@@ -263,44 +413,55 @@ namespace BrushingAndLinking
 
             //Aisle 3
             var Pos4 = CenterPivot + new Vector3(-1.2f, 0, -1.5f);
-            var Pos5 = CenterPivot + new Vector3(-2f, 0, 1.5f);
+            var Pos5 = CenterPivot + new Vector3(-2.5f, 0, 1.5f);
 
             //Aisle 4
-            var Pos6 = CenterPivot + new Vector3(1.8f, 0, -2.7f);
-            var Pos7 = CenterPivot + new Vector3(-2f, 0, -1.5f);
+            var Pos6 = CenterPivot + new Vector3(2.5f, 0, -2.7f);
+            var Pos7 = CenterPivot + new Vector3(-2.5f, 0, -1.5f);
 
-            //Aisle 24
-            //var Pos8 = CenterPivot + new Vector3(0.6f, 0, -2.7f);
-            //var Pos9 = CenterPivot + new Vector3(-0.75f, 0, -1.5f);
+            //Aisle 5
+            var Pos8 = CenterPivot + new Vector3(2.5f, 0, 1.5f);
+            var Pos9 = CenterPivot + new Vector3(-2.5f, 0, 3f);
 
-            //Aisle 34
-            //var Pos10 = CenterPivot + new Vector3(-1.2f, 0, -2.7f);
-            //var Pos11 = CenterPivot + new Vector3(-2f, 0, -1.5f);
-
-
-            if (Position.x < Pos0.x && Position.x > Pos1.x)
-            {
-                if (Position.z > Pos0.z && Position.z < Pos1.z)
+            if (Position.x < Pos0.x && Position.x > Pos1.x &&
+                Position.z > Pos0.z && Position.z < Pos1.z)
                     return AisleArea.A1;
-            }
 
-            if (Position.x < Pos2.x && Position.x > Pos3.x)
-            {
-                if (Position.z > Pos2.z && Position.z < Pos3.z)
+            if (Position.x < Pos2.x && Position.x > Pos3.x && 
+                Position.z > Pos2.z && Position.z < Pos3.z)
                     return AisleArea.A2;
-            }
 
-            if (Position.x < Pos4.x && Position.x > Pos5.x)
-            {
-                if (Position.z > Pos4.z && Position.z < Pos5.z)
+            if (Position.x < Pos4.x && Position.x > Pos5.x &&
+                Position.z > Pos4.z && Position.z < Pos5.z)
                     return AisleArea.A3;
-            }
 
             if (Position.x > Pos7.x && Position.x < Pos6.x &&
                 Position.z < Pos7.z && Position.z > Pos6.z)
                 return AisleArea.A4;
 
+            if (Position.x < Pos8.x && Position.x > Pos9.x &&
+                Position.z > Pos8.z && Position.z < Pos9.z)
+                return AisleArea.A5;
+
             return AisleArea.None;
+        }
+
+        private void OnDestroy()
+        {
+            count = 0;
+            FrustumCount.Clear();
+            StepsFrustum.Clear();
+            EndSteps.Clear();
+            EndStepList.Clear();
+        }
+
+        private void OnDisable()
+        {
+            count = 0;
+            FrustumCount.Clear();
+            StepsFrustum.Clear();
+            EndSteps.Clear();
+            EndStepList.Clear();
         }
     }
 }

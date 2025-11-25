@@ -9,11 +9,11 @@ public class UnbundleFD : MonoBehaviour {
     // Visual Object Data
     public List<GameObject> sensorToTakeIntoAccount = new ();
     public List<KeyValuePair<GameObject, GameObject>> pointsList = new ();
-    public List<KeyValuePair<GameObject, GameObject>> pointsUptList = new();
+    //public List<KeyValuePair<GameObject, GameObject>> pointsUptList = new();
     public List<GameObject> gameObjectToAvoid = new ();
     public List<GameObject> attractivePlane = new ();
     //public Dictionary<int, TubeRenderer> tubeList = new Dictionary<int, TubeRenderer>();
-    public Dictionary<int, LineRenderer> tubeList = new ();
+    private Dictionary<int, LineRenderer> tubeList = new ();
 
     public GameObject ObjectsToAvoid;
 
@@ -497,6 +497,7 @@ public class UnbundleFD : MonoBehaviour {
             Destroy(entry.Value.gameObject);
 
         tubeList.Clear();
+        pointsList.Clear();
     }
 
     // Update is called once per frame

@@ -28,18 +28,18 @@ public class Graph
 
 public static class DijkstraAlgorithm
 {
-    public static int[] Dijkstra(Graph graph, int source)
+    public static Tuple<int[], int[]> Dijkstra(Graph graph, int source)
     {
         int vertices = graph.GetAdjacencyList().Length;
         int[] distances = new int[vertices];
         bool[] shortestPathTreeSet = new bool[vertices];
-        Dictionary<int, List<int>> shortPath = new Dictionary<int, List<int>>();
+        int[] previous = new int[vertices];
 
         for (int i = 0; i < vertices; i++)
         {
             distances[i] = int.MaxValue;
             shortestPathTreeSet[i] = false;
-            shortPath.Add(i, new List<int>());
+            previous[i] = -1;
         }
 
         distances[source] = 0;
@@ -57,12 +57,26 @@ public static class DijkstraAlgorithm
                 if (!shortestPathTreeSet[v] && distances[u] != int.MaxValue && distances[u] + weight < distances[v])
                 {
                     distances[v] = distances[u] + weight;
-                    shortPath[v].Add(u);
+                    previous[v] = u;
                 }
             }
         }
 
-        return distances;
+        return Tuple.Create(distances, previous); 
+    }
+
+    public static Stack<int> ReturnPath(List<int> previous, int destination)
+    {
+        Stack<int> path = new ();
+        int current = destination;
+
+        while (current != -1)
+        {
+            path.Push(current);
+            current = previous[current];
+        }
+
+        return path;
     }
 
     private static int MinimumDistance(int[] distances, bool[] shortestPathTreeSet)

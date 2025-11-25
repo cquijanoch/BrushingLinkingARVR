@@ -1,6 +1,5 @@
 using DxR;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace BrushingAndLinking
@@ -11,25 +10,31 @@ namespace BrushingAndLinking
         public override HighlightTechnique Mode { get { return HighlightTechnique.Link; } }
 
         private static Dictionary<string, Mark> marksDict;
-        private static UnbundleFD unbundleFD;
+        //private static UnbundleFD unbundleFD;
+        //private static UnbundleFD unbundleFDExt;
         private static List<KeyValuePair<GameObject, GameObject>> linkPairList = new ();
 
         private GameObject markGameObject;
-        private List<GameObject> stepsPoints;
         private GameObject targetReferent;
 
         //private bool isHighlighted = false;
 
         private void Start()
         {
-            if (unbundleFD == null)
-                unbundleFD = FindAnyObjectByType<UnbundleFD>();
+            //if (unbundleFD == null)
+            //    unbundleFD = FindAnyObjectByType<UnbundleFD>();
 
-            if (!unbundleFD.enabled)
-                unbundleFD.enabled = true;
+            //if (!unbundleFD.enabled)
+            //    unbundleFD.enabled = true;
+
+            //if (unbundleFDExt == null)
+            //    unbundleFDExt = FindAnyObjectByType<UnbundleFD>();
+
+            //if (!unbundleFDExt.enabled)
+            //    unbundleFDExt.enabled = true;
 
             AlwaysVisualLink = true;
-            UpdateVisualLink();
+            //UpdateVisualLink();
 
             if (marksDict == null)
                 CreateMarksDictionary();
@@ -56,63 +61,90 @@ namespace BrushingAndLinking
 
             if (!isHighlighted)
             {
-                stepsPoints = OcclusionManager.Instance.GetSteps(gameObject, Camera.main.transform.position);
-                GameObject pNode = targetReferent;
-              
-                for (int i = 0; i < stepsPoints.Count; i++)
-                {
-                    linkPairList.Add(new KeyValuePair<GameObject, GameObject>(pNode, stepsPoints[i]));
-                    pNode = stepsPoints[i];
-                }   
-               
-                linkPairList.Add(new KeyValuePair<GameObject, GameObject>(pNode, markGameObject));
-                unbundleFD.ResetBundling();
-                unbundleFD.InitUnbundling(linkPairList);
+                PathManager.Instance.PathAddingTarget(gameObject);
+                //if (OcclusionManager.Instance.DoINeedNewPath())
+                //    OcclusionManager.Instance.RecalculatePath(Camera.main.transform.position);
+
+                //var frustum = OcclusionManager.Instance.GetSteps(gameObject, Camera.main.transform.position, true);
+                //frustumDisplayed = new(frustum);
+                //unbundleFD.ResetBundling();
+
+                //if (frustum.Count == 0)
+                //    linkPairList.Add(new KeyValuePair<GameObject, GameObject>(targetReferent, markGameObject));
+                //else
+                //{
+
+                //var referentStep = OcclusionManager.Instance.GetStepReferent(gameObject.transform);
+                //linkPairList.Add(new KeyValuePair<GameObject, GameObject>(targetReferent, referentStep));
+                //linkPairList.Add(new KeyValuePair<GameObject, GameObject>(frustum.First().Key, markGameObject));
+                //}
+
+                //frustumDisplayed.AddRange(linkPairList);
+
+                //unbundleFD.InitUnbundling(frustumDisplayed);
 
                 isHighlighted = true;
             }
         }
 
+        //public void ResetFrustumLink()
+        //{
+        //    if (!OcclusionManager.Instance.DoINeedNewPath())
+        //        return;
+
+        //    frustumDisplayed = new(OcclusionManager.Instance.RecalculatePath(Camera.main.transform.position));
+        //    unbundleFD.ResetBundling();
+        //    unbundleFD.InitUnbundling(frustumDisplayed);
+        //}
+
         public override void Unhighlight()
         {
             if (isHighlighted)
             {
-                bool isRemoved = false;
-                for (int i = 0; i < linkPairList.Count; i++)
-                {
-                    var idxs = new List<int>();
-                    if (linkPairList[i].Key == targetReferent)
-                    {
-                        if (stepsPoints.Count == 2)
-                        {
-                            var idx1 = linkPairList.FindIndex(o => o.Key == stepsPoints[0] && o.Value == stepsPoints[1]);
-                            var idx2 = linkPairList.FindIndex(o => o.Key == stepsPoints[1] && o.Value == markGameObject);
-                            idxs.Add(idx1);
-                            idxs.Add(idx2);
-                        }
+                PathManager.Instance.PathRemovingTarget(gameObject);
 
-                        if (stepsPoints.Count == 1)
-                        {
-                            var idx = linkPairList.FindIndex(o => o.Key == stepsPoints[0] && o.Value == markGameObject);
-                            idxs.Add(idx);
-                        }
+                //var newFrustum = OcclusionManager.Instance.GetSteps(gameObject, Camera.main.transform.position, false).ToList();
 
-                        idxs.Add(i);
+                //bool isRemovedFrustum = !frustumDisplayed.SequenceEqual(newFrustum);
+                //if (isRemovedFrustum)
+                //    frustumDisplayed = newFrustum;
 
-                        foreach (var idx in idxs.OrderByDescending(c => c).ToArray())
-                            linkPairList.RemoveAt(idx);
+                //var referentStep = OcclusionManager.Instance.GetStepReferent(gameObject.transform);
 
-                        isRemoved = true;
-                        break;
-                    }
-                }
+                //for (int i = 0; i < linkPairList.Count; i++)
+                //{
+                //    if (linkPairList[i].Key == targetReferent && linkPairList[i].Value == referentStep)
+                //    {
+                //        if (!isRemovedFrustum)
+                //            frustumDisplayed.Remove(linkPairList[i]);
+                //        else
+                //            frustumDisplayed.Add(linkPairList[i]);
+                //            linkPairList.RemoveAt(i);
+                //        break;
+                //    }
 
-                if (isRemoved)
-                {
-                    unbundleFD.ResetBundling();
-                    if (linkPairList.Count > 0)
-                        unbundleFD.InitUnbundling(linkPairList);
-                }
+                //}
+                //    else
+                //    {
+                //        if (linkPairList[i].Key == targetReferent && linkPairList[i].Value == frustumDisplayed.Last().Value)
+                //            idxs.Add(i);
+                //        else if (linkPairList[i].Key == frustumDisplayed.First().Key && linkPairList[i].Value == markGameObject)
+                //            idxs.Add(i);
+
+
+                //    }
+
+                //    foreach (var idx in idxs.OrderByDescending(c => c).ToArray())
+                //    {
+                //        linkPairList.RemoveAt(idx);
+                //        isRemovedReferent = true;
+                //    }
+                //}
+
+                //unbundleFD.ResetBundling();            
+
+                //if (frustumDisplayed.Count > 0)
+                //    unbundleFD.InitUnbundling(frustumDisplayed);
 
                 isHighlighted = false;
             }
@@ -130,7 +162,7 @@ namespace BrushingAndLinking
 
         public void UpdateVisualLink()
         {
-            unbundleFD.SetManageDisplayer(AlwaysVisualLink);
+            //unbundleFD.SetManageDisplayer(AlwaysVisualLink);
         }
 
         public static void VisMarksChanged()
@@ -138,7 +170,9 @@ namespace BrushingAndLinking
             marksDict = null;
 
             linkPairList?.Clear();
-            unbundleFD?.ResetBundling();
+            //frustumDisplayed?.Clear();
+
+            //unbundleFD?.ResetBundling();
         }
     }
 }

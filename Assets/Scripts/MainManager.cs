@@ -15,6 +15,7 @@ namespace BrushingAndLinking
     {
         public GameObject ColorManager;
         public GameObject InteractionManager;
+        public GameObject RoutingManager;
         public GameObject CalibrationManager;
         public GameObject StudyMManager;
         public GameObject TabletDataVis;
@@ -48,9 +49,11 @@ namespace BrushingAndLinking
 
             AppMode = ApplicationMode.None;
             CurrentHandedness = Handedness.Right;
+            RoutingManager.SetActive(false);
             InteractionManager.SetActive(true);
             TabletDataVis.SetActive(true);
         }
+
         void Start()
         {
             EnvironmnetInfraestructure.SetActive(false);
@@ -112,6 +115,7 @@ namespace BrushingAndLinking
         {
             StartCoroutine(ChangeEnvironment(EnvironmentMode.AR));
             InteractionManager.SetActive(false);
+            RoutingManager.SetActive(false);
             CalibrationManager.SetActive(true);
             StudyMManager.SetActive(false);
 
@@ -136,6 +140,7 @@ namespace BrushingAndLinking
             AppMode = ApplicationMode.Demo;
 
             InteractionManager.SetActive(true);
+            RoutingManager.SetActive(true);
             CalibrationManager.SetActive(false);
             StudyMManager.SetActive(true);
             StartCoroutine(PlayDemo());
