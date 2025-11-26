@@ -66610,6 +66610,7 @@ MonoBehaviour:
   Infraestructure: {fileID: 1128062489}
   Baseplate: {fileID: 1280181242}
   FloorPoints: {fileID: 693342676}
+  GuiderCues: {fileID: 1138995572}
   PivotCalibration: {fileID: 1500100135}
   Shelves: []
   Points: []

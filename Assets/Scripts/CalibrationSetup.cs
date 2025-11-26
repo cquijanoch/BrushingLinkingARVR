@@ -11,6 +11,7 @@ public class CalibrationSetup : MonoBehaviour
     public GameObject Infraestructure;
     public GameObject Baseplate;
     public GameObject FloorPoints;
+    public GameObject GuiderCues;
     public Transform PivotCalibration;
 
     public List<Transform> Shelves = new List<Transform>();
@@ -122,6 +123,7 @@ public class CalibrationSetup : MonoBehaviour
     public void FinishShelvesCalibration()
     {
         Infraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        GuiderCues.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
         Baseplate.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
         Baseplate.transform.position = Baseplate.transform.position + new Vector3(0f, 0.001f, 0f);
         Baseplate.transform.Rotate(new Vector3(90f, 0, -180));
