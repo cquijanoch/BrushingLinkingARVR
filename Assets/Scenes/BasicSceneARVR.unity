@@ -26944,8 +26944,6 @@ GameObject:
   - component: {fileID: 1837048911}
   - component: {fileID: 1837048910}
   - component: {fileID: 1837048916}
-  - component: {fileID: 1837048917}
-  - component: {fileID: 1837048918}
   m_Layer: 0
   m_Name: InteractionManager
   m_TagString: Untagged
@@ -27134,55 +27132,6 @@ MonoBehaviour:
   IsViewing: 0
   ObjectTarget: {fileID: 896326188}
   timeViewing: 0
---- !u!114 &1837048917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1837048908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3e35681c9ccde4abba8d9f2babcbe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  StepPoint41: {fileID: 0}
-  StepPoint42: {fileID: 0}
-  StepPoint10: {fileID: 0}
-  StepPoint11: {fileID: 0}
-  StepPoint12: {fileID: 0}
-  StepPoint51: {fileID: 0}
-  StepPoint52: {fileID: 0}
-  StepPoint53: {fileID: 0}
-  StepPoint18: {fileID: 0}
-  StepPoint17: {fileID: 0}
-  StepPoint16: {fileID: 0}
-  StepPoint2: {fileID: 0}
-  StepPoint3: {fileID: 0}
-  StepPoint4: {fileID: 0}
-  StepPoint1: {fileID: 0}
-  StepPoint13: {fileID: 0}
-  StepPoint14: {fileID: 0}
-  Shelf_181716: {fileID: 2008862838}
-  Shelf_234: {fileID: 726133669}
-  Shelf_765: {fileID: 1489164005}
-  Shelf_14131: {fileID: 1385983114}
-  Shelf_101112: {fileID: 1173700153}
-  PivotCalibration: {fileID: 1500100135}
---- !u!114 &1837048918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1837048908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f48c381da891ce44e8dd081ad6551564, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  UserRig: {fileID: 3036151161626649572}
-  speed: 0.5
 --- !u!1 &1846125692
 GameObject:
   m_ObjectHideFlags: 0
