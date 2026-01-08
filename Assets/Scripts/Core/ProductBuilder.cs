@@ -126,7 +126,5 @@ namespace BrushingAndLinking
             TargetDirection.transform.localPosition = pos;
 
         }
-
     }
-
 }
