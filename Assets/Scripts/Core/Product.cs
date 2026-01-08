@@ -178,7 +178,6 @@ namespace BrushingAndLinking
 
         public void ShowOriginalMaterial(bool show, Material optionalMaterial = null)
         {
-
             foreach (var kvp in originalMaterials)
             {
                 if (show)
@@ -187,8 +186,7 @@ namespace BrushingAndLinking
                     kvp.Key.materials = new Material[1] { optionalMaterial };
                 else
                     kvp.Key.materials = new Material[0];
-            }
-                    
+            }        
         }
     }
 }

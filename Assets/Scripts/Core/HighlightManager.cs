@@ -111,7 +111,6 @@ namespace BrushingAndLinking
             if (HighlightDictionary.Count == 0 || !HighlightDictionary.ContainsValue(true))
                 return;
 
-
             foreach (Product product in ProductsDictionary.SelectMany(p => p.Value))
             {
                 if (HighlightDictionary[product.name])
@@ -119,8 +118,7 @@ namespace BrushingAndLinking
                     product.SetHighlightState(false);
                     product.SetHighlightState(true);
                 } 
-            }
-                
+            }   
         }
 
         public void UnhighlightAllProducts()

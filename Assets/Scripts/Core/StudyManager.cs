@@ -35,16 +35,6 @@ namespace BrushingAndLinking
         public TextAsset TaskInfo;
 
         [Header("Supermarket Variables")]
-        //public Transform ShelvesInfraestructure;
-        //public GameObject InLayoutProducts;
-        //public GameObject OutLayoutProducts;
-        //public GameObject EnvironmentForVR;
-
-        //[Tooltip("Tutorials are the brief period of time where the participant can see the highlighting technique before the trial begins.")] 
-        //public GameObject TutorialLayoutProducts;
-
-        //[Tooltip("Training is the stage before the user study begins, where the participant can try and practice with the interactions.")] 
-        //public GameObject TrainingLayoutProducts;
         public Vis MainVis;
         public Tablet Tablet;
         public ButtonGroup XButtonGroup;
@@ -53,7 +43,6 @@ namespace BrushingAndLinking
         [Header("Debug Parameters")]
         public bool AutoStartDemo = false;
         public bool AutoStartUserStudy = false;
-        //public bool AutoStartTraining = false;
 
         public List<StudyTrial> StudyTrials { get; private set; }
         public StudyTrial CurrentTrial { get { return StudyTrials[CurrentTrialIdx]; } }
@@ -65,7 +54,6 @@ namespace BrushingAndLinking
 
         public StudyMode Status = StudyMode.Pause;
 
-        // Data variables are using rows x columns (i.e. each list element is a row, each array element is a column within that row)
         private List<string[]> participantInfoData;
         private List<string[]> taskInfoData;
         private string[] participantInfoDataHeaders;
@@ -73,7 +61,6 @@ namespace BrushingAndLinking
         public List<Product> studyProducts;
         private Random randGen;
 
-        // Key is the configuration of independent variables, value is a list of questions associated with it
         private Dictionary<TaskType, List<StudyTask>> studyTasksDictionary;
         private EnvironmentMode currentEnvironment;
 
@@ -91,7 +78,6 @@ namespace BrushingAndLinking
 
         private void Awake()
         {
-            // Assign this object to the Instance property if it isn't already assigned, otherwise delete this object
             if (Instance != null && Instance != this) Destroy(this);
             else Instance = this;
 
@@ -126,7 +112,6 @@ namespace BrushingAndLinking
 
             DemoActive = true;
 
-            // Change the vis data set to a training one
             var json = MainVis.GetVisSpecs();
             json["data"]["url"] = "data_source_demo.csv";
             MainVis.UpdateVisSpecsFromJSONNode(json);
@@ -171,22 +156,21 @@ namespace BrushingAndLinking
             currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
             StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
 
-
             studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
             Tablet.SetOverallVisibility(true);
             
-            // Set initial visibility rules
             SetProductsHidden();
-            // Only show the pre-tutorial stuff
             SetTabletAllVisibility(false, true, false, false, false, true, false);
 
-            // Load the first trial in the study
             LoadTrial(StudyTrials[CurrentTrialIdx]);
 
-            // Initialise stream writer for data logging
             InitialiseDataLogging();
         }
 
+        /// There are three possible states that the study can be in when moving to a next step
+        /// 1. The loaded trial is not active and has not been completed -> Start the trial (i.e. pre-trial)
+        /// 2. The loaded trial is currently active -> Stop the trial (i.e. mid-trial)
+        /// 3. The loaded trial has already completed -> Load the next trial (i.e. post trial)
         public void NextStudyStep()
         {
             if (DemoActive)
@@ -198,12 +182,6 @@ namespace BrushingAndLinking
             if (!StudyActive)
                 return;
 
-            /// There are three possible states that the study can be in when moving to a next step
-            /// 1. The loaded trial is not active and has not been completed -> Start the trial (i.e. pre-trial)
-            /// 2. The loaded trial is currently active -> Stop the trial (i.e. mid-trial)
-            /// 3. The loaded trial has already completed -> Load the next trial (i.e. post trial)
-
-            // State 1: Start the trial
             if (!TrialActive && !CurrentTrial.IsTrialCompleted)
                 StartTrial();
             else if (TrialActive)
@@ -233,13 +211,12 @@ namespace BrushingAndLinking
 
         private void LoadTrial(StudyTrial trialToLoad)
         {
-            // Change the vis data set
             var json = MainVis.GetVisSpecs();
 
             if (TaskType.Tutorial == trialToLoad.Task)
                 json["data"]["url"] = "data_source_tutorial.csv";
             else
-                json["data"]["url"] = "data_source_study.csv";//"ProductData_Tutorial.csv";
+                json["data"]["url"] = "data_source_study.csv";
 
             MainVis.UpdateVisSpecsFromJSONNode(json);
             ResetAllBrushingAndLinking();
@@ -432,7 +409,6 @@ namespace BrushingAndLinking
 
         private void LoadTasks(ref List<string[]> taskInfoData)
         {
-            // Create data structure
             studyTasksDictionary = new Dictionary<TaskType, List<StudyTask>>();
 
             foreach (string[] row in taskInfoData)
