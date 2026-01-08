@@ -4,7 +4,7 @@ This repository contains supplemental material for a research paper **Situated B
 
 Please, check the presentation [video](TBA)
 
-It contains including source code, the software used in the experiment as well as the experimental data and analysis scripts.
+It contains including source code, the software used in the experiment as well as the logging data and analysis scripts.
 
 ## Source Code
 
@@ -26,7 +26,7 @@ Optionally, an apk file can be found in *Installer* folder, ready to be installe
 
 2. The application will run in AR mode, where a *admin menu* is displayed on the left controller.
 
-3. Using *Points* button will display the calibration cues. After grabbing the red cue to the center of the floor, *Show Shelves* button will show the outline of all the products.
+3. The calibration of the virtual and physical shelves is supported by cues. *Points* button displays the calibration cues. After grabbing the red cue to the center of the floor, *Show Shelves* button will show the outline of all the products.
 
 4. To start the demo, *Demo* button will run the application in AR using visual linking highlighting.
 
@@ -49,5 +49,7 @@ This folder contais the statistical scripts used to analyze results.
 3. In the R terminal, `> source(main.R)`, which will ingest CSVs files (tasks, tracking and forms), compute (bootstrap) CIs, and export plots.
 
 4. All of the .png charts will appear in this directory.
-### Acknowledgements
-Development of the prototype was led by Benjamin Lee, with assistance from Nina Doerr and Katarina Baricova.
+
+## Acknowledgements:
+
+This software is based on *VisHigh* by [Doerr et al.](https://github.com/doerrna/Visual-Highlighting-for-Situated-Brushing-and-Linking) 
