@@ -1,7 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Oculus.Interaction.Input;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BrushingAndLinking
@@ -19,26 +20,32 @@ namespace BrushingAndLinking
         public GameObject StudyMManager;
         public GameObject TabletDataVis;
 
+        [Header("Shelves Poster-based AR")]
         public GameObject Shelves_A;
         public GameObject Shelves_B;
         public GameObject Shelves_C;
         public GameObject Shelves_D;
         public GameObject Shelves_E;
+        public GameObject Occluders;
 
+        [Header("Shelves Poster-based VR")]
         public GameObject ShelvesVR_A;
         public GameObject ShelvesVR_B;
         public GameObject ShelvesVR_C; //Fridge
-
-        //public GameObject ShelvesInfrastructure;
         public GameObject EnvironmentRoom;
+
+        [Header("Shelves Real-based ARVR")]
+        public List<GameObject> ShelvesReal;
+        public GameObject EnvironmentRoom2;
+
         public Light LightInfrastructure;
-        public GameObject Occluders;
+        
         public EnvironmentMode EnvironmentMode = EnvironmentMode.AR;
         public SupermarketVersion supermarketVersion = SupermarketVersion.None;
         public ApplicationMode AppMode;
 
         private Handedness CurrentHandedness;
-        private Dictionary<Tuple<ApplicationMode, EnvironmentMode>, List<Product>> ProductDictionary;
+        private Dictionary<(ApplicationMode, EnvironmentMode, SupermarketVersion), List<Product>> ProductDictionary;
 
         public static MainManager Instance { get; private set; }
 
@@ -55,7 +62,6 @@ namespace BrushingAndLinking
         void Start()
         {
             EnvironmentRoom.SetActive(false);
-            ReadShelves();
             StudyMManager.SetActive(true);
             ColorManager.SetActive(true);
             StartCalibration();
@@ -82,31 +88,81 @@ namespace BrushingAndLinking
             }
         }
 
-        private void ReadShelves()
+        public void ReadShelves(SupermarketVersion supermarket)
         {
-            ProductDictionary = new Dictionary<Tuple<ApplicationMode, EnvironmentMode>, List<Product>>();
+            CleanProductsDictionary();
+            switch (supermarket)
+            {
+                case SupermarketVersion.None:
+                    break;
+                case SupermarketVersion.SupermarketPoster:
+                    ReadShelvesPoster();
+                    break;
+                case SupermarketVersion.SupermarketReal:
+                    ReadShelvesReal();
+                    break;
+            }
 
-            var keyDemoAR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.AR);
-            ProductDictionary.Add(keyDemoAR, Shelves_A.GetComponent<ProductBuilder>().products);
+            supermarketVersion = supermarket;
+
+        }
+
+        private void ReadShelvesReal()
+        {
+            var keyDemoAR = (ApplicationMode.Demo, EnvironmentMode.AR, SupermarketVersion.SupermarketReal);
+            
+            foreach (var shelfReal in ShelvesReal)
+                if (ProductDictionary.ContainsKey(keyDemoAR))
+                    ProductDictionary[keyDemoAR].AddRange(shelfReal.GetComponent<ProductBuilder>().products);
+                else
+                    ProductDictionary.Add(keyDemoAR, ShelvesReal[0].GetComponent<ProductBuilder>().products.ToList());
+
+            var keyDemoVR = (ApplicationMode.Demo, EnvironmentMode.VR, SupermarketVersion.SupermarketReal);
+
+            foreach (var shelfReal in ShelvesReal)
+                if (ProductDictionary.ContainsKey(keyDemoVR))
+                    ProductDictionary[keyDemoVR].AddRange(shelfReal.GetComponent<ProductBuilder>().products);
+                else
+                    ProductDictionary.Add(keyDemoVR, ShelvesReal[0].GetComponent<ProductBuilder>().products.ToList());
+        }
+
+        private void ReadShelvesPoster()
+        {
+            var keyDemoAR = (ApplicationMode.Demo, EnvironmentMode.AR, SupermarketVersion.SupermarketPoster);
+            ProductDictionary.Add(keyDemoAR, Shelves_A.GetComponent<ProductBuilder>().products.ToList());
             ProductDictionary[keyDemoAR].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoAR].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoAR].AddRange(Shelves_D.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoAR].AddRange(Shelves_E.GetComponent<ProductBuilder>().products);
 
-            var keyDemoVR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.VR);
-            ProductDictionary.Add(keyDemoVR, Shelves_A.GetComponent<ProductBuilder>().products);
+            var keyDemoVR = (ApplicationMode.Demo, EnvironmentMode.VR, SupermarketVersion.SupermarketPoster);
+            ProductDictionary.Add(keyDemoVR, Shelves_A.GetComponent<ProductBuilder>().products.ToList());
             ProductDictionary[keyDemoVR].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoVR].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoVR].AddRange(Shelves_D.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoVR].AddRange(Shelves_E.GetComponent<ProductBuilder>().products);
 
-            var keyStudyAR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Study, EnvironmentMode.AR);
-            ProductDictionary.Add(keyStudyAR, Shelves_A.GetComponent<ProductBuilder>().products);
+            var keyStudyAR = (ApplicationMode.Study, EnvironmentMode.AR, SupermarketVersion.SupermarketPoster);
+            ProductDictionary.Add(keyStudyAR, Shelves_A.GetComponent<ProductBuilder>().products.ToList());
             ProductDictionary[keyStudyAR].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
 
-            var keyStudyVR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Study, EnvironmentMode.VR);
-            ProductDictionary.Add(keyStudyVR, ShelvesVR_A.GetComponent<ProductBuilder>().products);
+            var keyStudyVR = (ApplicationMode.Study, EnvironmentMode.VR, SupermarketVersion.SupermarketPoster);
+            ProductDictionary.Add(keyStudyVR, ShelvesVR_A.GetComponent<ProductBuilder>().products.ToList());
             ProductDictionary[keyStudyVR].AddRange(ShelvesVR_B.GetComponent<ProductBuilder>().products);
+        }
+
+        private void CleanProductsDictionary()
+        {
+            if (ProductDictionary == null)
+            { 
+                ProductDictionary = new Dictionary<(ApplicationMode, EnvironmentMode, SupermarketVersion), List<Product>>();
+                return;
+            }
+
+                foreach (var list in ProductDictionary.Values)
+                    list?.Clear();
+
+            ProductDictionary.Clear();
         }
 
         public void StartCalibration()
@@ -204,17 +260,6 @@ namespace BrushingAndLinking
                 OVRManager.instance.isInsightPassthroughEnabled = !isVR;
         }
 
-        //private void ShowMaterialInfraestructure(bool show)
-        //{
-        //    for (int i = 0; i < ShelvesInfrastructure.transform.childCount; i++)
-        //    {
-        //        var child = ShelvesInfrastructure.transform.GetChild(i);
-        //        var pbuilder = child.GetComponent<ProductBuilder>();
-        //        if (pbuilder != null && pbuilder.prepertiesCreated)
-        //            pbuilder.ShowProductMaterial(show);
-        //    }
-        //}
-
         public void GetVisibility(ApplicationMode mode)
         {               
             if (supermarketVersion == SupermarketVersion.SupermarketPoster)
@@ -271,11 +316,11 @@ namespace BrushingAndLinking
             
         }
 
-        public List<Product> GetProductsByMode(ApplicationMode mode)
+        public List<Product> GetProducts(ApplicationMode mode)
         {
             if (mode == ApplicationMode.None)
                 mode = ApplicationMode.Demo;
-            var key = new Tuple<ApplicationMode, EnvironmentMode>(mode, EnvironmentMode);
+            var key = (mode, EnvironmentMode, supermarketVersion);
             if (ProductDictionary == null)
                 return new List<Product>();
 

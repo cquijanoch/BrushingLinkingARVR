@@ -91,7 +91,7 @@ namespace BrushingAndLinking
             Status = StudyMode.Pause;
 
             studyProducts = new List<Product>();
-            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Demo);
+            studyProducts = MainManager.Instance.GetProducts(ApplicationMode.Demo);
 
             // Set handedness of all interactions
             SetHandedness(CurrentParticipantHandedness);
@@ -156,7 +156,7 @@ namespace BrushingAndLinking
             currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
             StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
 
-            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
+            studyProducts = MainManager.Instance.GetProducts(ApplicationMode.Study);
             Tablet.SetOverallVisibility(true);
             
             SetProductsHidden();
@@ -200,7 +200,7 @@ namespace BrushingAndLinking
                 {
                     currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
                     StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
-                    studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
+                    studyProducts = MainManager.Instance.GetProducts(ApplicationMode.Study);
                 }
 
                 LoadTrial(StudyTrials[CurrentTrialIdx]);
@@ -551,7 +551,7 @@ namespace BrushingAndLinking
 
             currentEnvironment = StudyTrials[CurrentTrialIdx].Environment;
             StartCoroutine(MainManager.Instance.ChangeEnvironment(currentEnvironment));
-            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Study);
+            studyProducts = MainManager.Instance.GetProducts(ApplicationMode.Study);
             Tablet.SetOverallVisibility(true);
 
             SetProductsHidden();

@@ -6,7 +6,7 @@ namespace BrushingAndLinking
         public override void Select()
         {
             base.Select();
-            MainManager.Instance.supermarketVersion = buttonVersion;
+            MainManager.Instance.ReadShelves(buttonVersion);
         }
     }
 }

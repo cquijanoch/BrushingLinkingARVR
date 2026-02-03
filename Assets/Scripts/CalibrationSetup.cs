@@ -138,7 +138,7 @@ public class CalibrationSetup : MonoBehaviour
         HighlightManager.Instance.UnhighlightAllProducts();
         LinkHighlighter.VisMarksChanged();
 
-        foreach (var product in MainManager.Instance.GetProductsByMode(ApplicationMode.Demo))
+        foreach (var product in MainManager.Instance.GetProducts(ApplicationMode.Demo))
             product.SetHighlightTechnique(HighlightTechnique.None);
 
         yield return new WaitForEndOfFrame();
@@ -147,7 +147,7 @@ public class CalibrationSetup : MonoBehaviour
     private IEnumerator ShowAllCues()
     {
         yield return new WaitForEndOfFrame();
-        foreach (var product in MainManager.Instance.GetProductsByMode(ApplicationMode.Demo))
+        foreach (var product in MainManager.Instance.GetProducts(ApplicationMode.Demo))
         {
             product.SetHighlightTechnique(HighlightTechnique.Outline);
             product.SetHighlightState(true);

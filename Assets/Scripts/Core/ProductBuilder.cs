@@ -32,6 +32,8 @@ namespace BrushingAndLinking
 
                 if (child.name.EndsWith("Background") || child.name.StartsWith("Fridge"))
                     Destroy(child.gameObject);
+                else if (child.name.StartsWith("Board_") || child.name.StartsWith("Pillar_"))
+                    Destroy(child.gameObject);
                 else
                 {
                     child.AddComponent<MeshCollider>().convex = true;
@@ -42,7 +44,7 @@ namespace BrushingAndLinking
 
                     if (forwardingTarget)
                         Forwarding(child);
-                    
+
                     product.LinkToChildForwarding = forwardingTarget;
                     products.Add(product);
                 }
