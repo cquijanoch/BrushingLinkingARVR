@@ -7,15 +7,20 @@ using UnityEngine;
 
 public class CalibrationSetup : MonoBehaviour
 {
-    [Header("Elements from the environment")]
-    public GameObject Infraestructure;
+    [Header("General")]
+    public SupermarketVersion SupermarketVersion;
+    public List<Transform> Shelves = new List<Transform>();
+    public List<Transform> Points = new List<Transform>();
+    public float TimeConfiguration = 0f;
+
+    [Header("Elements for the environment 1")]
+    public GameObject Infrastructure;
     public GameObject Baseplate;
     public GameObject FloorPoints;
     public Transform PivotCalibration;
 
-    public List<Transform> Shelves = new List<Transform>();
-    public List<Transform> Points = new List<Transform>();
-    public float TimeConfiguration = 0f;
+    [Header("Elements for the environment 2")]
+    public GameObject Infrastructure2;
 
     [Header("Controllers elements")]
     public Controller LeftController;
@@ -59,9 +64,7 @@ public class CalibrationSetup : MonoBehaviour
         }
 
         if (IsUnpressedGrabTrigger())
-        {
             TimeConfiguration = 0f;
-        }
     }
 
     public void ShowLog(bool show)
@@ -121,12 +124,12 @@ public class CalibrationSetup : MonoBehaviour
 
     public void FinishShelvesCalibration()
     {
-        Infraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        Infrastructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
         Baseplate.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
         Baseplate.transform.position = Baseplate.transform.position + new Vector3(0f, 0.001f, 0f);
         Baseplate.transform.Rotate(new Vector3(90f, 0, -180));
 
-        MainManager.Instance.EnvironmnetInfraestructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        MainManager.Instance.EnvironmentInfrastructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
     }
 
     private IEnumerator ResetAllCues()
@@ -162,7 +165,7 @@ public class CalibrationSetup : MonoBehaviour
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(false);
         FloorPoints.SetActive(false);
-        Infraestructure.SetActive(true);
+        Infrastructure.SetActive(true);
 
         MainManager.Instance.StartDemo();
 
@@ -178,7 +181,7 @@ public class CalibrationSetup : MonoBehaviour
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(true);
         FloorPoints.SetActive(false);
-        Infraestructure.SetActive(true);
+        Infrastructure.SetActive(true);
 
         if (MainManager.Instance.AppMode == ApplicationMode.Study)
         {

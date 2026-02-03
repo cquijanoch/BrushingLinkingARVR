@@ -19,6 +19,13 @@ namespace BrushingAndLinking
         VR
     }
 
+    public enum SupermarketVersion
+    {
+        SupermarketPoster,
+        SupermarketReal,
+        None
+    }
+
     public enum LinkTechnique
     {
         None,

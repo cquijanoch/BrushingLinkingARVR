@@ -29,11 +29,12 @@ namespace BrushingAndLinking
         public GameObject ShelvesVR_B;
         public GameObject ShelvesVR_C; //Fridge
 
-        public GameObject ShelvesInfraestructure;
-        public GameObject EnvironmnetInfraestructure;
-        public Light LightInfraestructure;
+        //public GameObject ShelvesInfrastructure;
+        public GameObject EnvironmentInfrastructure;
+        public Light LightInfrastructure;
         public GameObject Occluders;
         public EnvironmentMode EnvironmentMode = EnvironmentMode.AR;
+        public SupermarketVersion supermarketVersion = SupermarketVersion.None;
         public ApplicationMode AppMode;
 
         private Handedness CurrentHandedness;
@@ -53,7 +54,7 @@ namespace BrushingAndLinking
         }
         void Start()
         {
-            EnvironmnetInfraestructure.SetActive(false);
+            EnvironmentInfrastructure.SetActive(false);
             ReadShelves();
             StudyMManager.SetActive(true);
             ColorManager.SetActive(true);
@@ -186,15 +187,15 @@ namespace BrushingAndLinking
 
             if (isVR)
             {
-                EnvironmnetInfraestructure.SetActive(true);
+                EnvironmentInfrastructure.SetActive(true);
                 Occluders.SetActive(false);
-                LightInfraestructure.type = LightType.Point;
+                LightInfrastructure.type = LightType.Point;
             }
             else
             {
-                EnvironmnetInfraestructure.SetActive(false);
+                EnvironmentInfrastructure.SetActive(false);
                 Occluders.SetActive(true);
-                LightInfraestructure.type = LightType.Directional;
+                LightInfrastructure.type = LightType.Directional;
             }
 
             yield return new WaitForEndOfFrame();
@@ -203,67 +204,71 @@ namespace BrushingAndLinking
                 OVRManager.instance.isInsightPassthroughEnabled = !isVR;
         }
 
-        private void ShowMaterialInfraestructure(bool show)
-        {
-            for (int i = 0; i < ShelvesInfraestructure.transform.childCount; i++)
-            {
-                var child = ShelvesInfraestructure.transform.GetChild(i);
-                var pbuilder = child.GetComponent<ProductBuilder>();
-                if (pbuilder != null && pbuilder.prepertiesCreated)
-                    pbuilder.ShowProductMaterial(show);
-            }
-        }
+        //private void ShowMaterialInfraestructure(bool show)
+        //{
+        //    for (int i = 0; i < ShelvesInfrastructure.transform.childCount; i++)
+        //    {
+        //        var child = ShelvesInfrastructure.transform.GetChild(i);
+        //        var pbuilder = child.GetComponent<ProductBuilder>();
+        //        if (pbuilder != null && pbuilder.prepertiesCreated)
+        //            pbuilder.ShowProductMaterial(show);
+        //    }
+        //}
 
         public void GetVisibility(ApplicationMode mode)
-        {
-            if (mode == ApplicationMode.Study)
+        {               
+            if (supermarketVersion == SupermarketVersion.SupermarketPoster)
             {
-                if (EnvironmentMode.AR == EnvironmentMode)
+                if (mode == ApplicationMode.Study)
                 {
+                    if (EnvironmentMode.AR == EnvironmentMode)
+                    {
+                        Shelves_A.SetActive(true);
+                        Shelves_B.SetActive(true);
+                        ShelvesVR_A.SetActive(false);
+                        ShelvesVR_B.SetActive(false);
+                        ShelvesVR_C.SetActive(false);
+                    }
+                    else
+                    {
+                        Shelves_A.SetActive(false);
+                        Shelves_B.SetActive(false);
+                        ShelvesVR_A.SetActive(true);
+                        ShelvesVR_B.SetActive(true);
+                        ShelvesVR_C.SetActive(true);
+                    }
+
+                    Shelves_C.SetActive(false);
+                    Shelves_D.SetActive(false);
+                    Shelves_E.SetActive(false);
+                }
+                else if (mode == ApplicationMode.Demo)
+                {
+
                     Shelves_A.SetActive(true);
                     Shelves_B.SetActive(true);
+                    Shelves_C.SetActive(true);
+                    Shelves_D.SetActive(true);
+                    Shelves_E.SetActive(true);
+
                     ShelvesVR_A.SetActive(false);
                     ShelvesVR_B.SetActive(false);
                     ShelvesVR_C.SetActive(false);
                 }
-                else
+                else if (mode == ApplicationMode.None)
                 {
                     Shelves_A.SetActive(false);
                     Shelves_B.SetActive(false);
-                    ShelvesVR_A.SetActive(true);
-                    ShelvesVR_B.SetActive(true);
-                    ShelvesVR_C.SetActive(true);
+                    Shelves_C.SetActive(false);
+                    Shelves_D.SetActive(false);
+                    Shelves_E.SetActive(false);
+
+                    ShelvesVR_A.SetActive(false);
+                    ShelvesVR_B.SetActive(false);
+                    ShelvesVR_C.SetActive(false);
                 }
-                
-                Shelves_C.SetActive(false);
-                Shelves_D.SetActive(false);
-                Shelves_E.SetActive(false);
             }
-            else if (mode == ApplicationMode.Demo)
-            {
-
-                Shelves_A.SetActive(true);
-                Shelves_B.SetActive(true);
-                Shelves_C.SetActive(true);
-                Shelves_D.SetActive(true);
-                Shelves_E.SetActive(true);
-
-                ShelvesVR_A.SetActive(false);
-                ShelvesVR_B.SetActive(false);
-                ShelvesVR_C.SetActive(false);
-            }
-            else if (mode == ApplicationMode.None)
-            {
-                Shelves_A.SetActive(false);
-                Shelves_B.SetActive(false);
-                Shelves_C.SetActive(false);
-                Shelves_D.SetActive(false);
-                Shelves_E.SetActive(false);
-
-                ShelvesVR_A.SetActive(false);
-                ShelvesVR_B.SetActive(false);
-                ShelvesVR_C.SetActive(false);
-            }
+            
         }
 
         public List<Product> GetProductsByMode(ApplicationMode mode)//1 = demo, 2 = study, No
