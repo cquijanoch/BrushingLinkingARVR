@@ -1,10 +1,9 @@
 # Situated Brushing and Linking in Virtual and Augmented Reality
 
-This repository contains supplemental material for a research paper **Situated Brushing and Linking in Virtual and Augmented Reality** by [Carlos Quijano Ch.](mailto:cquijanochavez@gmail.com), [Benjamin Lee], [Nina Doerr], [Wolfgang Büschel], [Michael Sedlmair] and [Dieter Schmalstieg]. 
+This repository contains the source code for a research paper **Situated Brushing and Linking in Virtual and Augmented Reality** by [Carlos Quijano Ch.](mailto:cquijanochavez@gmail.com), [Benjamin Lee], [Nina Doerr], [Wolfgang Büschel], [Michael Sedlmair] and [Dieter Schmalstieg]. 
 
 Please, check the presentation [video](TBA)
 
-It contains including source code, the software used in the experiment as well as the logging data and analysis scripts.
 
 ## Source Code
 
@@ -38,18 +37,5 @@ Optionally, an apk file can be found in *Installer* folder, ready to be installe
  
 8. Logging data are being recorded in the same device.
 
-## Analysis Data
 
-This folder contais the statistical scripts used to analyze results.
-
-1. Navigate to Analysis folder.
-
-2. Ensure that [R](https://www.r-project.org/) is installed.
-
-3. In the R terminal, `> source(main.R)`, which will ingest CSVs files (tasks, tracking and forms), compute (bootstrap) CIs, and export plots.
-
-4. All of the .png charts will appear in this directory.
-
-## Acknowledgements:
-
-This software is based on *VisHigh* by [Doerr et al.](https://github.com/doerrna/Visual-Highlighting-for-Situated-Brushing-and-Linking) 
+This project is based on *VisHigh* by [Doerr et al.](https://github.com/doerrna/Visual-Highlighting-for-Situated-Brushing-and-Linking) 
