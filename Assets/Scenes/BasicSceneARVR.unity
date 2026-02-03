@@ -9531,7 +9531,7 @@ MonoBehaviour:
   ShelvesVR_A: {fileID: 1753226087}
   ShelvesVR_B: {fileID: 985437144}
   ShelvesVR_C: {fileID: 1172003273}
-  EnvironmentInfrastructure: {fileID: 550300548}
+  EnvironmentRoom: {fileID: 550300548}
   LightInfrastructure: {fileID: 705507994}
   Occluders: {fileID: 763320770}
   EnvironmentMode: 0

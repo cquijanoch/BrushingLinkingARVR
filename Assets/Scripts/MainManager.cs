@@ -30,7 +30,7 @@ namespace BrushingAndLinking
         public GameObject ShelvesVR_C; //Fridge
 
         //public GameObject ShelvesInfrastructure;
-        public GameObject EnvironmentInfrastructure;
+        public GameObject EnvironmentRoom;
         public Light LightInfrastructure;
         public GameObject Occluders;
         public EnvironmentMode EnvironmentMode = EnvironmentMode.AR;
@@ -54,7 +54,7 @@ namespace BrushingAndLinking
         }
         void Start()
         {
-            EnvironmentInfrastructure.SetActive(false);
+            EnvironmentRoom.SetActive(false);
             ReadShelves();
             StudyMManager.SetActive(true);
             ColorManager.SetActive(true);
@@ -187,13 +187,13 @@ namespace BrushingAndLinking
 
             if (isVR)
             {
-                EnvironmentInfrastructure.SetActive(true);
+                EnvironmentRoom.SetActive(true);
                 Occluders.SetActive(false);
                 LightInfrastructure.type = LightType.Point;
             }
             else
             {
-                EnvironmentInfrastructure.SetActive(false);
+                EnvironmentRoom.SetActive(false);
                 Occluders.SetActive(true);
                 LightInfrastructure.type = LightType.Directional;
             }
@@ -271,7 +271,7 @@ namespace BrushingAndLinking
             
         }
 
-        public List<Product> GetProductsByMode(ApplicationMode mode)//1 = demo, 2 = study, No
+        public List<Product> GetProductsByMode(ApplicationMode mode)
         {
             if (mode == ApplicationMode.None)
                 mode = ApplicationMode.Demo;

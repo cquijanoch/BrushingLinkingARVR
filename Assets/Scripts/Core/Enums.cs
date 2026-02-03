@@ -21,6 +21,7 @@ namespace BrushingAndLinking
 
     public enum SupermarketVersion
     {
+        All,
         SupermarketPoster,
         SupermarketReal,
         None

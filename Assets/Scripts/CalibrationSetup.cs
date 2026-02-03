@@ -129,7 +129,7 @@ public class CalibrationSetup : MonoBehaviour
         Baseplate.transform.position = Baseplate.transform.position + new Vector3(0f, 0.001f, 0f);
         Baseplate.transform.Rotate(new Vector3(90f, 0, -180));
 
-        MainManager.Instance.EnvironmentInfrastructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        MainManager.Instance.EnvironmentRoom.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
     }
 
     private IEnumerator ResetAllCues()
