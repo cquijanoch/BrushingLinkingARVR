@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Oculus.Interaction;
 using Oculus.Interaction.Surfaces;
 using UnityEngine;
@@ -185,7 +186,15 @@ namespace BrushingAndLinking
                 else if (optionalMaterial != null)
                     kvp.Key.materials = new Material[1] { optionalMaterial };
                 else
-                    kvp.Key.materials = new Material[0];
+                {
+                    Material[] newMaterials = new Material[kvp.Key.materials.Count()];
+                    for (int i = 0; i < newMaterials.Length; i++)
+                        newMaterials[i] = Resources.Load<Material>("Materials/TransparentProduct");
+                    kvp.Key.materials = newMaterials;
+
+
+                }
+                    
             }        
         }
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class CalibrationSetup : MonoBehaviour
 {
     [Header("General")]
-    public SupermarketVersion SupermarketVersion;
+    //public SupermarketVersion SupermarketVersion;
     public List<Transform> Shelves = new List<Transform>();
     public List<Transform> Points = new List<Transform>();
     public float TimeConfiguration = 0f;
@@ -84,8 +84,33 @@ public class CalibrationSetup : MonoBehaviour
         FloorPoints.SetActive(false);
         MainManager.Instance.GetVisibility(ApplicationMode.Demo);
         StartCoroutine(ResetAllCues());
-
+        ActivateSupermarket(true);
         return true;
+    }
+
+    private void ActivateSupermarket(bool active)
+    {
+        switch (MainManager.Instance.supermarketVersion)
+        {
+            case SupermarketVersion.None:
+                Infrastructure.SetActive(!active);
+                Infrastructure2.SetActive(!active);
+                break;
+            case SupermarketVersion.All:
+                Infrastructure.SetActive(active);
+                Infrastructure2.SetActive(active);
+                break;
+            case SupermarketVersion.SupermarketPoster:
+                Infrastructure.SetActive(active);
+                Infrastructure2.SetActive(!active);
+                break;
+
+            case SupermarketVersion.SupermarketReal:
+                Infrastructure.SetActive(!active);
+                Infrastructure2.SetActive(active);
+                break;
+
+        }
     }
 
     public bool ShowFloorPoints()
@@ -108,7 +133,7 @@ public class CalibrationSetup : MonoBehaviour
             return false;
 
         StartCoroutine(ResetAllCues());
-
+        ActivateSupermarket(true);
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
         FloorPoints.SetActive(true);

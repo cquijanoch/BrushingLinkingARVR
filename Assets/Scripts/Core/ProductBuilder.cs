@@ -1,5 +1,4 @@
 using Oculus.Interaction;
-using Oculus.Interaction.Surfaces;
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
@@ -9,7 +8,7 @@ namespace BrushingAndLinking
 {
     public class ProductBuilder : MonoBehaviour
     {
-        public bool prepertiesCreated = false;
+        public bool propertiesCreated = false;
         public bool transparentMaterial = false;
         public Material material;
         public GameObject TargetDirection;
@@ -23,7 +22,7 @@ namespace BrushingAndLinking
 
         private void Awake()
         {
-            if (prepertiesCreated)
+            if (propertiesCreated)
                 return;
 
             for (int i = 0; i < transform.childCount; i++)
@@ -35,9 +34,9 @@ namespace BrushingAndLinking
                 else if (child.name.StartsWith("Board_") || child.name.StartsWith("Pillar_"))
                     Destroy(child.gameObject);
                 else
-                {
-                    child.AddComponent<MeshCollider>().convex = true;
-                    child.AddComponent<ColliderSurface>().enabled = true;
+                { 
+                    child.AddComponent<BoxCollider>();
+                    //child.AddComponent<MeshCollider>().convex = false;
                     child.AddComponent<RayInteractable>();
                     var product = child.AddComponent<Product>();
                     product.ShowOriginalMaterial(!transparentMaterial);
@@ -50,7 +49,7 @@ namespace BrushingAndLinking
                 }
             }
 
-            prepertiesCreated = true;
+            propertiesCreated = true;
         }
 
         private void Start()
@@ -61,7 +60,7 @@ namespace BrushingAndLinking
 
         public void ShowProductMaterial(bool show)
         {
-            if (!prepertiesCreated)
+            if (!propertiesCreated)
                 return;
 
             foreach (var prod in products)
