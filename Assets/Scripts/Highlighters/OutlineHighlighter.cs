@@ -15,7 +15,7 @@ namespace BrushingAndLinking
             outlineScript.enabled = false;
             outlineScript.OutlineWidth = outlineWidth;
             outlineScript.precomputeOutline = true;
-            outlineScript.OutlineMode = Outline.Mode.OutlineVisible;
+            outlineScript.OutlineMode = Outline.Mode.OutlineAll;
         }
 
         private void LateUpdate()

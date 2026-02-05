@@ -16,11 +16,13 @@ public class CalibrationSetup : MonoBehaviour
     [Header("Elements for the environment 1")]
     public GameObject Infrastructure;
     public GameObject Baseplate;
-    public GameObject FloorPoints;
-    public Transform PivotCalibration;
+    public GameObject FloorPointsInfra1;
+    private Transform PivotCalibrationInfra1;
 
     [Header("Elements for the environment 2")]
     public GameObject Infrastructure2;
+    public GameObject FloorPointsInfra2;
+    private Transform PivotCalibrationInfra2;
 
     [Header("Controllers elements")]
     public Controller LeftController;
@@ -50,6 +52,8 @@ public class CalibrationSetup : MonoBehaviour
         LogAux = Instantiate(LogAuxPrefab, RightController.transform.GetChild(2).transform);
         GrabTrigger = OVRInput.Axis1D.SecondaryHandTrigger;
         SphereTracking = Instantiate(SphereTrackingPrefab, RightControllerMesh.transform);
+        PivotCalibrationInfra1 = FloorPointsInfra1.transform.GetChild(0);
+        PivotCalibrationInfra2 = FloorPointsInfra2.transform.GetChild(0);
     }
 
     private void FixedUpdate()
@@ -80,8 +84,10 @@ public class CalibrationSetup : MonoBehaviour
             return false;
 
         MenuUI.SetOverallVisibility(true);
+        MoveBasePlate();
         Baseplate.SetActive(true);
-        FloorPoints.SetActive(false);
+        FloorPointsInfra1.SetActive(false);
+        FloorPointsInfra2.SetActive(false);
         MainManager.Instance.GetVisibility(ApplicationMode.Demo);
         StartCoroutine(ResetAllCues());
         ActivateSupermarket(true);
@@ -118,7 +124,7 @@ public class CalibrationSetup : MonoBehaviour
         StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(true);
+        ActiveFloorPoints(true);
         MainManager.Instance.GetVisibility(ApplicationMode.Demo);
 
         return true;
@@ -136,7 +142,7 @@ public class CalibrationSetup : MonoBehaviour
         ActivateSupermarket(true);
         MenuUI.SetOverallVisibility(true);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(true);
+        ActiveFloorPoints(true);
         FinishShelvesCalibration();
 
         MainManager.Instance.GetVisibility(ApplicationMode.Demo);
@@ -149,12 +155,13 @@ public class CalibrationSetup : MonoBehaviour
 
     public void FinishShelvesCalibration()
     {
-        Infrastructure.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
-        Baseplate.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        var pivot = GetPivotFloorPoints();
+        GetInfraestructure().transform.SetPositionAndRotation(pivot.position, pivot.rotation);
+        Baseplate.transform.SetPositionAndRotation(pivot.position, pivot.rotation);
         Baseplate.transform.position = Baseplate.transform.position + new Vector3(0f, 0.001f, 0f);
         Baseplate.transform.Rotate(new Vector3(90f, 0, -180));
 
-        MainManager.Instance.EnvironmentRoom.transform.SetPositionAndRotation(PivotCalibration.transform.position, PivotCalibration.transform.rotation);
+        MainManager.Instance.GetVREnvironment().transform.SetPositionAndRotation(pivot.position, pivot.rotation);
     }
 
     private IEnumerator ResetAllCues()
@@ -189,7 +196,7 @@ public class CalibrationSetup : MonoBehaviour
         StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(false);
-        FloorPoints.SetActive(false);
+        ActiveFloorPoints(false);
         Infrastructure.SetActive(true);
 
         MainManager.Instance.StartDemo();
@@ -205,7 +212,7 @@ public class CalibrationSetup : MonoBehaviour
         StartCoroutine(ResetAllCues());
         MenuUI.SetOverallVisibility(false);
         Baseplate.SetActive(true);
-        FloorPoints.SetActive(false);
+        ActiveFloorPoints(false);
         Infrastructure.SetActive(true);
 
         if (MainManager.Instance.AppMode == ApplicationMode.Study)
@@ -225,6 +232,40 @@ public class CalibrationSetup : MonoBehaviour
 
         MainManager.Instance.StopStudy();
         return true;
+    }
+
+    private void ActiveFloorPoints(bool active)
+    {
+        if (active)
+        {
+            FloorPointsInfra1.SetActive(MainManager.Instance.supermarketVersion == SupermarketVersion.SupermarketPoster);
+            FloorPointsInfra2.SetActive(MainManager.Instance.supermarketVersion == SupermarketVersion.SupermarketReal);
+            return;
+        }
+
+        FloorPointsInfra1.SetActive(active);
+        FloorPointsInfra2.SetActive(active);
+    }
+
+    private void MoveBasePlate()
+    {
+        Baseplate.transform.position = GetPivotFloorPoints().position + new Vector3(0, 0.01f, 0);
+    }
+
+    private Transform GetPivotFloorPoints()
+    {
+        if (MainManager.Instance.supermarketVersion == SupermarketVersion.SupermarketPoster)
+            return PivotCalibrationInfra1;
+
+        return PivotCalibrationInfra2;
+    }
+
+    private GameObject GetInfraestructure()
+    {
+        if (MainManager.Instance.supermarketVersion == SupermarketVersion.SupermarketPoster)
+            return Infrastructure;
+
+        return Infrastructure2;
     }
 
     private string ShowLogAux(Vector3 position)

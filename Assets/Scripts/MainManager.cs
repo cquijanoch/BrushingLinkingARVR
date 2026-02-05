@@ -26,17 +26,17 @@ namespace BrushingAndLinking
         public GameObject Shelves_C;
         public GameObject Shelves_D;
         public GameObject Shelves_E;
-        public GameObject Occluders;
+        public GameObject OccludersAR1;
 
         [Header("Shelves Poster-based VR")]
         public GameObject ShelvesVR_A;
         public GameObject ShelvesVR_B;
         public GameObject ShelvesVR_C; //Fridge
-        public GameObject EnvironmentRoom;
+        public GameObject VREnvironment;
 
         [Header("Shelves Real-based ARVR")]
         public List<GameObject> ShelvesReal;
-        public GameObject EnvironmentRoom2;
+        public GameObject VREnvironment2;
 
         public Light LightInfrastructure;
         
@@ -61,7 +61,7 @@ namespace BrushingAndLinking
         }
         void Start()
         {
-            EnvironmentRoom.SetActive(false);
+            GetVREnvironment().SetActive(false);
             StudyMManager.SetActive(true);
             ColorManager.SetActive(true);
             StartCalibration();
@@ -88,6 +88,14 @@ namespace BrushingAndLinking
             }
         }
 
+        public GameObject GetVREnvironment()
+        {
+            if (supermarketVersion == SupermarketVersion.SupermarketReal)
+                return VREnvironment2;
+
+            return VREnvironment;
+        }
+
         public void ReadShelves(SupermarketVersion supermarket)
         {
             CleanProductsDictionary();
@@ -104,7 +112,6 @@ namespace BrushingAndLinking
             }
 
             supermarketVersion = supermarket;
-
         }
 
         private void ReadShelvesReal()
@@ -243,16 +250,17 @@ namespace BrushingAndLinking
 
             if (isVR)
             {
-                EnvironmentRoom.SetActive(true);
-                Occluders.SetActive(false);
+                GetVREnvironment().SetActive(true);
                 LightInfrastructure.type = LightType.Point;
             }
             else
             {
-                EnvironmentRoom.SetActive(false);
-                Occluders.SetActive(true);
+                GetVREnvironment().SetActive(false);
                 LightInfrastructure.type = LightType.Directional;
             }
+
+            if (supermarketVersion == SupermarketVersion.SupermarketPoster)
+                OccludersAR1.SetActive(!isVR);
 
             yield return new WaitForEndOfFrame();
 
