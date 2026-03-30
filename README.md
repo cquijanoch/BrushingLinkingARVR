@@ -1,23 +1,5 @@
 # Situated Brushing and Linking in Virtual and Augmented Reality
 
-This repository contains supplemental material for a research paper **Situated Brushing and Linking in Virtual and Augmented Reality** by [Carlos Quijano Ch.](mailto:cquijanochavez@gmail.com), [Benjamin Lee](mailto:benjaminchlee@gmail.com), [Nina Doerr](mailto:nina.doerr@visus.uni-stuttgart.de), [Wolfgang Büschel](mailto:wolfgang.bueschel@visus.uni-stuttgart.de), [Michael Sedlmair](mailto:michael.sedlmair@visus.uni-stuttgart.de) and [Dieter Schmalstieg](mailto:schmaldr@visus.uni-stuttgart.de). 
-
-Please, check the presentation [video](https://youtu.be/jv8a4tl3gng?si=AcgVtOACAZX0fpPH)
-
-It contains including source code, the software used in the experiment as well as the logging data and analysis scripts.
-
-## Source Code
-
-A Unity project application for evaluating Brushing and Linking in Virtual and Augmented Reality in Meta Quest with passthrough devices.  
-
-1. Navigate to *Application* folder.
-
-2. To run in editor mode, ensure that Unity Version: 6000.2.8f1 and Meta Horizon Link are installed.
-
-3. Open the scene *BasicSceneARVR* and update the folder logging directory in *StudyManager*.
-
-4. Run.
-
 ## Application
 
 Optionally, an apk file can be found in *Installer* folder, ready to be installed in Meta Quest devices.
@@ -38,17 +20,6 @@ Optionally, an apk file can be found in *Installer* folder, ready to be installe
  
 8. Logging data are being recorded in the same device.
 
-## Analysis Data
-
-This folder contais the statistical scripts used to analyze results.
-
-1. Navigate to Analysis folder.
-
-2. Ensure that [R](https://www.r-project.org/) is installed.
-
-3. In the R terminal, `> source(main.R)`, which will ingest CSVs files (tasks, tracking and forms), compute (bootstrap) CIs, and export plots.
-
-4. All of the .pdf charts will appear in this directory.
 
 ## Acknowledgements:
 
