@@ -1,0 +1,45 @@
+product_id,Prefab name,shelf_no,Side,product_name,en_product_name,Category,Volume (kg/l),Price (EUR),height (z),width (x),depth (y),row,position,Calories (kcal),Fat (g),Sugar (g),Protein (g),Carbohydrate (g),Alcohol (%),Lactose (Y/N),Gluten (Y/N),N/Vegan/Vegetarian,Rating (u)
+1,C1,1,A,Milk chocolate safe aussen knusprig,Milk chocolate safe aussen knusprig,Pantry,750,3.99,0.26,0.193,0.065,5,1,446,15,25,7.9,68,0,Y,Y,Vegetarian,4.1
+2,C2,1,A,Cini Minis,Cini Minis,Pantry,375,4.99,0.275,0.193,0.054,5,2,410,9.3,24.9,5.8,72.6,0,N,Y,Vegetarian,4.3
+3,C3,1,A,Cini Minis Churros,Cini Minis Churros,Pantry,360,3.99,0.275,0.193,0.059,5,3,393,5.5,25,7.6,75.6,0,N,Y,Vegan,4.2
+4,C4,1,A,Nestle Clusters,Nestle Clusters,Pantry,330,3.99,0.258,0.193,0.046,5,4,386,5.8,28.2,8.4,70.6,0,N,Y,Vegan,4.4
+5,C5,1,A,Duplo choco duo,Duplo choco duo,Snacks,182,4.95,0.115,0.085,0.045,4,1,553,32.7,49.5,6.2,56.5,0,Y,N,Vegetarian,4.6
+6,C6,1,A,Duplo white,Duplo white,Snacks,182,4.95,0.115,0.085,0.045,4,2,553,35.8,47.3,9.2,52.8,0,Y,N,Vegetarian,4.6
+7,C7,1,A,Duplo schmeckt knusperleicht,Duplo schmeckt knusperleicht,Snacks,364,6.79,0.115,0.112,0.06,4,3,551,33,50,6.1,56,0,Y,Y,Vegetarian,4.2
+8,C8,1,A,Amicelli Haselnuss,Amicelli Haselnuss,Snacks,200,4.29,0.08,0.14,0.083,4,4,512,26,52,6.1,62,0,Y,Y,Vegetarian,4.5
+9,C9,1,A,Veritable Petit encolier,Veritable Petit encolier,Snacks,150,1.49,0.073,0.204,0.038,4,5,498,23,39,6.2,65,0,Y,Y,Vegetarian,4.3
+10,C10,1,A,bala de frutas sabor acai com guarana,bala de frutas sabor acai com guarana,Snacks,108,6.75,0.154,0.065,0.06,4,6,330,0.4,80,1.2,83,0,N,N,Vegan,4.4
+11,C11,1,A,Butter Spritz geback,Butter Spritz geback,Snacks,400,2.99,0.25,0.075,0.075,3,1,533,30.5,22.6,5.5,58,0,N,Y,Vegetarian,4
+12,C12,1,A,Taiwan dessert  matcha flavor,Taiwan dessert  matcha flavor,Snacks,80,1.69,0.085,0.16,0.028,3,2,349,6.1,39.5,1.5,71.9,0,N,N,Vegan,4.3
+13,C13,1,A,Schogetten originals edel-zartbitter,Schogetten originals edel-zartbitter,Snacks,100,2.23,0.077,0.156,0.015,3,3,529,31,47,6.8,52,0,N,N,Vegan,4.6
+14,C14,1,A,Corny Schoko,Corny Schoko,Snacks,150,1.99,0.145,0.145,0.035,3,4,433,8.9,1.6,6.8,67.6,0,Unknown,Y,N,4.2
+15,C15,1,A,Kinder country,Kinder country,Snacks,211.5,1.29,0.1,0.14,0.042,3,5,561,33.8,49.1,0,54.9,0,Y,Unknown,Vegetarian,4.3
+16,C16,1,A,Soft cake,Soft cake,Snacks,300,2.59,0.114,0.181,0.056,2,1,388,10,55,3,71,0,N,Y,Vegetarian,4.2
+17,C17,1,A,Crownfield nougat bits,Crownfield nougat bits,Snacks,45,2.79,0.105,0.071,0.041,2,2,443,16.3,26.6,6.1,65.6,0,N,Y,Vegan,4.4
+18,C18,1,A,Oreo grape and peach,Oreo grape and peach,Snacks,97,2.59,0.054,0.21,0.049,2,3,484,21.1,6.7,4.8,67.8,0,Y,Y,Vegetarian,4.2
+19,C19,1,A,Oreo matcha,Oreo matcha,Snacks,97,2.59,0.054,0.21,0.049,2,4,484,21.1,6.7,4.8,67.8,0,Y,Y,Vegetarian,3.8
+20,C20,1,A,Mini Doppel-kekse,Mini Doppel-kekse,Snacks,500,2.99,0.237,0.095,0.08,1,1,511,25,29,6.2,64,0,N,Y,Vegetarian,3.9
+21,C21,1,A,Schoko Waffeln,Schoko Waffeln,Snacks,175,3.49,0.067,0.226,0.044,1,2,175,36.6,33.1,7.6,49.1,0,N,Y,Vegetarian,4.4
+22,C22,1,A,La galette gourmande,La galette gourmande,Snacks,121,2.29,0.082,0.24,0.035,1,3,486,19,30,6.2,71,0,N,Y,Vegetarian,4.2
+23,C23,1,A,Yogurette,Yogurette,Snacks,100,1.65,0.082,0.157,0.014,1,4,571,35.6,55.4,4.8,56.8,0,Y,N,Vegetarian,4.5
+24,C24,2,A,Mövenpick Fürst Pückler Art,Mövenpick Fürst Pückler Art,Snacks,454,1.59,0.12,0.215,0.062,5,1,205,8.9,26,1.9,29,0,Y,N,Vegetarian,4.3
+25,C25,2,A,Mövenpick Bourbon Vanille,Mövenpick Bourbon Vanille,Snacks,464,1.59,0.12,0.215,0.062,5,2,208,11,22,1.8,26,0,Y,N,Vegetarian,4.4
+26,C26,2,A,Bon gelati Eis,Bon gelati Eis,Snacks,500,2.19,0.125,0.185,0.07,5,3,214,12.6,19.7,3,22.1,0,Y,N,Vegetarian,4.5
+27,C27,2,A,Premium Orangen Saft,Premium Orangen Saft,Beverages,1000,1.99,0.24,0.071,0.062,4,1,43,0.5,8.8,0.7,8.8,0,N,N,Vegan,4.4
+28,C28,2,A,Rauch happy day mango,Rauch happy day mango,Beverages,1000,3.46,0.232,0.064,0.061,4,2,56,0.5,13,0.5,13,0,N,N,Vegan,4.8
+29,C29,2,A,"Premium mehrfruchtsaft ananas, orange, mango","Premium mehrfruchtsaft ananas, orange, mango",Beverages,1000,0.99,0.23,0.073,0.073,4,3,50,0.1,11,0.5,11,0,N,N,Vegan,4.3
+30,C30,2,A,Oatly Matcha oat drink,Oatly Matcha oat drink,Beverages,1000,3.29,0.203,0.075,0.073,4,4,63,2.8,4.5,1.1,7.8,0,N,N,Vegan,3.5
+31,C31,2,A,Oatly barista edition hafer,Oatly barista edition hafer,Beverages,1000,2.55,0.203,0.075,0.073,4,5,61,3,3.4,1.1,7.1,0,N,N,Vegan,4.6
+32,C32,2,A,iglo knuspring kross,iglo knuspring kross,Food,380,2.99,0.125,0.19,0.04,3,1,184,11,1,11,10,0,N,N,N,4.4
+33,C33,2,A,Leicht and cross mein knusperbrot,Leicht and cross mein knusperbrot,Pantry,125,1.49,0.127,0.166,0.063,3,2,355,2.5,1,11,65,0,N,Y,Vegan,4.2
+34,C34,2,A,Peynirli kunefe,Peynirli kunefe,Food,210,3.99,0.141,0.141,0.03,3,3,394,20,21.1,5.84,46.99,0,Y,N,Vegetarian,4.7
+35,C35,2,A,Edeka herzstucke chocolate chunks,Edeka herzstucke chocolate chunks,Diary,100,2.44,0.136,0.085,0.028,3,4,551,36.1,40.4,10.7,43.4,0,Y,N,Vegetarian,4.3
+36,C36,2,A,Fried Noodels,Fried Noodels,Pantry,25,1.29,0.138,0.09,0.01,3,5,278,1.3,25.5,10.1,54.3,0,N,N,Vegan,4
+37,C37,2,A,Knusper Schoko-krokant,Knusper Schoko-krokant,Pantry,500,3.79,0.22,0.145,0.051,2,1,444,16,22,8.5,64,0,N,N,Vegan,4.3
+38,C38,2,A,Knusper schoko feinherb,Knusper schoko feinherb,Pantry,500,3.79,0.22,0.145,0.051,2,2,444,10,20,11,64,0,N,N,Vegan,4.2
+39,C39,2,A,Crunchy choc-choc-choc,Crunchy choc-choc-choc,Pantry,500,3.79,0.22,0.145,0.051,2,3,444,16,22,8.5,64,0,N,N,Vegan,4.4
+40,C40,2,A,Knusper Hafer-musli Strawberry yogurt,Knusper Hafer-musli Strawberry yogurt,Pantry,500,3.79,0.22,0.145,0.051,2,4,444,10,20,11,64,0,N,N,Vegan,4.1
+41,C41,2,A,Max jumbo peanuts roasted and salted,Max jumbo peanuts roasted and salted,Snacks,300,3.99,0.086,0.103,0.103,1,1,618,51,6.7,26,11,0,N,N,Vegan,4.2
+42,C42,2,A,Max misnutsd mit edamame pikant,Max misnutsd mit edamame pikant,Snacks,300,4.99,0.086,0.103,0.103,1,2,589,46,5,25,15,0,N,N,Vegan,4.2
+43,C43,2,A,ultje erdnusse gerostet und ungesalzen,ultje erdnusse gerostet und ungesalzen,Snacks,180,2.49,0.076,0.087,0.087,1,3,626,52,5.3,25,11,0,N,N,Vegan,4.4
+44,C44,2,A,Pringles hot and spicy,Pringles hot and spicy,Snacks,185,2.99,0.26,0.078,0.078,1,4,521,30,2.4,6.6,54,0,N,Y,Vegan,4.6
