@@ -95,9 +95,9 @@ namespace BrushingAndLinking
         {
             ProductDictionary = new Dictionary<Tuple<ApplicationMode, EnvironmentMode>, List<Product>>();
 
-            var keyDemo = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.AR);
-            ProductDictionary.Add(keyDemo, ShelvesDemo1AR.GetComponent<ProductBuilder>().products);
-            ProductDictionary[keyDemo].AddRange(ShelvesDemo2AR.GetComponent<ProductBuilder>().products);
+            var keyDemoVR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.VR);
+            ProductDictionary.Add(keyDemoVR, ShelvesDemo1VR.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoVR].AddRange(ShelvesDemo2VR.GetComponent<ProductBuilder>().products);
             //ProductDictionary.Add(keyDemo, Shelves_A.GetComponent<ProductBuilder>().products);
             //ProductDictionary[keyDemo].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
             //ProductDictionary[keyDemo].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
@@ -213,6 +213,14 @@ namespace BrushingAndLinking
 
             if (OVRManager.instance != null)
                 OVRManager.instance.isInsightPassthroughEnabled = !isVR;
+
+            if (AppMode != ApplicationMode.None)
+            {
+                GetVisibilityDemo(AppMode);
+
+                if (HighlightManager.Instance != null)
+                    HighlightManager.Instance.ResetProductReferences();
+            }
         }
 
         //private void ShowMaterialInfraestructure(bool show)
@@ -246,7 +254,7 @@ namespace BrushingAndLinking
         //            ShelvesVR_B.SetActive(true);
         //            ShelvesVR_C.SetActive(true);
         //        }
-                
+
         //        Shelves_C.SetActive(false);
         //        Shelves_D.SetActive(false);
         //        Shelves_E.SetActive(false);
@@ -278,32 +286,35 @@ namespace BrushingAndLinking
         //    }
         //}
 
+        private void SetShelfWithParentActive(GameObject shelf, bool active)
+        {
+            if (shelf == null)
+                return;
+
+            if (shelf.transform.parent != null)
+                shelf.transform.parent.gameObject.SetActive(active);
+
+            shelf.SetActive(active);
+        }
+
+        private void SetDemoShelfVisibility(bool arActive, bool vrActive)
+        {
+            SetShelfWithParentActive(ShelvesDemo1AR, arActive);
+            SetShelfWithParentActive(ShelvesDemo2AR, arActive);
+
+            SetShelfWithParentActive(ShelvesDemo1VR, vrActive);
+            SetShelfWithParentActive(ShelvesDemo2VR, vrActive);
+        }
         public void GetVisibilityDemo(ApplicationMode mode)
         {
-            if (mode == ApplicationMode.Study)
+            if (mode == ApplicationMode.Study || mode == ApplicationMode.Demo)
             {
-                if (EnvironmentMode.AR == EnvironmentMode)
-                {
-                    ShelvesDemo1AR.SetActive(true);
-                    ShelvesDemo2AR.SetActive(true);
-                    ShelvesDemo1VR.SetActive(false);
-                    ShelvesDemo2VR.SetActive(false);
-                }
-                else
-                {
-                    ShelvesDemo1AR.SetActive(false);
-                    ShelvesDemo2AR.SetActive(false);
-                    ShelvesDemo1VR.SetActive(true);
-                    ShelvesDemo2VR.SetActive(true);
-                }
-                    
-            }
-            else if (mode == ApplicationMode.Demo)
-            {
-                ShelvesDemo1AR.SetActive(true);
-                ShelvesDemo2AR.SetActive(true);
-                ShelvesDemo1VR.SetActive(false);
-                ShelvesDemo2VR.SetActive(false);
+                bool isVR = EnvironmentMode == EnvironmentMode.VR;
+
+                SetDemoShelfVisibility(
+                    arActive: !isVR,
+                    vrActive: isVR
+                );
             }
             else if (mode == ApplicationMode.None)
             {
@@ -317,10 +328,10 @@ namespace BrushingAndLinking
                 ShelvesVR_B.SetActive(false);
                 ShelvesVR_C.SetActive(false);
 
-                ShelvesDemo1AR.SetActive(false);
-                ShelvesDemo2AR.SetActive(false);
-                ShelvesDemo1VR.SetActive(false);
-                ShelvesDemo2VR.SetActive(false);
+                SetDemoShelfVisibility(
+                    arActive: false,
+                    vrActive: false
+                );
             }
         }
 
