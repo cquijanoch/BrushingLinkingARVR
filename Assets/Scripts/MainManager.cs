@@ -95,27 +95,21 @@ namespace BrushingAndLinking
         {
             ProductDictionary = new Dictionary<Tuple<ApplicationMode, EnvironmentMode>, List<Product>>();
 
+            var keyDemoAR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.AR);
+            ProductDictionary.Add(keyDemoAR, ShelvesDemo1AR.GetComponent<ProductBuilder>().products);
+            ProductDictionary[keyDemoAR].AddRange(ShelvesDemo2AR.GetComponent<ProductBuilder>().products);
+
             var keyDemoVR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Demo, EnvironmentMode.VR);
             ProductDictionary.Add(keyDemoVR, ShelvesDemo1VR.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyDemoVR].AddRange(ShelvesDemo2VR.GetComponent<ProductBuilder>().products);
-            //ProductDictionary.Add(keyDemo, Shelves_A.GetComponent<ProductBuilder>().products);
-            //ProductDictionary[keyDemo].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
-            //ProductDictionary[keyDemo].AddRange(Shelves_C.GetComponent<ProductBuilder>().products);
-            //ProductDictionary[keyDemo].AddRange(Shelves_D.GetComponent<ProductBuilder>().products);
-            //ProductDictionary[keyDemo].AddRange(Shelves_E.GetComponent<ProductBuilder>().products);
 
             var keyStudyAR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Study, EnvironmentMode.AR);
             ProductDictionary.Add(keyStudyAR, ShelvesDemo1AR.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyStudyAR].AddRange(ShelvesDemo2AR.GetComponent<ProductBuilder>().products);
-            //ProductDictionary.Add(keyStudyAR, Shelves_A.GetComponent<ProductBuilder>().products);
-            //ProductDictionary[keyStudyAR].AddRange(Shelves_B.GetComponent<ProductBuilder>().products);
 
             var keyStudyVR = new Tuple<ApplicationMode, EnvironmentMode>(ApplicationMode.Study, EnvironmentMode.VR);
             ProductDictionary.Add(keyStudyVR, ShelvesDemo1VR.GetComponent<ProductBuilder>().products);
             ProductDictionary[keyStudyVR].AddRange(ShelvesDemo2VR.GetComponent<ProductBuilder>().products);
-
-            //ProductDictionary.Add(keyStudyVR, ShelvesVR_A.GetComponent<ProductBuilder>().products);
-            //ProductDictionary[keyStudyVR].AddRange(ShelvesVR_B.GetComponent<ProductBuilder>().products);
         }
 
         public void StartCalibration()
@@ -214,13 +208,6 @@ namespace BrushingAndLinking
             if (OVRManager.instance != null)
                 OVRManager.instance.isInsightPassthroughEnabled = !isVR;
 
-            if (AppMode != ApplicationMode.None)
-            {
-                GetVisibilityDemo(AppMode);
-
-                if (HighlightManager.Instance != null)
-                    HighlightManager.Instance.ResetProductReferences();
-            }
         }
 
         //private void ShowMaterialInfraestructure(bool show)
@@ -286,35 +273,43 @@ namespace BrushingAndLinking
         //    }
         //}
 
-        private void SetShelfWithParentActive(GameObject shelf, bool active)
-        {
-            if (shelf == null)
-                return;
-
-            if (shelf.transform.parent != null)
-                shelf.transform.parent.gameObject.SetActive(active);
-
-            shelf.SetActive(active);
-        }
-
-        private void SetDemoShelfVisibility(bool arActive, bool vrActive)
-        {
-            SetShelfWithParentActive(ShelvesDemo1AR, arActive);
-            SetShelfWithParentActive(ShelvesDemo2AR, arActive);
-
-            SetShelfWithParentActive(ShelvesDemo1VR, vrActive);
-            SetShelfWithParentActive(ShelvesDemo2VR, vrActive);
-        }
+        
         public void GetVisibilityDemo(ApplicationMode mode)
         {
-            if (mode == ApplicationMode.Study || mode == ApplicationMode.Demo)
+            if (mode == ApplicationMode.Study)
             {
-                bool isVR = EnvironmentMode == EnvironmentMode.VR;
-
-                SetDemoShelfVisibility(
-                    arActive: !isVR,
-                    vrActive: isVR
-                );
+                if (EnvironmentMode.AR == EnvironmentMode)
+                {
+                    ShelvesDemo1AR.SetActive(true);
+                    ShelvesDemo2AR.SetActive(true);
+                    ShelvesDemo1VR.SetActive(false);
+                    ShelvesDemo2VR.SetActive(false);
+                }
+                else
+                {
+                    ShelvesDemo1AR.SetActive(false);
+                    ShelvesDemo2AR.SetActive(false);
+                    ShelvesDemo1VR.SetActive(true);
+                    ShelvesDemo2VR.SetActive(true);
+                }
+                    
+            }
+            else if (mode == ApplicationMode.Demo)
+            {
+                if (EnvironmentMode.AR == EnvironmentMode)
+                {
+                    ShelvesDemo1AR.SetActive(true);
+                    ShelvesDemo2AR.SetActive(true);
+                    ShelvesDemo1VR.SetActive(false);
+                    ShelvesDemo2VR.SetActive(false);
+                }
+                else
+                {
+                    ShelvesDemo1AR.SetActive(false);
+                    ShelvesDemo2AR.SetActive(false);
+                    ShelvesDemo1VR.SetActive(true);
+                    ShelvesDemo2VR.SetActive(true);
+                }
             }
             else if (mode == ApplicationMode.None)
             {
@@ -328,10 +323,10 @@ namespace BrushingAndLinking
                 ShelvesVR_B.SetActive(false);
                 ShelvesVR_C.SetActive(false);
 
-                SetDemoShelfVisibility(
-                    arActive: false,
-                    vrActive: false
-                );
+                ShelvesDemo1AR.SetActive(false);
+                ShelvesDemo2AR.SetActive(false);
+                ShelvesDemo1VR.SetActive(false);
+                ShelvesDemo2VR.SetActive(false);
             }
         }
 

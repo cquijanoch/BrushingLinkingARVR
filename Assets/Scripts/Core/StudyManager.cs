@@ -134,6 +134,7 @@ namespace BrushingAndLinking
             Tablet.SetOverallVisibility(true);
 
             SetProductsVisibility(ApplicationMode.Demo);
+            studyProducts = MainManager.Instance.GetProductsByMode(ApplicationMode.Demo);
             StartCoroutine(SetHighlightTechnique(HighlightTechnique.AnimatedOutlineLink));
             
             Tablet.SetTaskText("<b>Demo Phase</b>\nPlease practice using the brushing and linking interactions.");

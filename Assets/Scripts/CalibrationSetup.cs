@@ -107,7 +107,7 @@ public class CalibrationSetup : MonoBehaviour
         //FloorPoints.SetActive(true);
         FloorDemo1.SetActive(true);
         FloorDemo2.SetActive(true);
-        MainManager.Instance.GetVisibilityDemo(ApplicationMode.Demo);
+        MainManager.Instance.GetVisibilityDemo(ApplicationMode.None);
 
         return true;
     }

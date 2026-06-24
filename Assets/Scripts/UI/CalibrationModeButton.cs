@@ -33,6 +33,7 @@ namespace BrushingAndLinking
                     break;
                 case CalibrationStep.MoveShelves:
                     CalibrationSetup.FinishShelvesCalibration();
+                    MainManager.Instance.GetVisibilityDemo(ApplicationMode.Demo);
                     status = true;
                     break;
                 case CalibrationStep.Demo:
