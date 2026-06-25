@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: VISUS
-  productName: B&L DEMO
+  productName: B&L DEMOscienceDay
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
@@ -139,10 +139,12 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.1
+  bundleVersion: 0.2
   preloadedAssets:
   - {fileID: 11400000, guid: 40b301dc98ba2384b82a969d0c427838, type: 2}
   - {fileID: 11400000, guid: 632f995efd236a94e8880b7a2b04335e, type: 2}
+  - {fileID: 847303079190117083, guid: b8befae0f0f13f14bad569a32ed20059, type: 2}
+  - {fileID: 11400000, guid: 35a17e5910b2c314ebfb3d8bf839f098, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -163,7 +165,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.VISUS.BLDemo
+    Android: com.VISUS.BLDemoScienceDay
     Standalone: com.VISUS.Brushing-and-Linking
   buildNumber:
     Standalone: 0

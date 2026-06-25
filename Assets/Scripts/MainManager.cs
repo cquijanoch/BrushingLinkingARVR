@@ -191,18 +191,25 @@ namespace BrushingAndLinking
             if (isVR)
             {
                 EnvironmnetInfraestructure.SetActive(true);
-                OccludersS1.SetActive(false);
-                OccludersS2.SetActive(false);
                 LightInfraestructure.type = LightType.Point;
+                if (AppMode == ApplicationMode.Study)
+                {
+                    OccludersS1.SetActive(false);
+                    OccludersS2.SetActive(false);
+                }
             }
             else
             {
                 EnvironmnetInfraestructure.SetActive(false);
-                OccludersS1.SetActive(true);
-                OccludersS2.SetActive(true);
                 LightInfraestructure.type = LightType.Directional;
-            }
 
+                if (AppMode == ApplicationMode.Study)
+                {
+                    OccludersS1.SetActive(true);
+                    OccludersS2.SetActive(true);
+                }
+            }
+        
             yield return new WaitForEndOfFrame();
 
             if (OVRManager.instance != null)
